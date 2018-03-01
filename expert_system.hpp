@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 13:43:25 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/03/01 14:06:11 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 # include <list>
 # include <string>
 # include <iostream>
+
+# include "axiom.class.hpp"
 # include "facts.class.hpp"
+# include "formula.class.hpp"
 # include "hub.class.hpp"
 
 //stat, mmap, getline, strtok

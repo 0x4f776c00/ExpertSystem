@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 13:47:51 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/03/01 14:03:59 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ class Formula : public Facts
 		Facts	fact2;
 		int		relation; //Position in fonction tab
 
+		Formula & operator==(Formula const & rhs);
 		Formula(int, Facts, Facts);
 		~Formula(void);
 		//operator overload
