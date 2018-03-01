@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 15:44:52 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 16:16:29 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ e_status	Formula::not_operator(Facts fact1, Facts fact2)
 	e_status	status1 = fact1.get_status();
 
 	if (status1 == F_FALSE)
-		ret = F_TRUE;
+		return F_TRUE;
 	else if (status1 == F_TRUE)
-		ret = F_FALSE;
+		return F_FALSE;
 	return F_UNKNOWN;
 }
 
@@ -41,9 +41,9 @@ e_status	Formula::and_operator(Facts fact1, Facts fact2)
 	e_status	status2 = fact2.get_status();
 	
 	if (status1 == F_FALSE || status2 == F_FALSE)
-		ret = F_FALSE;
+		return F_FALSE;
 	else if (status1 == F_TRUE && status2 == F_TRUE)
-		ret = F_TRUE;
+		return F_TRUE;
 	return F_UNKNOWN;
 }
 
@@ -72,6 +72,14 @@ e_status	xor_operator(Facts fact1, Facts fact2)
 		return F_FALSE;
 	return F_UNKNOWN;
 }
+
+const e_status (Formula::*tab_func[NB_OPERATOR])(Fact, Fact) =
+{
+	&Formula::not_operator,
+	&Formula::and_operator,
+	&Formula::or_operator,
+	&Formula::xor_operator
+};
 
 void	Formula::compute_status()
 {

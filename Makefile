@@ -4,7 +4,11 @@ CC = clang++
 
 FLAGS = -Wall -Wextra -Werror -Weverything
 
-FILES =		replace \
+FILES =		axiom.class\
+			expert_system\
+			facts.class\
+			formula.class\
+			hub.class
 
 SRCS =		$(addsuffix .cpp, $(FILES))
 

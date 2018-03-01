@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 15:28:41 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 16:16:03 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class Formula : public Facts
 		e_status	and_operator(Facts, Facts);
 		e_status	or_operator(Facts, Facts);
 		e_status	xor_operator(Facts, Facts);
-		e_status	(*tab_func[NB_OPERATOR])(Facts, Facts);
+		static const e_status	(*tab_func[NB_OPERATOR])(Facts, Facts);
 
 		Facts	*fact1;
 		Facts	*fact2;
