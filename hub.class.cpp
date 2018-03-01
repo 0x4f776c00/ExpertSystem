@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:06:32 by justasze          #+#    #+#             */
-/*   Updated: 2018/03/01 14:26:11 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 16:46:54 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	Hub::add_fact(Facts fact)
 
 void	Hub::add_axiom(Axiom axiom)
 {
-	this->facts.push_front(axiom);
+	this->axioms.push_front(axiom);
 }
 
 bool	Hub::has_been_actualized(void)

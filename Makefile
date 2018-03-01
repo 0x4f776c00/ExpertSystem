@@ -2,7 +2,7 @@ NAME = expert_system
 
 CC = clang++
 
-FLAGS = -Wall -Wextra -Werror -Weverything
+FLAGS = -Wall -Wextra -Werror #-Weverything
 
 FILES =		axiom.class\
 			expert_system\

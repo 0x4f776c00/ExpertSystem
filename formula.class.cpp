@@ -6,17 +6,17 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 16:20:33 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 16:50:08 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
 
-Formula::Formula(int relation, Facts *fact1, Facts *fact2)
+Formula::Formula(Facts *fact1, Facts *fact2, int relation)
 {
-	this->relation = relation;
 	this->fact1 = fact1;
 	this->fact2 = fact2;
+	this->relation = relation;
 }
 
 Formula::~Formula(void)
@@ -74,7 +74,7 @@ e_status	xor_operator(Facts fact1, Facts fact2)
 	return F_UNKNOWN;
 }
 
-const e_status (Formula::*tab_func[NB_OPERATOR])(Fact, Fact) =
+e_status (Formula::*tab_func[NB_OPERATOR])(Facts, Facts) =
 {
 	&Formula::not_operator,
 	&Formula::and_operator,
@@ -84,5 +84,5 @@ const e_status (Formula::*tab_func[NB_OPERATOR])(Fact, Fact) =
 
 void	Formula::compute_status()
 {
-	this->set_status(tab_func[this->relation](this->fact1, this->fact2));
+	this->set_status(tab_func[this->relation](*this->fact1, *this->fact2));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   axiom.class.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:48:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 14:37:56 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/03/01 16:38:06 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 
 class Axiom : public Hub
 {
-	public :
+	public:
 
-		Facts	fact1;
-		Facts	fact2;
+		Facts	*fact1;
+		Facts	*fact2;
 		bool	biconditional;
 		//TODO : bool is treated (?)
 
-		Axiom(Facts, Facts, bool);
+		Axiom(Facts *f1, Facts *f2, bool);
 		~Axiom(void);
-}
+};
 
 #endif

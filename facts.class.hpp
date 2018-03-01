@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   facts.class.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:36:02 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 14:51:33 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/03/01 16:51:52 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 # define FACTS_CLASS_HPP
 
 #include "expert_system.hpp"
+#include "hub.class.hpp"
 
 class Facts : public Hub
 {
-	public :
+	public:
 
 		const char	symbol;
 		
@@ -25,10 +26,11 @@ class Facts : public Hub
 		void		set_status(e_status);
 
 		Facts(const char);
+		Facts(void);
 		~Facts(void);
 		//to do: add operator overload
 
-	private :
+	private:
 
 		e_status	_status;
 };
