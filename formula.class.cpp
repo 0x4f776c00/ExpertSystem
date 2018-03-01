@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 16:16:29 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 16:20:33 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ Formula::~Formula(void)
 e_status	Formula::not_operator(Facts fact1, Facts fact2)
 {
 	e_status	status1 = fact1.get_status();
-
+	
+	(void)fact2;
 	if (status1 == F_FALSE)
 		return F_TRUE;
 	else if (status1 == F_TRUE)
