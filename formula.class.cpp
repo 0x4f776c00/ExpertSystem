@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 17:15:54 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 17:46:04 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ Formula::~Formula(void)
 
 e_status	Formula::not_operator(Facts fact1, Facts fact2)
 {
+	std::cout << "not operator called\n";
 	e_status	status1 = fact1.get_status();
 	
 	(void)fact2;
@@ -38,6 +39,7 @@ e_status	Formula::not_operator(Facts fact1, Facts fact2)
 
 e_status	Formula::and_operator(Facts fact1, Facts fact2)
 {
+	std::cout << "and operator called\n";
 	e_status	status1 = fact1.get_status();
 	e_status	status2 = fact2.get_status();
 	
@@ -50,6 +52,7 @@ e_status	Formula::and_operator(Facts fact1, Facts fact2)
 
 e_status	Formula::or_operator(Facts fact1, Facts fact2)
 {
+	std::cout << "or operator called\n";
 	e_status	status1 = fact1.get_status();
 	e_status	status2 = fact2.get_status();
 
@@ -62,6 +65,7 @@ e_status	Formula::or_operator(Facts fact1, Facts fact2)
 
 e_status	Formula::xor_operator(Facts fact1, Facts fact2)
 {
+	std::cout << "xor operator called\n";
 	e_status	status1 = fact1.get_status();
 	e_status	status2 = fact2.get_status();
 
@@ -74,13 +78,13 @@ e_status	Formula::xor_operator(Facts fact1, Facts fact2)
 	return F_UNKNOWN;
 }
 
-e_status (Formula::*tab_func[NB_OPERATOR])(Facts, Facts) =
-{
-	&Formula::not_operator,
-	&Formula::and_operator,
-	&Formula::or_operator,
-	&Formula::xor_operator
-};
+	e_status (*Formula::tab_func[NB_OPERATOR])(Facts, Facts) =
+	{
+		&Formula::not_operator,
+		&Formula::and_operator,
+		&Formula::or_operator,
+		&Formula::xor_operator
+	};
 
 void	Formula::compute_status()
 {
