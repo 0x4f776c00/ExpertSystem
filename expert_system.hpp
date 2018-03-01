@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 14:06:11 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 15:20:24 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include "facts.class.hpp"
 # include "formula.class.hpp"
 # include "hub.class.hpp"
+
+# define NB_OPERATOR 4
 
 //stat, mmap, getline, strtok
 

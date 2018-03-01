@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   facts.class.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:36:02 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 14:03:33 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:51:33 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,18 @@ class Facts : public Hub
 {
 	public :
 
-		e_status	status;
-		char		symbol;
-		Facts & operator=(Facts const & rhs);
-		Facts & operator==(Facts const & rhs);
+		const char	symbol;
+		
+		e_status	get_status(void);
+		void		set_status(e_status);
 
-		Facts(void);
+		Facts(const char);
 		~Facts(void);
 		//to do: add operator overload
+
+	private :
+
+		e_status	_status;
 };
 
 #endif
