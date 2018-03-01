@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   facts.class.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:38:16 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 15:03:17 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/03/01 15:37:11 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 Facts::Facts(const char symbol) : symbol(symbol)
 {
-	this->_status = PENDING;
+	this->_status = F_PENDING;
 }
 
 Facts::~Facts(void)
@@ -29,10 +29,10 @@ e_status	Facts::get_status(void)
 
 void		Facts::set_status(e_status status)
 {
-	if ((this->_status == TRUE && status == FALSE)
-			|| (this->_status == FALSE && status == TRUE))
+	if ((this->_status == F_TRUE && status == F_FALSE)
+			|| (this->_status == F_FALSE && status == F_TRUE))
 		apocalypse();
-	if (this->_status != PENDING && status == UNKNOW)
+	if (this->_status != F_PENDING && status == F_UNKNOW)
 		return ;
 	this->_status = status;
 }
