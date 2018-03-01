@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 16:50:08 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 17:12:21 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ e_status	Formula::and_operator(Facts fact1, Facts fact2)
 	return F_UNKNOWN;
 }
 
-e_status	or_operator(Facts fact1, Facts fact2)
+e_status	Formula::or_operator(Facts fact1, Facts fact2)
 {
 	e_status	status1 = fact1.get_status();
 	e_status	status2 = fact2.get_status();
@@ -60,7 +60,7 @@ e_status	or_operator(Facts fact1, Facts fact2)
 	return F_UNKNOWN;
 }
 
-e_status	xor_operator(Facts fact1, Facts fact2)
+e_status	Formula::xor_operator(Facts fact1, Facts fact2)
 {
 	e_status	status1 = fact1.get_status();
 	e_status	status2 = fact2.get_status();
