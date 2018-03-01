@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/03/01 17:35:26 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 17:58:01 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int		main()
 	Formula z(&a, &c, 1);
 
 	x.compute_status();
-//	y.compute_status();
-//	z.compute_status();
+	y.compute_status();
+	z.compute_status();
 
 	return 0;
 }

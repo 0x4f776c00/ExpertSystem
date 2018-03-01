@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 17:46:04 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 17:56:29 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ e_status	Formula::xor_operator(Facts fact1, Facts fact2)
 
 	e_status (*Formula::tab_func[NB_OPERATOR])(Facts, Facts) =
 	{
-		&Formula::not_operator,
-		&Formula::and_operator,
-		&Formula::or_operator,
-		&Formula::xor_operator
+		Formula::not_operator,
+		Formula::and_operator,
+		Formula::or_operator,
+		Formula::xor_operator
 	};
 
 void	Formula::compute_status()

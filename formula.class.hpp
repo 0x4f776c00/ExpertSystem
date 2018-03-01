@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 17:44:18 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 17:56:16 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ class Formula : public Facts
 		Formula(Facts *f1, Facts *f2, int relation);
 		~Formula(void);
 
-		e_status	not_operator(Facts, Facts);
-		e_status	and_operator(Facts, Facts);
-		e_status	or_operator(Facts, Facts);
-		e_status	xor_operator(Facts, Facts);
+		static e_status	not_operator(Facts, Facts);
+		static e_status	and_operator(Facts, Facts);
+		static e_status	or_operator(Facts, Facts);
+		static e_status	xor_operator(Facts, Facts);
 
 		Facts	*fact1;
 		Facts	*fact2;
