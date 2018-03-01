@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:22:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 17:10:46 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/01 17:15:43 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ class Hub
 		bool				is_solved(void);
 		void				set_actualized_status(bool);
 		void				set_solved(void);
-
-		std::list<Facts> facts;
-		std::list<Axiom> axioms;
+		std::list <Facts>	facts;
+		std::list <Axiom>	axioms;
 
 	private:
 
