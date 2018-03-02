@@ -2,14 +2,16 @@ NAME = expert_system
 
 CC = clang++
 
-FLAGS = -Wall -Wextra -Werror #-Weverything
+FLAGS = -Wall -Wextra -Werror -std=c++11 #-Weverything
 
 FILES =		axiom.class\
 			expert_system\
 			facts.class\
 			formula.class\
 			hub.class\
-			parser\
+			lexer\
+			token.struct\
+			error_handling
 
 SRCS =		$(addsuffix .cpp, $(FILES))
 

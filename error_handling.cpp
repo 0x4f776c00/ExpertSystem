@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.struct.hpp                                   :+:      :+:    :+:   */
+/*   error_handling.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/02 16:09:11 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/02 19:12:56 by justasze         ###   ########.fr       */
+/*   Created: 2018/03/02 18:46:32 by justasze          #+#    #+#             */
+/*   Updated: 2018/03/02 19:10:09 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKEN_STRUCT_HPP
-# define TOKEN_STRUCT_HPP
-
 #include "expert_system.hpp"
 
-struct Token
+int	error_n_exit(std::string str)
 {
-	char			symbol;
-	e_token_type	type;
-	Token(char symbol);
-	~Token(void);
-};
+	int		random_snark = std::rand() % NB_SNARK;
 
-#endif
+	std::cerr << "Error: " << str << std::endl;
+	std::cerr << snark_tab[random_snark] << std::endl;
+	exit (EXIT_FAILURE);
+}

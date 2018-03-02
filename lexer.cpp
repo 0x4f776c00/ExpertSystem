@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/02 18:08:08 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/03/02 19:11:33 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ static void					open_stream(char *file_name, std::ifstream *ifs)
 	}
 	catch (std::ios_base::failure& e) 
 	{
-		std::srand(std::time(NULL));
 		if (std::rand() % 2 == 0)
- 			std::cerr << "Error while opening file" << std::endl;
+ 			error_n_exit("Error while opening file");
 		else
-		 	std::cerr << "Error when opening file" << std::endl;	
-		exit(EXIT_FAILURE);
+		 	error_n_exit("Error when opening file");
 	}
 }
 
@@ -71,8 +69,8 @@ static std::list <Token>	tokenize(std::ifstream & ifs)
 				break;
 			else if ((type = check_symbol(it)))
 			{
-				ret_token = generate_token(it, type);
-				token_list.push_back(ret_token);
+				//ret_token = generate_token(it, type);
+				//token_list.push_back(ret_token);
 				if (*it == '=')
 					it++;
 				continue;
@@ -92,6 +90,8 @@ void						get_system(Hub *hub, char *file_name)
 {
 	std::ifstream ifs;
 	open_stream(file_name, &ifs);
-	parse_system(tokenize(ifs), hub);
+	//parse the result of tokenize
+	tokenize(ifs);
+	(void)hub;
 	ifs.close();
 }

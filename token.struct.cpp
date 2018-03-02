@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.struct.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:11:30 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/02 16:26:49 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/03/02 19:13:03 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,9 @@ Token::Token(char symbol)
 		this->type = SEPARATOR;
 	else
 		this->type = OPERATOR;
+}
+
+Token::~Token()
+{
+	return ;
 }
