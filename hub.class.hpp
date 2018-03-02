@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hub.class.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:22:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 17:15:43 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/02 15:12:02 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ class Hub
 		void				set_solved(void);
 		std::list <Facts>	facts;
 		std::list <Axiom>	axioms;
+		std::string			queries;
 
 	private:
 

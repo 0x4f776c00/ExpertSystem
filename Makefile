@@ -8,7 +8,8 @@ FILES =		axiom.class\
 			expert_system\
 			facts.class\
 			formula.class\
-			hub.class
+			hub.class\
+			parser\
 
 SRCS =		$(addsuffix .cpp, $(FILES))
 

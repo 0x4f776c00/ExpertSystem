@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expert_system.cpp                                  :+:      :+:    :+:   */
+/*   token.struct.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/03/02 14:28:12 by bcozic           ###   ########.fr       */
+/*   Created: 2018/03/02 16:09:11 by bcozic            #+#    #+#             */
+/*   Updated: 2018/03/02 16:15:45 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef TOKEN_STRUCT_HPP
+# define TOKEN_STRUCT_HPP
+
 #include "expert_system.hpp"
 
-static int	usage()
+struct Token
 {
-	std::cout << "usage: ./expert_system <file>" << std::endl;
-	return (EXIT_FAILURE);
-}
+	char			symbol;
+	e_token_type	type;
+	Token(char symbol);
+	~Token();
+};
 
-int		main(int ac, char **av)
-{
-	if (ac != 2)
-		return (usage());
-	Hub hub;
-	get_system(&hub, av[1]);
-	return 0;
-}
+#endif

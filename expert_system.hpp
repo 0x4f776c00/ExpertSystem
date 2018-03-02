@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 16:34:04 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/02 17:58:44 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 # include <list>
 # include <string>
 # include <iostream>
+# include <fstream>
 
 enum e_status {F_TRUE, F_FALSE, F_PENDING, F_UNKNOWN};
+enum e_token_type {OPERATOR = 1, FACT, RELATION, SEPARATOR, TRUTH, QUERY};
 
 # define NB_OPERATOR 4
 
@@ -25,7 +27,9 @@ enum e_status {F_TRUE, F_FALSE, F_PENDING, F_UNKNOWN};
 # include "hub.class.hpp"
 # include "formula.class.hpp"
 # include "axiom.class.hpp"
+# include "token.struct.hpp"
 
+void	get_system(Hub *hub, char *file_name);
 
 //stat, mmap, getline, strtok
 

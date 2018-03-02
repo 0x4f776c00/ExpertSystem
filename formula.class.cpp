@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 17:56:29 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/03/02 13:08:16 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ Formula::~Formula(void)
 
 e_status	Formula::not_operator(Facts fact1, Facts fact2)
 {
-	std::cout << "not operator called\n";
 	e_status	status1 = fact1.get_status();
 	
 	(void)fact2;
@@ -39,7 +38,6 @@ e_status	Formula::not_operator(Facts fact1, Facts fact2)
 
 e_status	Formula::and_operator(Facts fact1, Facts fact2)
 {
-	std::cout << "and operator called\n";
 	e_status	status1 = fact1.get_status();
 	e_status	status2 = fact2.get_status();
 	
@@ -52,7 +50,6 @@ e_status	Formula::and_operator(Facts fact1, Facts fact2)
 
 e_status	Formula::or_operator(Facts fact1, Facts fact2)
 {
-	std::cout << "or operator called\n";
 	e_status	status1 = fact1.get_status();
 	e_status	status2 = fact2.get_status();
 
@@ -65,7 +62,6 @@ e_status	Formula::or_operator(Facts fact1, Facts fact2)
 
 e_status	Formula::xor_operator(Facts fact1, Facts fact2)
 {
-	std::cout << "xor operator called\n";
 	e_status	status1 = fact1.get_status();
 	e_status	status2 = fact2.get_status();
 
