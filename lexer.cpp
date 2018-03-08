@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/08 17:36:53 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/08 18:06:19 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,11 @@ static std::vector <Token>	tokenize(std::ifstream & ifs)
 				it++;
 			continue;
 		}
-		//TODO if back list != Separator => separator
+		if (token_vector.size() != 0 && token_vector.back().type != SEPARATOR)
+		{
+			Token ret_token(';', SEPARATOR);
+			token_vector.push_back(ret_token);
+		}
 	}
 	return token_vector;
 }
