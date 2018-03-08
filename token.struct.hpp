@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.struct.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:09:11 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/08 16:25:35 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/03/08 17:36:06 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ struct Token
 	Token(char symbol, e_token_type type);
 	~Token(void);
 };
+
+std::ostream & operator<<(std::ostream & o, const Token & rep);
 
 #endif
