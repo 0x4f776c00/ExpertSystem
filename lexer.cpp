@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/08 17:07:51 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/03/08 17:36:53 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ static void					open_stream(char *file_name, std::ifstream *ifs)
 	}
 }
 
-
-
 static std::vector <Token>	tokenize(std::ifstream & ifs)
 {
 	std::string			line;
@@ -64,8 +62,8 @@ static std::vector <Token>	tokenize(std::ifstream & ifs)
 		std::string::iterator it = line.begin();
 		if (*line.begin() == '=' || *line.begin() == '?')
 		{
-			Token ret_token = generate_token(it, (*line.begin() == '=') ? TRUTH : QUERY);
-			token_vector.push_back(ret_token);;
+			Token ret_token(*it, (*line.begin() == '=') ? TRUTH : QUERY);
+			token_vector.push_back(ret_token);
 			it++;
 		}
 		for (; it!=line.end(); ++it)
@@ -79,7 +77,7 @@ static std::vector <Token>	tokenize(std::ifstream & ifs)
 				ifs.close();
 				error_n_exit("Bad file format");
 			}
-			Token ret_token = generate_token(it, type);
+			Token ret_token(*it, type);
 			token_vector.push_back(ret_token);
 			if (*it == '=')
 				it++;
@@ -90,10 +88,18 @@ static std::vector <Token>	tokenize(std::ifstream & ifs)
 	return token_vector;
 }
 
+static void					aff_token_list(std::vector <Token> token_vector, Hub *hub)
+{
+	(void) hub;
+	std::vector <Token> :: iterator i;
+	for (i = token_vector.begin(); i != token_vector.end(); ++i)
+		std::cout << *i << '\n';
+}
+
 void						get_system(Hub *hub, char *file_name)
 {
 	std::ifstream ifs;
 	open_stream(file_name, &ifs);
-	parse_system(tokenize(ifs), hub);
+	aff_token_list(tokenize(ifs), hub);
 	ifs.close();
 }
