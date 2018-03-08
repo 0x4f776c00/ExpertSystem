@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.struct.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:09:11 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/02 19:12:56 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/08 16:25:35 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ struct Token
 {
 	char			symbol;
 	e_token_type	type;
-	Token(char symbol);
+	Token(char symbol, e_token_type type);
 	~Token(void);
 };
 

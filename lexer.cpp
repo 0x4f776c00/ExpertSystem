@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/02 19:11:33 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/08 17:07:51 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,57 +41,59 @@ static void					open_stream(char *file_name, std::ifstream *ifs)
 	{
 		(*ifs).open(file_name);
 	}
-	catch (std::ios_base::failure& e) 
+	catch (std::ios_base::failure& e)
 	{
+		std::srand(std::time(NULL));
 		if (std::rand() % 2 == 0)
- 			error_n_exit("Error while opening file");
+ 			std::cerr << "Error while opening file" << std::endl;
 		else
-		 	error_n_exit("Error when opening file");
+		 	std::cerr << "Error when opening file" << std::endl;	
+		exit(EXIT_FAILURE);
 	}
 }
 
-static std::list <Token>	tokenize(std::ifstream & ifs)
+
+
+static std::vector <Token>	tokenize(std::ifstream & ifs)
 {
 	std::string			line;
-	std::list <Token>	token_list;
+	std::vector <Token>	token_vector;
 	e_token_type		type;
 	while (std::getline(ifs, line))
 	{
+		std::string::iterator it = line.begin();
 		if (*line.begin() == '=' || *line.begin() == '?')
 		{
-			continue;
+			Token ret_token = generate_token(it, (*line.begin() == '=') ? TRUTH : QUERY);
+			token_vector.push_back(ret_token);;
+			it++;
 		}
-		for ( std::string::iterator it=line.begin(); it!=line.end(); ++it)
+		for (; it!=line.end(); ++it)
 		{
 			if (isspace(*it))
 				continue;
 			else if (*it == '#')
 				break;
-			else if ((type = check_symbol(it)))
-			{
-				//ret_token = generate_token(it, type);
-				//token_list.push_back(ret_token);
-				if (*it == '=')
-					it++;
-				continue;
-			}
-			else
+			else if ((type = check_symbol(it)) == INVALID)
 			{
 				ifs.close();
 				error_n_exit("Bad file format");
 			}
+			Token ret_token = generate_token(it, type);
+			token_vector.push_back(ret_token);
+			if (*it == '=')
+				it++;
+			continue;
 		}
 		//TODO if back list != Separator => separator
 	}
-	return token_list;
+	return token_vector;
 }
 
 void						get_system(Hub *hub, char *file_name)
 {
 	std::ifstream ifs;
 	open_stream(file_name, &ifs);
-	//parse the result of tokenize
-	tokenize(ifs);
-	(void)hub;
+	parse_system(tokenize(ifs), hub);
 	ifs.close();
 }
