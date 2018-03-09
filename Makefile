@@ -10,6 +10,7 @@ FILES =		axiom.class\
 			formula.class\
 			hub.class\
 			lexer\
+			parser\
 			token.struct\
 			error_handling
 

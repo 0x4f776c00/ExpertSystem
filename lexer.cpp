@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/08 18:06:19 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/08 18:09:08 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,10 @@ static std::vector <Token>	tokenize(std::ifstream & ifs)
 	return token_vector;
 }
 
-static void					aff_token_list(std::vector <Token> token_vector, Hub *hub)
-{
-	(void) hub;
-	std::vector <Token> :: iterator i;
-	for (i = token_vector.begin(); i != token_vector.end(); ++i)
-		std::cout << *i << '\n';
-}
-
 void						get_system(Hub *hub, char *file_name)
 {
 	std::ifstream ifs;
 	open_stream(file_name, &ifs);
-	aff_token_list(tokenize(ifs), hub);
+	parse_system(tokenize(ifs), hub);
 	ifs.close();
 }
