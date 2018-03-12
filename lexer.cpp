@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/08 18:09:08 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/12 16:25:04 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,15 @@ static void					open_stream(char *file_name, std::ifstream *ifs)
 	}
 }
 
-static std::vector <Token>	tokenize(std::ifstream & ifs)
+static std::vector <std::vector <Token>>	tokenize(std::ifstream & ifs)
 {
 	std::string			line;
-	std::vector <Token>	token_vector;
+	std::vector <std::vector <Token>>	tokens;
 	e_token_type		type;
+
 	while (std::getline(ifs, line))
 	{
+		std::vector <Token>	token_vector;
 		std::string::iterator it = line.begin();
 		if (*line.begin() == '=' || *line.begin() == '?')
 		{
@@ -83,13 +85,10 @@ static std::vector <Token>	tokenize(std::ifstream & ifs)
 				it++;
 			continue;
 		}
-		if (token_vector.size() != 0 && token_vector.back().type != SEPARATOR)
-		{
-			Token ret_token(';', SEPARATOR);
-			token_vector.push_back(ret_token);
-		}
+		if (token_vector.size() != 0)
+			tokens.push_back(token_vector);
 	}
-	return token_vector;
+	return tokens;
 }
 
 void						get_system(Hub *hub, char *file_name)

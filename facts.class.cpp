@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   facts.class.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:38:16 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 16:54:14 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/12 17:23:31 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 Facts::Facts(const char symbol) : symbol(symbol)
 {
 	this->_status = F_PENDING;
+	this->queried = false;
 }
 
 Facts::Facts(void) : symbol('\0')

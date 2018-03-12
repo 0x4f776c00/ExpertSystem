@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/08 18:10:44 by justasze         ###   ########.fr       */
+/*   Updated: 2018/03/12 16:18:11 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ constexpr const char *snark_tab[NB_SNARK] =
 # include "token.struct.hpp"
 
 void	get_system(Hub *hub, char *file_name);
-void	parse_system(std::vector <Token> token_vector, Hub *hub);
+void	parse_system(std::vector <std::vector <Token>> tokens, Hub *hub);
 int		error_n_exit(std::string str);
 
 //stat, mmap, getline, strtok
