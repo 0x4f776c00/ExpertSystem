@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 17:05:25 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/01 17:42:01 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,53 @@ static void		get_truth(std::vector <std::vector <Token>> :: iterator line, Hub *
 	}
 }
 
+static int		get_end_parenthesis(Hub *hub, std::vector <Token> line, int i, int end)
+{
+	while (line[i].symbol != ')')
+	{
+		if (line[i].symbol == '(')
+			i = get_end_parenthesis(hub, line, i, end);
+		if (i == end)
+			return (0);
+		i++;
+	}
+	return (i);
+}
+
 static Facts	get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 {
 	(void)hub;
+	int	index = 0;
+	int	priority = -1;
+
+	for (int i = begin; i <= end; i++)
+	{
+		if (line[i].symbol == ')')
+			error_n_exit("Parenthesis don't match");
+		if (line[i].symbol == '(')
+		{
+			if ((i = get_end_parenthesis(hub, line, i, end)) == -1)
+				error_n_exit("Parenthesis don't match");
+			if (i == end)
+			{
+				i = begin;
+				begin++;
+				end--;
+				continue ;
+			}
+		}
+		if (line[i].operator_type > priority)
+		{
+			index = i;
+			priority = line[i].operator_type;
+		}
+	}
 	if (begin == end)
 		return Facts(line[begin].symbol);
-	return Facts(line[begin].symbol);
+	if (priority == -1)
+		error_n_exit("Error in formula");
+	Formula ret = new Formula(&(get_formula(hub, line, begin, index - 1)), &(get_formula(hub, line, index + 1, end)), priority);
+	return ret;
 }
 
 static void		get_axioms(std::vector <Token> line, Hub *hub)
