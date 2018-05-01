@@ -3,27 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/12 16:25:04 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/01 17:06:47 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
 
-static int		isoperator(char it)
+static int		isoperator(char it, int *operator_type)
 {
-	if (it == '|' || it == '+' || it == '!' || it == '^' || it == '(' || it == ')')
-		return 1;
-	return 0;
+	switch (it)
+	{
+		case '^' :
+			*operator_type = 0;
+			return 1;
+		case '|' :
+			*operator_type = 1;
+			return 1;
+		case '+' :
+			*operator_type = 2;
+			return 1;
+		case '!' :
+			*operator_type = 3;
+			return 1;
+		case '(' :
+			*operator_type = 4;
+			return 1;
+		case ')' :
+			*operator_type = 4;
+			return 1;
+		default :
+			return 0;
+	}
 }
 
-static e_token_type	check_symbol(std::string::iterator it)
+static e_token_type	check_symbol(std::string::iterator it, int *operator_type)
 {
 	if (isupper(*it))
 		return FACT;
-	if (isoperator(*it))
+	if (isoperator(*it, operator_type))
 		return OPERATOR;
 	else if ((*it == '=' && *(it + 1) == '>') || (*it == '<' && *(it + 1) == '=' && *(it + 2) == '>'))
 	{
@@ -57,29 +77,29 @@ static std::vector <std::vector <Token>>	tokenize(std::ifstream & ifs)
 	std::string			line;
 	std::vector <std::vector <Token>>	tokens;
 	e_token_type		type;
-
 	while (std::getline(ifs, line))
 	{
 		std::vector <Token>	token_vector;
 		std::string::iterator it = line.begin();
 		if (*line.begin() == '=' || *line.begin() == '?')
 		{
-			Token ret_token(*it, (*line.begin() == '=') ? TRUTH : QUERY);
+			Token ret_token(*it, (*line.begin() == '=') ? TRUTH : QUERY, -1);
 			token_vector.push_back(ret_token);
 			it++;
 		}
 		for (; it!=line.end(); ++it)
 		{
+			int	operator_type = -1;
 			if (isspace(*it))
 				continue;
 			else if (*it == '#')
 				break;
-			else if ((type = check_symbol(it)) == INVALID)
+			else if ((type = check_symbol(it, &operator_type)) == INVALID)
 			{
 				ifs.close();
 				error_n_exit("Bad file format");
 			}
-			Token ret_token(*it, type);
+			Token ret_token(*it, type, operator_type);
 			token_vector.push_back(ret_token);
 			if (*it == '=')
 				it++;

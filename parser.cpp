@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 16:42:29 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/01 17:05:25 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,10 @@ static void		get_truth(std::vector <std::vector <Token>> :: iterator line, Hub *
 
 static Facts	get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 {
+	(void)hub;
 	if (begin == end)
 		return Facts(line[begin].symbol);
-	
+	return Facts(line[begin].symbol);
 }
 
 static void		get_axioms(std::vector <Token> line, Hub *hub)

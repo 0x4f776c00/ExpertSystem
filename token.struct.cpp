@@ -6,16 +6,17 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:11:30 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/08 17:58:22 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/01 17:06:08 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
 
-Token::Token(char symbol, e_token_type type)
+Token::Token(char symbol, e_token_type type, int operator_type)
 {
 	this->symbol = symbol;
 	this->type = type;
+	this->operator_type = operator_type;
 }
 
 Token::~Token()
