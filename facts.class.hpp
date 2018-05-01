@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   facts.class.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:36:02 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/12 17:22:20 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/01 18:05:40 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ class Facts : public Hub
 
 		e_status	_status;
 };
+
+std::ostream & operator<<(std::ostream & o, const Facts & fact);
 
 #endif

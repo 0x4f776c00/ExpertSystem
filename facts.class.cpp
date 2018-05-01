@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   facts.class.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:38:16 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/12 17:23:31 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/01 18:05:43 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,10 @@ void		Facts::set_status(e_status status)
 	if (this->_status != F_PENDING && status == F_UNKNOWN)
 		return ;
 	this->_status = status;
+}
+
+std::ostream & operator<<(std::ostream & o, const Facts & fact)
+{
+	o << "Symbol: " << fact.symbol << std::endl;
+	return o;
 }

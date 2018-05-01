@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 16:45:34 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/01 18:03:55 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ class Formula : public Facts
 
 		//operator overload
 };
+
+std::ostream & operator<<(std::ostream & o, const Formula & formula);
 
 #endif

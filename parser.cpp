@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 17:42:01 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/01 18:00:43 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int		get_end_parenthesis(Hub *hub, std::vector <Token> line, int i, int e
 	return (i);
 }
 
-static Facts	get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
+static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 {
 	(void)hub;
 	int	index = 0;
@@ -128,17 +128,18 @@ static Facts	get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 		}
 	}
 	if (begin == end)
-		return Facts(line[begin].symbol);
+		return &(hub->facts[line[begin].symbol - 'A']);
 	if (priority == -1)
 		error_n_exit("Error in formula");
-	Formula ret = new Formula(&(get_formula(hub, line, begin, index - 1)), &(get_formula(hub, line, index + 1, end)), priority);
-	return ret;
+	return new Formula(get_formula(hub, line, begin, index - 1), get_formula(hub, line, index + 1, end), priority);
+
 }
 
 static void		get_axioms(std::vector <Token> line, Hub *hub)
 {
 	(void)hub;
-	Facts fact = get_formula(hub, line, 0, 0);
+	Facts fact = *get_formula(hub, line, 0, 0);
+	std::cout << fact << std::endl;
 	//aff_token_line(line);
 }
 

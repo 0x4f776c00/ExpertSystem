@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 16:45:56 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/01 18:04:03 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,10 @@ e_status	Formula::xor_operator(Facts fact1, Facts fact2)
 void	Formula::compute_status()
 {
 	this->set_status(tab_func[this->relation](*this->fact1, *this->fact2));
+}
+
+std::ostream & operator<<(std::ostream & o, const Formula & formula)
+{
+	o << "Fact1: " << formula.fact1 << std::endl << " Fact2: " << std::endl << formula.fact2 << std::endl << "Relation: " << formula.relation << std::endl;
+	return o;
 }
