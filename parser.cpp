@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 18:12:09 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/01 21:19:00 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 // 	}
 // }
 
-static void		aff_token_line(std::vector <Token> tokens)
-{
-	for (std::vector <Token> :: iterator i = tokens.begin(); i != tokens.end(); ++i)
-	{
-		std::cout << *i << '\n';
-	}
-}
+// static void		aff_token_line(std::vector <Token> tokens)
+// {
+// 	for (std::vector <Token> :: iterator i = tokens.begin(); i != tokens.end(); ++i)
+// 	{
+// 		std::cout << *i << '\n';
+// 	}
+// }
 
 static int		fact_queried(char symbol, Hub *hub)
 {
@@ -86,61 +86,62 @@ static void		get_truth(std::vector <std::vector <Token>> :: iterator line, Hub *
 	}
 }
 
-// static int		get_end_parenthesis(Hub *hub, std::vector <Token> line, int i, int end)
-// {
-// 	while (line[i].symbol != ')')
-// 	{
-// 		if (line[i].symbol == '(')
-// 			i = get_end_parenthesis(hub, line, i, end);
-// 		if (i == end)
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (i);
-// }
+static int		get_end_parenthesis(Hub *hub, std::vector <Token> line, int i, int end)
+{
+	while (line[i].symbol != ')')
+	{
+		if (line[i].symbol == '(')
+			i = get_end_parenthesis(hub, line, i, end);
+		if (i == end)
+			return (0);
+		i++;
+	}
+	return (i);
+}
 
-// static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
-// {
-// 	(void)hub;
-// 	int	index = 0;
-// 	int	priority = -1;
+static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
+{
+	(void)hub;
+	int	index = -1;
+	int	priority = -1;
 
-// 	for (int i = begin; i <= end; i++)
-// 	{
-// 		if (line[i].symbol == ')')
-// 			error_n_exit("Parenthesis don't match");
-// 		if (line[i].symbol == '(')
-// 		{
-// 			if ((i = get_end_parenthesis(hub, line, i, end)) == -1)
-// 				error_n_exit("Parenthesis don't match");
-// 			if (i == end)
-// 			{
-// 				i = begin;
-// 				begin++;
-// 				end--;
-// 				continue ;
-// 			}
-// 		}
-// 		if (line[i].operator_type > priority)
-// 		{
-// 			index = i;
-// 			priority = line[i].operator_type;
-// 		}
-// 	}
-// 	if (begin == end)
-// 		return &(hub->facts[line[begin].symbol - 'A']);
-// 	if (priority == -1)
-// 		error_n_exit("Error in formula");
-// 	return new Formula(get_formula(hub, line, begin, index - 1), get_formula(hub, line, index + 1, end), priority);
-
-// }
+	for (int i = begin; i < end; i++)
+	{
+		if (line[i].symbol == ')')
+			error_n_exit("Parenthesis don't match");
+		if (line[i].symbol == '(')
+		{
+			if ((i = get_end_parenthesis(hub, line, i, end)) == -1)
+				error_n_exit("Parenthesis don't match");
+			if (i == end)
+			{
+				i = begin;
+				begin++;
+				end--;
+				continue ;
+			}
+		}
+		std::cout << line[i].operator_type << std::endl;
+		if (line[i].operator_type > priority)
+		{
+			index = i;
+			priority = line[i].operator_type;
+		}
+	}
+	if (begin == end - 1)
+		return &(hub->facts[line[begin].symbol - 'A']);
+	if (priority == -1)
+		error_n_exit("Error in formula");
+	return new Formula(get_formula(hub, line, begin, index), get_formula(hub, line, index + 1, end), priority);
+}
 
 static void		get_axioms(std::vector <Token> line, Hub *hub)
 {
 	(void)hub;
-	//Facts fact = *get_formula(hub, line, 0, line.size());
-	//std::cout << fact << std::endl;
-	aff_token_line(line);
+	//for (int i = 0; )
+	Facts fact = *get_formula(hub, line, 0, line.size());
+	std::cout << fact << std::endl;
+	//aff_token_line(line);
 }
 
 void			parse_system(std::vector <std::vector <Token>> tokens, Hub *hub)
