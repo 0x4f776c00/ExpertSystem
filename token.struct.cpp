@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:11:30 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 17:06:08 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/01 18:10:12 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ Token::~Token()
 
 std::ostream & operator<<(std::ostream & o, const Token & token)
 {
-    o << "Symbol: '" << token.symbol << "' Type: " << static_cast<int>(token.type) << std::endl;
-    return o;
+	o << "Symbol: '" << token.symbol << "' Type: " << static_cast<int>(token.type) << std::endl << "operator_type: " << token.operator_type << std::endl;
+	return o;
 }
