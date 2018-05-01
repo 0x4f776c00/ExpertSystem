@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/03/02 18:48:35 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/01 16:27:48 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,19 @@ static int	usage()
 	return (EXIT_FAILURE);
 }
 
+static void	create_facts(Hub *hub)
+{
+	for (int i = 0; i < 26; i++)
+		hub->facts.push_back(Facts('A' + i));
+}
+
 int		main(int ac, char **av)
 {
 	if (ac != 2)
 		return (usage());
 	Hub hub;
 	std::srand(std::time(NULL));
+	create_facts(&hub);
 	get_system(&hub, av[1]);
 	return 0;
 }
