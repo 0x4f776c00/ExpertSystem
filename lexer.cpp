@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 17:06:47 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/01 17:31:05 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,20 @@ static int		isoperator(char it, int *operator_type)
 	switch (it)
 	{
 		case '^' :
-			*operator_type = 0;
+			*operator_type = XOR;
 			return 1;
 		case '|' :
-			*operator_type = 1;
+			*operator_type = OR;
 			return 1;
 		case '+' :
-			*operator_type = 2;
+			*operator_type = AND;
 			return 1;
 		case '!' :
-			*operator_type = 3;
+			*operator_type = NOT;
 			return 1;
 		case '(' :
-			*operator_type = 4;
 			return 1;
 		case ')' :
-			*operator_type = 4;
 			return 1;
 		default :
 			return 0;
