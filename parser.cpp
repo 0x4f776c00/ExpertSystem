@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 14:44:26 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 16:54:34 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 	(void)hub;
 	int	index = -1;
 	int	priority = -1;
-std::cout << "value begin :" << begin << " " << end << std::endl;
+
 	for (int i = begin; i < end; i++)
 	{
 		if (line[i].symbol == ')')
@@ -112,24 +112,25 @@ std::cout << "value begin :" << begin << " " << end << std::endl;
 			int tmp = i;
 			if ((i = get_end_parenthesis(hub, line, i, end)) == -1)
 				error_n_exit("Parenthesis don't match2");
-			i++;
+			//i++;
 			//std::cout << "get parenthesis" << i << std::endl;
-			if (i >= end && tmp == begin)
+			if (i >= end - 1 && tmp == begin)
 			{
 				i = begin;
 				begin++;
 				end--;
 				continue ;
 			}
+			continue ;
+			//else if (i >= end)
+			//	break ;
 		}
-		//std::cout << i << " " << begin << " " << end << std::endl;
 		if (line[i].operator_type > priority)
 		{
 			index = i;
 			priority = line[i].operator_type;
 		}
 	}
-	std::cout << begin << " " << end << " " << index << std::endl;
 	if (begin == end - 1)
 		return &hub->facts[line[begin].symbol - 'A'];
 	if (priority == -1)
