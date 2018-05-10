@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 16:43:31 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/10 16:48:52 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,16 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 			int tmp = i;
 			if ((i = get_end_parenthesis(hub, line, i, end)) == -1)
 				error_n_exit("Parenthesis don't match2");
-			i++;
+			//i++;
 			//std::cout << "get parenthesis" << i << std::endl;
-			if (i >= end /*- 1*/ && tmp == begin)
+			if (i >= end - 1 && tmp == begin)
 			{
 				i = begin;
 				begin++;
 				end--;
 				continue ;
 			}
-			//continue ;
+			continue ;
 			//else if (i >= end)
 			//	break ;
 		}
