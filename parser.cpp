@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 11:53:21 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 14:10:16 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,14 @@ static void		get_truth(std::vector <std::vector <Token>> :: iterator line, Hub *
 
 static int		get_end_parenthesis(Hub *hub, std::vector <Token> line, int i, int end)
 {
+	i++;
 	while (line[i].symbol != ')')
 	{
 		if (line[i].symbol == '(')
 			i = get_end_parenthesis(hub, line, i, end);
-		if (i == end)
-			return (0);
 		i++;
+		if (i >= end || i == 0)
+			return (-1);
 	}
 	return (i);
 }
@@ -105,11 +106,13 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 	for (int i = begin; i < end; i++)
 	{
 		if (line[i].symbol == ')')
-			error_n_exit("Parenthesis don't match");
+			error_n_exit("Parenthesis don't match1");
 		if (line[i].symbol == '(')
 		{
 			if ((i = get_end_parenthesis(hub, line, i, end)) == -1)
-				error_n_exit("Parenthesis don't match");
+				error_n_exit("Parenthesis don't match2");
+			i++;
+			//std::cout << "get parenthesis" << i << std::endl;
 			if (i == end)
 			{
 				i = begin;
@@ -118,7 +121,8 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 				continue ;
 			}
 		}
-		std::cout << line[i].operator_type << std::endl;
+		//std::cout << i << " " << begin << " " << end << std::endl;
+		//std::cout << line[i].operator_type << std::endl;
 		if (line[i].operator_type > priority)
 		{
 			index = i;
@@ -136,8 +140,8 @@ static void		get_axioms(std::vector <Token> line, Hub *hub)
 {
 	(void)hub;
 	Formula *test = static_cast<Formula*>(get_formula(hub, line, 0, line.size()));
-	std::cout << *test << std::endl;
-	std::cout << *static_cast<Formula*>(test->fact2) << std::endl;
+	//std::cout << *test << std::endl;
+	//std::cout << *static_cast<Formula*>(test->fact1) << std::endl;
 	test->fact2->compute_status();
 	//aff_token_line(line);
 }
