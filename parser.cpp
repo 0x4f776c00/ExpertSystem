@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 11:39:34 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 11:53:21 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ static void		get_axioms(std::vector <Token> line, Hub *hub)
 	(void)hub;
 	Formula *test = static_cast<Formula*>(get_formula(hub, line, 0, line.size()));
 	std::cout << *test << std::endl;
+	std::cout << *static_cast<Formula*>(test->fact2) << std::endl;
+	test->fact2->compute_status();
 	//aff_token_line(line);
 }
 

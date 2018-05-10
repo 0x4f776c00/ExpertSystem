@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:36:02 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 18:05:40 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 11:52:19 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ class Facts : public Hub
 		Facts(void);
 		~Facts(void);
 		//to do: add operator overload
+
+		void	compute_status(void);
 
 	private:
 
