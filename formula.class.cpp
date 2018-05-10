@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 18:04:03 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 11:19:44 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,6 @@ void	Formula::compute_status()
 
 std::ostream & operator<<(std::ostream & o, const Formula & formula)
 {
-	o << "Fact1: " << formula.fact1 << std::endl << " Fact2: " << std::endl << formula.fact2 << std::endl << "Relation: " << formula.relation << std::endl;
+	o << "Fact1: " << *(formula.fact1) << std::endl << " Fact2: " << std::endl << *(formula.fact2) << std::endl << "Relation: " << formula.relation << std::endl;
 	return o;
 }

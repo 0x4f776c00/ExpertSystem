@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 21:19:00 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/10 11:32:44 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,6 @@ static void		fact_set_true(char symbol, Hub *hub)
 			return ;
 		}
 	}
-	Facts fact(symbol);
-	fact.set_status(F_TRUE);
-	(*hub).facts.push_back(fact);
 }
 
 static void		get_truth(std::vector <std::vector <Token>> :: iterator line, Hub *hub)
@@ -129,7 +126,7 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 		}
 	}
 	if (begin == end - 1)
-		return &(hub->facts[line[begin].symbol - 'A']);
+		return &hub->facts[0];
 	if (priority == -1)
 		error_n_exit("Error in formula");
 	return new Formula(get_formula(hub, line, begin, index), get_formula(hub, line, index + 1, end), priority);
@@ -140,7 +137,7 @@ static void		get_axioms(std::vector <Token> line, Hub *hub)
 	(void)hub;
 	//for (int i = 0; )
 	Facts fact = *get_formula(hub, line, 0, line.size());
-	std::cout << fact << std::endl;
+	std::cout << reinterpret_cast<Formula&>(fact) << std::endl;
 	//aff_token_line(line);
 }
 

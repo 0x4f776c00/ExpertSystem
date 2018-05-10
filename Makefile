@@ -4,26 +4,28 @@ CC = clang++
 
 FLAGS = -Wall -Wextra -Werror -std=c++11 #-Weverything
 
-FILES =		axiom.class\
-			expert_system\
-			facts.class\
-			formula.class\
-			hub.class\
-			lexer\
-			parser\
-			token.struct\
-			error_handling
+SRCS =		axiom.class.cpp\
+			expert_system.cpp\
+			facts.class.cpp\
+			formula.class.cpp\
+			hub.class.cpp\
+			lexer.cpp\
+			parser.cpp\
+			token.struct.cpp\
+			error_handling.cpp
 
-SRCS =		$(addsuffix .cpp, $(FILES))
+O_FILES = $(SRCS:.cpp=.o)
 
 all: $(NAME)
 
-$(NAME): $(SRCS)
-	$(CC) $(FLAGS) -c $(SRCS)
-	$(CC) $(FLAGS) -o $(NAME) $(addsuffix .o, $(FILES))
+$(NAME): $(O_FILES)
+	$(CC) $(FLAGS) -o $(NAME) $(O_FILES)
+
+%.o:%.cpp
+	$(CC) $(FLAGS) -c -o $@ $^
 
 clean:
-	rm -f $(addsuffix .o, $(FILES))
+	rm -f $(O_FILES)
 
 fclean: clean
 	rm -f $(NAME)
