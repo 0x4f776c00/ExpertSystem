@@ -6,14 +6,15 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 11:52:37 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 14:22:43 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
 
-Formula::Formula(Facts *fact1, Facts *fact2, int relation)
+Formula::Formula(int type, Facts *fact1, Facts *fact2, int relation)
 {
+	this->type = type;
 	this->fact1 = fact1;
 	this->fact2 = fact2;
 	this->relation = relation;
@@ -84,7 +85,7 @@ e_status	Formula::xor_operator(Facts fact1, Facts fact2)
 
 void	Formula::compute_status()
 {
-	std::cout << "I AM A FORMULA\n";
+		std::cout << "I AM A FORMULA\n";
 	//this->set_status(tab_func[this->relation](*this->fact1, *this->fact2));
 }
 

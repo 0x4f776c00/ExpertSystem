@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:36:02 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 11:52:19 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 14:21:59 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ class Facts : public Hub
 {
 	public:
 
+		int			type;
 		const char	symbol;
 		bool		queried;
 		
 		e_status	get_status(void);
 		void		set_status(e_status);
 
-		Facts(const char);
+		Facts(int type, const char);
 		Facts(void);
 		~Facts(void);
 		//to do: add operator overload

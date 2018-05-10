@@ -6,13 +6,13 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:38:16 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 11:53:06 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 14:23:03 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
 
-Facts::Facts(const char symbol) : symbol(symbol)
+Facts::Facts(int type, const char symbol) : type(type), symbol(symbol)
 {
 	this->_status = F_PENDING;
 	this->queried = false;
@@ -46,7 +46,15 @@ void		Facts::set_status(e_status status)
 
 void	Facts::compute_status()
 {
-	std::cout << "I AM A FACT\n";
+	if (this->type == 1)
+	{
+		Formula test = *static_cast<Formula *>(this);
+		test.compute_status();
+	}
+	else
+	{
+		std::cout << "I AM A FACT\n";
+	}
 	//this->set_status(tab_func[this->relation](*this->fact1, *this->fact2));
 }
 
