@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 11:52:26 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 14:22:08 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@
 class Formula : public Facts
 {
 	public:
-		Formula(Facts *f1, Facts *f2, int relation);
+
+		Facts	*fact1;
+		Facts	*fact2;
+		int		relation; //Position in fonction tab
+
+		Formula(int type, Facts *f1, Facts *f2, int relation);
 		~Formula(void);
 
 		static e_status	xor_operator(Facts, Facts);
@@ -26,9 +31,6 @@ class Formula : public Facts
 		static e_status	and_operator(Facts, Facts);
 		static e_status	not_operator(Facts, Facts);
 
-		Facts	*fact1;
-		Facts	*fact2;
-		int		relation; //Position in fonction tab
 
 		void	compute_status(void);
 

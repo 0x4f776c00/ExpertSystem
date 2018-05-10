@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 14:10:16 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/10 14:26:00 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,7 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 				continue ;
 			}
 		}
-		//std::cout << i << " " << begin << " " << end << std::endl;
-		//std::cout << line[i].operator_type << std::endl;
+
 		if (line[i].operator_type > priority)
 		{
 			index = i;
@@ -133,16 +132,16 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 		return &hub->facts[line[begin].symbol - 'A'];
 	if (priority == -1)
 		error_n_exit("Error in formula");
-	return new Formula(get_formula(hub, line, begin, index), get_formula(hub, line, index + 1, end), priority);
+	return new Formula(1, get_formula(hub, line, begin, index), get_formula(hub, line, index + 1, end), priority);
 }
 
 static void		get_axioms(std::vector <Token> line, Hub *hub)
 {
 	(void)hub;
-	Formula *test = static_cast<Formula*>(get_formula(hub, line, 0, line.size()));
-	//std::cout << *test << std::endl;
-	//std::cout << *static_cast<Formula*>(test->fact1) << std::endl;
-	test->fact2->compute_status();
+	Formula test = *static_cast<Formula*>(get_formula(hub, line, 0, line.size()));
+	test.compute_status();
+	test.fact1->compute_status();
+	test.fact2->compute_status();
 	//aff_token_line(line);
 }
 
