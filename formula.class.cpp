@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 14:22:43 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 16:56:48 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ e_status	Formula::xor_operator(Facts fact1, Facts fact2)
 void	Formula::compute_status()
 {
 		std::cout << "I AM A FORMULA\n";
+		this->fact1->compute_status();
+		this->fact2->compute_status();
 	//this->set_status(tab_func[this->relation](*this->fact1, *this->fact2));
 }
 
