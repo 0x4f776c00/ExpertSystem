@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 17:04:09 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 17:15:24 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,17 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 static void		get_axioms(std::vector <Token> line, Hub *hub)
 {
 	(void)hub;
-	Formula test = *static_cast<Formula*>(get_formula(hub, line, 0, line.size()));
-	test.compute_status();
+	int relation = -1;
+	for (int i = 0; i < line.size(); i++)
+		if (line[i].operator_type == RELATION)
+		{
+			relation = i;
+			break ;
+		}
+	bool bicond = (line[i].symbol == '=') ? 1 : 0;
+	//Formula test = *static_cast<Formula*>(get_formula(hub, line, 0, line.size()));
+	Axiom axiom = new Axiom(test,) 
+	//test.compute_status();
 	//aff_token_line(line);
 }
 
