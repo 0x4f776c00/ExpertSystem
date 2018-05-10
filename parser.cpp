@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 14:25:51 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 14:44:26 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,14 @@ static void		get_truth(std::vector <std::vector <Token>> :: iterator line, Hub *
 
 static int		get_end_parenthesis(Hub *hub, std::vector <Token> line, int i, int end)
 {
+	i++;
 	while (line[i].symbol != ')')
 	{
 		if (line[i].symbol == '(')
 			i = get_end_parenthesis(hub, line, i, end);
-		if (i == end)
-			return (0);
 		i++;
+		if (i >= end || i == 0)
+			return (-1);
 	}
 	return (i);
 }
@@ -101,16 +102,19 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 	(void)hub;
 	int	index = -1;
 	int	priority = -1;
-
+std::cout << "value begin :" << begin << " " << end << std::endl;
 	for (int i = begin; i < end; i++)
 	{
 		if (line[i].symbol == ')')
-			error_n_exit("Parenthesis don't match");
+			error_n_exit("Parenthesis don't match1");
 		if (line[i].symbol == '(')
 		{
+			int tmp = i;
 			if ((i = get_end_parenthesis(hub, line, i, end)) == -1)
-				error_n_exit("Parenthesis don't match");
-			if (i == end)
+				error_n_exit("Parenthesis don't match2");
+			i++;
+			//std::cout << "get parenthesis" << i << std::endl;
+			if (i >= end && tmp == begin)
 			{
 				i = begin;
 				begin++;
@@ -118,12 +122,14 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 				continue ;
 			}
 		}
+		//std::cout << i << " " << begin << " " << end << std::endl;
 		if (line[i].operator_type > priority)
 		{
 			index = i;
 			priority = line[i].operator_type;
 		}
 	}
+	std::cout << begin << " " << end << " " << index << std::endl;
 	if (begin == end - 1)
 		return &hub->facts[line[begin].symbol - 'A'];
 	if (priority == -1)
