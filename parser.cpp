@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 11:32:44 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 11:39:34 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 		}
 	}
 	if (begin == end - 1)
-		return &hub->facts[0];
+		return &hub->facts[line[begin].symbol - 'A'];
 	if (priority == -1)
 		error_n_exit("Error in formula");
 	return new Formula(get_formula(hub, line, begin, index), get_formula(hub, line, index + 1, end), priority);
@@ -135,9 +135,8 @@ static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end
 static void		get_axioms(std::vector <Token> line, Hub *hub)
 {
 	(void)hub;
-	//for (int i = 0; )
-	Facts fact = *get_formula(hub, line, 0, line.size());
-	std::cout << reinterpret_cast<Formula&>(fact) << std::endl;
+	Formula *test = static_cast<Formula*>(get_formula(hub, line, 0, line.size()));
+	std::cout << *test << std::endl;
 	//aff_token_line(line);
 }
 
