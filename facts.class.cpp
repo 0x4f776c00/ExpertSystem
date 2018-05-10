@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:38:16 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 14:23:03 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 16:59:43 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	Facts::compute_status()
 	}
 	else
 	{
-		std::cout << "I AM A FACT\n";
+		std::cout << "I AM A FACT: " << this->symbol << std::endl;
 	}
 	//this->set_status(tab_func[this->relation](*this->fact1, *this->fact2));
 }

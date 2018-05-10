@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 16:54:34 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/10 17:04:09 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,6 @@ static void		get_axioms(std::vector <Token> line, Hub *hub)
 	(void)hub;
 	Formula test = *static_cast<Formula*>(get_formula(hub, line, 0, line.size()));
 	test.compute_status();
-	test.fact1->compute_status();
-	test.fact2->compute_status();
 	//aff_token_line(line);
 }
 
