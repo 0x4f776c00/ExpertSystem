@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 17:29:48 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 17:45:19 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,19 @@ e_status (*Formula::tab_func[NB_OPERATOR])(e_status, e_status) =
 	Formula::and_operator
 };
 
-void		Formula::set_status(e_status status)
-{
-	if ((this->status == F_TRUE && status == F_FALSE)
-			|| (this->status == F_FALSE && status == F_TRUE))
-		error_n_exit("Contradiction in the facts...\n");
-	if (this->status != F_PENDING && status == F_UNKNOWN)
-		return ;
-	this->status = status;
-}
+// void		Formula::set_status(e_status status)
+// {
+// 	if ((this->status == F_TRUE && status == F_FALSE)
+// 			|| (this->status == F_FALSE && status == F_TRUE))
+// 		error_n_exit("Contradiction in the facts...\n");
+// 	if (this->status != F_PENDING && status == F_UNKNOWN)
+// 		return ;
+// 	this->status = status;
+// }
 
 e_status	Formula::get_status(void)
 {
+//	std::cout << this << std::endl;
 	return this->status;
 }
 
@@ -92,13 +93,15 @@ void	Formula::compute_status()
 {
 	e_status status2 = F_TRUE;
 
+	std::cout << this << std::endl;
 	this->fact1->compute_status();
 	if (this->fact2 != nullptr)
 	{
 		this->fact2->compute_status();
 		status2 = this->fact2->get_status();
 	}
-	this->set_status(tab_func[this->relation](this->fact1->get_status(), status2));
+
+	this->status = tab_func[this->relation](this->fact1->get_status(), status2);
 	std::cout << "Formula status: " << this->get_status() << std::endl;
 }
 

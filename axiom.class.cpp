@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 17:16:01 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 17:45:43 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ Axiom::~Axiom(void)
 
 void	Axiom::compute_axiom()
 {
+	std::cout << this->fact1 << std::endl;
 	this->fact1->compute_status();
 	std::cout << "AXIOM FACT1 STATUS: " << this->fact1->get_status() << "\n";
 	if (this->biconditional || this->fact1->get_status() == F_TRUE)

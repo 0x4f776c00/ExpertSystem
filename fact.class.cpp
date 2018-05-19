@@ -31,35 +31,39 @@ Fact::~Fact(void)
 
 e_status	Fact::get_status(void)
 {
-	// if (this->type == 1)
-	// {
-	// 	Formula formula = *static_cast<Formula *>(this);
-	// 	formula.get_status();
-	// }
+	if (this->type == 1)
+	{
+		Formula *formula = static_cast<Formula *>(this);
+		return formula->get_status();
+	}
+	std::cout << "FACT GET STATUS\n";
 	return this->status;
 }
 
 void		Fact::set_status(e_status status)
 {
-	if (this->type == 1)
-	{
-		Formula formula = *static_cast<Formula *>(this);
-		formula.set_status(status);
-	}
-	if ((this->status == F_TRUE && status == F_FALSE)
-			|| (this->status == F_FALSE && status == F_TRUE))
-		error_n_exit("Contradiction in the facts...\n");
-	if (this->status != F_PENDING && status == F_UNKNOWN)
-		return ;
-	this->status = status;
+	// if (this->type == 1)
+	// {
+	// 	Formula formula = *static_cast<Formula *>(this);
+	// 	formula.set_status(status);
+	// }
+	// else
+	// {
+		if ((this->status == F_TRUE && status == F_FALSE)
+				|| (this->status == F_FALSE && status == F_TRUE))
+			error_n_exit("Contradiction in the facts...\n");
+		if (this->status != F_PENDING && status == F_UNKNOWN)
+			return ;
+		this->status = status;
+	//}
 }
 
 void	Fact::compute_status()
 {
 	if (this->type == 1)
 	{
-		Formula formula = *static_cast<Formula *>(this);
-		formula.compute_status();
+		Formula *formula = static_cast<Formula *>(this);
+		formula->compute_status();
 	}
 	else
 	{
