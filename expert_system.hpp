@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 12:37:42 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/19 15:23:16 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ constexpr const char *snark_tab[NB_SNARK] =
 void	get_system(Hub *hub, char *file_name);
 void	parse_system(std::vector <std::vector <Token>> tokens, Hub *hub);
 int		error_n_exit(std::string str);
+void	solve_system(Hub *hub);
 
 //stat, mmap, getline, strtok
 

@@ -12,7 +12,8 @@ SRCS =		axiom.class.cpp\
 			lexer.cpp\
 			parser.cpp\
 			token.struct.cpp\
-			error_handling.cpp
+			error_handling.cpp\
+			solve_system.cpp
 
 O_FILES = $(SRCS:.cpp=.o)
 

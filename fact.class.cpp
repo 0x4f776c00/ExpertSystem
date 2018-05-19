@@ -14,7 +14,7 @@
 
 Fact::Fact(int type, const char symbol) : type(type), symbol(symbol)
 {
-	this->status = F_FALSE;
+	this->status = F_UNKNOWN;
 	this->queried = false;
 }
 

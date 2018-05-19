@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   axiom.class.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 12:27:31 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 15:13:03 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ Axiom::~Axiom(void)
 
 void	Axiom::compute_axiom()
 {
-		std::cout << "bicond: " << this->biconditional << std::endl;
-		this->fact1->compute_status();
-		std::cout << "\n";
-		this->fact2->compute_status();
-	//this->set_status(tab_func[this->relation](*this->fact1, *this->fact2));
+	this->fact1->compute_status();
+	if (this->biconditional || this->fact1->get_status() == F_TRUE)
+		this->fact2->set_status(this->fact1->get_status());
+
+	// TODO: if fact2 is a formula, create a function
+	// to propagate its status among itself
 }
