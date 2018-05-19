@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:48:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/03/01 16:38:06 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 10:55:35 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ class Axiom : public Hub
 {
 	public:
 
-		Facts	*fact1;
-		Facts	*fact2;
+		Fact	*fact1;
+		Fact	*fact2;
 		bool	biconditional;
 		//TODO : bool is treated (?)
 
-		Axiom(Facts *f1, Facts *f2, bool);
+		Axiom(Fact *f1, Fact *f2, bool);
 		~Axiom(void);
 };
 

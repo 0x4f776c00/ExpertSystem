@@ -6,13 +6,13 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 17:00:41 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 10:55:37 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
 
-Formula::Formula(int type, Facts *fact1, Facts *fact2, int relation)
+Formula::Formula(int type, Fact *fact1, Fact *fact2, int relation)
 {
 	this->type = type;
 	this->fact1 = fact1;
@@ -25,7 +25,7 @@ Formula::~Formula(void)
 	return ;
 }
 
-e_status	Formula::not_operator(Facts fact1, Facts fact2)
+e_status	Formula::not_operator(Fact fact1, Fact fact2)
 {
 	e_status	status1 = fact1.get_status();
 	
@@ -37,7 +37,7 @@ e_status	Formula::not_operator(Facts fact1, Facts fact2)
 	return F_UNKNOWN;
 }
 
-e_status	Formula::and_operator(Facts fact1, Facts fact2)
+e_status	Formula::and_operator(Fact fact1, Fact fact2)
 {
 	e_status	status1 = fact1.get_status();
 	e_status	status2 = fact2.get_status();
@@ -49,7 +49,7 @@ e_status	Formula::and_operator(Facts fact1, Facts fact2)
 	return F_UNKNOWN;
 }
 
-e_status	Formula::or_operator(Facts fact1, Facts fact2)
+e_status	Formula::or_operator(Fact fact1, Fact fact2)
 {
 	e_status	status1 = fact1.get_status();
 	e_status	status2 = fact2.get_status();
@@ -61,7 +61,7 @@ e_status	Formula::or_operator(Facts fact1, Facts fact2)
 	return F_UNKNOWN;
 }
 
-e_status	Formula::xor_operator(Facts fact1, Facts fact2)
+e_status	Formula::xor_operator(Fact fact1, Fact fact2)
 {
 	e_status	status1 = fact1.get_status();
 	e_status	status2 = fact2.get_status();
@@ -75,7 +75,7 @@ e_status	Formula::xor_operator(Facts fact1, Facts fact2)
 	return F_UNKNOWN;
 }
 
-	e_status (*Formula::tab_func[NB_OPERATOR])(Facts, Facts) =
+	e_status (*Formula::tab_func[NB_OPERATOR])(Fact, Fact) =
 	{
 		Formula::xor_operator,
 		Formula::or_operator,

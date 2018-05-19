@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 17:15:24 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/19 10:55:39 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 static int		fact_queried(char symbol, Hub *hub)
 {
 	int	ret = 0;
-	for (std::vector <Facts> :: iterator i = (*hub).facts.begin(); i != (*hub).facts.end(); i++)
+	for (std::vector <Fact> :: iterator i = (*hub).facts.begin(); i != (*hub).facts.end(); i++)
 	{
 		if ((*i).symbol == symbol)
 		{
@@ -61,7 +61,7 @@ static void		get_queries(std::vector <std::vector <Token>> :: iterator line, Hub
 
 static void		fact_set_true(char symbol, Hub *hub)
 {
-	for (std::vector <Facts> :: iterator i = (*hub).facts.begin(); i != (*hub).facts.end(); i++)
+	for (std::vector <Fact> :: iterator i = (*hub).facts.begin(); i != (*hub).facts.end(); i++)
 	{
 		if ((*i).symbol == symbol)
 		{
@@ -97,7 +97,7 @@ static int		get_end_parenthesis(Hub *hub, std::vector <Token> line, int i, int e
 	return (i);
 }
 
-static Facts	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
+static Fact	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 {
 	(void)hub;
 	int	index = -1;

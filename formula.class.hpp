@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/10 14:22:08 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 10:55:38 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 
 #include "expert_system.hpp"
 
-class Formula : public Facts
+class Formula : public Fact
 {
 	public:
 
-		Facts	*fact1;
-		Facts	*fact2;
+		Fact	*fact1;
+		Fact	*fact2;
 		int		relation; //Position in fonction tab
 
-		Formula(int type, Facts *f1, Facts *f2, int relation);
+		Formula(int type, Fact *f1, Fact *f2, int relation);
 		~Formula(void);
 
-		static e_status	xor_operator(Facts, Facts);
-		static e_status	or_operator(Facts, Facts);
-		static e_status	and_operator(Facts, Facts);
-		static e_status	not_operator(Facts, Facts);
+		static e_status	xor_operator(Fact, Fact);
+		static e_status	or_operator(Fact, Fact);
+		static e_status	and_operator(Fact, Fact);
+		static e_status	not_operator(Fact, Fact);
 
 
 		void	compute_status(void);
 
 	private:
-		static e_status	(*tab_func[NB_OPERATOR])(Facts, Facts);
+		static e_status	(*tab_func[NB_OPERATOR])(Fact, Fact);
 
 		//operator overload
 };

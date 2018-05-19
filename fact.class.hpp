@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   facts.class.hpp                                    :+:      :+:    :+:   */
+/*   fact.class.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -16,7 +16,7 @@
 #include "expert_system.hpp"
 #include "hub.class.hpp"
 
-class Facts : public Hub
+class Fact : public Hub
 {
 	public:
 
@@ -27,9 +27,9 @@ class Facts : public Hub
 		e_status	get_status(void);
 		void		set_status(e_status);
 
-		Facts(int type, const char);
-		Facts(void);
-		~Facts(void);
+		Fact(int type, const char);
+		Fact(void);
+		~Fact(void);
 		//to do: add operator overload
 
 		void	compute_status(void);
@@ -39,6 +39,6 @@ class Facts : public Hub
 		e_status	_status;
 };
 
-std::ostream & operator<<(std::ostream & o, const Facts & fact);
+std::ostream & operator<<(std::ostream & o, const Fact & fact);
 
 #endif

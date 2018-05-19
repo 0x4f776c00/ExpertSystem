@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/05/10 14:23:09 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 10:55:36 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	usage()
 static void	create_facts(Hub *hub)
 {
 	for (int i = 0; i < 26; i++)
-		hub->facts.push_back(Facts(0, 'A' + i));
+		hub->facts.push_back(Fact(0, 'A' + i));
 }
 
 int		main(int ac, char **av)

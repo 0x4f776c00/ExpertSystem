@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 16:46:48 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 10:55:35 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ constexpr const char *snark_tab[NB_SNARK] =
 	"Well done. Here come the test results: \"You are a horrible person.\" That's what it says. We weren't even testing for that."
 };
 
-# include "facts.class.hpp"
+# include "fact.class.hpp"
 # include "hub.class.hpp"
 # include "formula.class.hpp"
 # include "axiom.class.hpp"
