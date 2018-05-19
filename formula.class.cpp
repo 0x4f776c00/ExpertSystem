@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 10:55:37 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 12:45:08 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,10 @@ void	Formula::compute_status()
 		std::cout << "I AM A FORMULA:\n";
 		std::cout << this->relation << std::endl;
 		this->fact1->compute_status();
-		this->fact2->compute_status();
+		if (this->fact2 != nullptr)
+			this->fact2->compute_status();
+		else
+			std::cout << "NOT formula\n";
 	//this->set_status(tab_func[this->relation](*this->fact1, *this->fact2));
 }
 

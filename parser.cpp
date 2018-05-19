@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 12:28:14 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 12:42:26 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,6 @@ static Fact	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 			int tmp = i;
 			if ((i = get_end_parenthesis(hub, line, i, end)) == -1)
 				error_n_exit("Parenthesis don't match2");
-			//i++;
-			//std::cout << "get parenthesis" << i << std::endl;
 			if (i >= end - 1 && tmp == begin)
 			{
 				i = begin;
@@ -122,8 +120,6 @@ static Fact	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 				continue ;
 			}
 			continue ;
-			//else if (i >= end)
-			//	break ;
 		}
 		if (line[i].operator_type > priority)
 		{
@@ -135,6 +131,8 @@ static Fact	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 		return &hub->facts[line[begin].symbol - 'A'];
 	if (priority == -1)
 		error_n_exit("Error in formula");
+	if (priority == NOT)
+		return new Formula(1, get_formula(hub, line, index + 1, end), nullptr, priority);
 	return new Formula(1, get_formula(hub, line, begin, index), get_formula(hub, line, index + 1, end), priority);
 }
 
