@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 17:31:05 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/10 17:47:37 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ static int		isoperator(char it, int *operator_type)
 	}
 }
 
-static e_token_type	check_symbol(std::string::iterator it, int *operator_type)
+static e_token_type	check_symbol(std::string::iterator *it, int *operator_type)
 {
-	if (isupper(*it))
+	if (isupper(**it))
 		return FACT;
-	if (isoperator(*it, operator_type))
+	if (isoperator(**it, operator_type))
 		return OPERATOR;
-	else if ((*it == '=' && *(it + 1) == '>') || (*it == '<' && *(it + 1) == '=' && *(it + 2) == '>'))
+	else if ((**it == '=' && *(*it + 1) == '>') || (**it == '<' && *(*it + 1) == '=' && *(*it + 2) == '>'))
 	{
-		it++;
+		*it = *it + 1;
 		return RELATION;
 	}
 	return INVALID;
@@ -92,7 +92,7 @@ static std::vector <std::vector <Token>>	tokenize(std::ifstream & ifs)
 				continue;
 			else if (*it == '#')
 				break;
-			else if ((type = check_symbol(it, &operator_type)) == INVALID)
+			else if ((type = check_symbol(&it, &operator_type)) == INVALID)
 			{
 				ifs.close();
 				error_n_exit("Bad file format");
