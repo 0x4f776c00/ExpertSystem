@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 17:31:05 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 11:19:59 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static e_token_type	check_symbol(std::string::iterator it, int *operator_type)
 		return FACT;
 	if (isoperator(*it, operator_type))
 		return OPERATOR;
-	else if ((*it == '=' && *(it + 1) == '>') || (*it == '<' && *(it + 1) == '=' && *(it + 2) == '>'))
+	else if ((*it == '=' && *(it + 1) == '>')
+			|| (*it == '<' && *(it + 1) == '=' && *(it + 2) == '>'))
 	{
 		it++;
 		return RELATION;
@@ -72,9 +73,10 @@ static void					open_stream(char *file_name, std::ifstream *ifs)
 
 static std::vector <std::vector <Token>>	tokenize(std::ifstream & ifs)
 {
-	std::string			line;
+	std::string							line;
 	std::vector <std::vector <Token>>	tokens;
-	e_token_type		type;
+	e_token_type						type;
+
 	while (std::getline(ifs, line))
 	{
 		std::vector <Token>	token_vector;
