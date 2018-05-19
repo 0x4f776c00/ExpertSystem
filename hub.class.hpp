@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   hub.class.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:22:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/01 16:38:01 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/19 10:55:38 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HUB_CLASS_HPP
 # define HUB_CLASS_HPP
 
-# include "facts.class.hpp"
+# include "fact.class.hpp"
 # include "expert_system.hpp"
 
-class Facts;
+class Fact;
 class Axiom;
 
 class Hub
@@ -32,7 +32,7 @@ class Hub
 		bool				is_solved(void);
 		void				set_actualized_status(bool);
 		void				set_solved(void);
-		std::vector	<Facts>	facts;
+		std::vector	<Fact>	facts;
 		std::list	<Axiom>	axioms;
 		std::string			queries;
 

@@ -6,7 +6,11 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2018/05/10 17:47:37 by bcozic           ###   ########.fr       */
+=======
+/*   Updated: 2018/05/19 11:19:59 by justasze         ###   ########.fr       */
+>>>>>>> e4af69235dea7b2227aa409141a02169dbee469f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +47,12 @@ static e_token_type	check_symbol(std::string::iterator *it, int *operator_type)
 		return FACT;
 	if (isoperator(**it, operator_type))
 		return OPERATOR;
+<<<<<<< HEAD
 	else if ((**it == '=' && *(*it + 1) == '>') || (**it == '<' && *(*it + 1) == '=' && *(*it + 2) == '>'))
+=======
+	else if ((*it == '=' && *(it + 1) == '>')
+			|| (*it == '<' && *(it + 1) == '=' && *(it + 2) == '>'))
+>>>>>>> e4af69235dea7b2227aa409141a02169dbee469f
 	{
 		*it = *it + 1;
 		return RELATION;
@@ -72,9 +81,10 @@ static void					open_stream(char *file_name, std::ifstream *ifs)
 
 static std::vector <std::vector <Token>>	tokenize(std::ifstream & ifs)
 {
-	std::string			line;
+	std::string							line;
 	std::vector <std::vector <Token>>	tokens;
-	e_token_type		type;
+	e_token_type						type;
+
 	while (std::getline(ifs, line))
 	{
 		std::vector <Token>	token_vector;

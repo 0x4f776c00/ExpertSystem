@@ -6,13 +6,17 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2018/05/10 17:34:45 by bcozic           ###   ########.fr       */
+=======
+/*   Updated: 2018/05/19 10:55:39 by justasze         ###   ########.fr       */
+>>>>>>> e4af69235dea7b2227aa409141a02169dbee469f
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
 
-Axiom::Axiom(Facts *f1, Facts *f2, bool bicond)
+Axiom::Axiom(Fact *f1, Fact *f2, bool bicond)
 {
 	this->fact1 = f1;
 	this->fact2 = f2;

@@ -6,7 +6,7 @@ FLAGS = -Wall -Wextra -Werror -std=c++11 -g #-Weverything
 
 SRCS =		axiom.class.cpp\
 			expert_system.cpp\
-			facts.class.cpp\
+			fact.class.cpp\
 			formula.class.cpp\
 			hub.class.cpp\
 			lexer.cpp\
