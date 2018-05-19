@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 15:02:27 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 17:29:48 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ e_status	Formula::xor_operator(e_status status1, e_status status2)
 
 e_status (*Formula::tab_func[NB_OPERATOR])(e_status, e_status) =
 {
+	Formula::not_operator,
 	Formula::xor_operator,
 	Formula::or_operator,
-	Formula::and_operator,
-	Formula::not_operator
+	Formula::and_operator
 };
 
 void		Formula::set_status(e_status status)
@@ -90,21 +90,14 @@ e_status	Formula::get_status(void)
 
 void	Formula::compute_status()
 {
-	// std::cout << "I AM A FORMULA:\n";
-	// std::cout << this->relation << std::endl;
-	// this->fact1->compute_status();
-	// if (this->fact2 != nullptr)
-	// 	this->fact2->compute_status();
-	// else
-	// 	std::cout << "NOT formula\n";
 	e_status status2 = F_TRUE;
+
 	this->fact1->compute_status();
 	if (this->fact2 != nullptr)
 	{
 		this->fact2->compute_status();
 		status2 = this->fact2->get_status();
 	}
-
 	this->set_status(tab_func[this->relation](this->fact1->get_status(), status2));
 	std::cout << "Formula status: " << this->get_status() << std::endl;
 }

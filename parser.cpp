@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 12:42:26 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/19 17:21:27 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ static void		get_axioms(std::vector <Token> line, Hub *hub)
 	bool bicond = (line[relation].symbol == '=') ? 1 : 0;
 	//Formula test = *static_cast<Formula*>(get_formula(hub, line, 0, line.size()));
 	Axiom axiom(get_formula(hub, line, 0, relation), get_formula(hub, line, relation + 1, line.size()), bicond);
-	axiom.compute_axiom();
 	hub->axioms.push_back(axiom);
 
 	//test.compute_status();

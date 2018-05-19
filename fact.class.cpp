@@ -31,12 +31,12 @@ Fact::~Fact(void)
 
 e_status	Fact::get_status(void)
 {
-	if (this->type == 1)
-	{
-		Formula formula = *static_cast<Formula *>(this);
-		formula.get_status();
-	}
-	return (this->status);
+	// if (this->type == 1)
+	// {
+	// 	Formula formula = *static_cast<Formula *>(this);
+	// 	formula.get_status();
+	// }
+	return this->status;
 }
 
 void		Fact::set_status(e_status status)
