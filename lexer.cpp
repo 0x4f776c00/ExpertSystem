@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:22:34 by bcozic            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2018/05/10 17:47:37 by bcozic           ###   ########.fr       */
-=======
-/*   Updated: 2018/05/19 11:19:59 by justasze         ###   ########.fr       */
->>>>>>> e4af69235dea7b2227aa409141a02169dbee469f
+/*   Updated: 2018/05/19 12:28:04 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +43,8 @@ static e_token_type	check_symbol(std::string::iterator *it, int *operator_type)
 		return FACT;
 	if (isoperator(**it, operator_type))
 		return OPERATOR;
-<<<<<<< HEAD
-	else if ((**it == '=' && *(*it + 1) == '>') || (**it == '<' && *(*it + 1) == '=' && *(*it + 2) == '>'))
-=======
-	else if ((*it == '=' && *(it + 1) == '>')
-			|| (*it == '<' && *(it + 1) == '=' && *(it + 2) == '>'))
->>>>>>> e4af69235dea7b2227aa409141a02169dbee469f
+	else if ((**it == '=' && *(*it + 1) == '>')
+			|| (**it == '<' && *(*it + 1) == '=' && *(*it + 2) == '>'))
 	{
 		*it = *it + 1;
 		return RELATION;
