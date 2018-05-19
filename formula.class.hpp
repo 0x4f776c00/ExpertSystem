@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 10:55:38 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/19 14:49:28 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,17 @@ class Formula : public Fact
 		Formula(int type, Fact *f1, Fact *f2, int relation);
 		~Formula(void);
 
-		static e_status	xor_operator(Fact, Fact);
-		static e_status	or_operator(Fact, Fact);
-		static e_status	and_operator(Fact, Fact);
-		static e_status	not_operator(Fact, Fact);
+		static e_status	xor_operator(e_status, e_status);
+		static e_status	or_operator(e_status, e_status);
+		static e_status	and_operator(e_status, e_status);
+		static e_status	not_operator(e_status, e_status);
 
-
-		void	compute_status(void);
+		void		set_status(e_status status);
+		e_status	get_status(void);
+		void		compute_status(void);
 
 	private:
-		static e_status	(*tab_func[NB_OPERATOR])(Fact, Fact);
+		static e_status	(*tab_func[NB_OPERATOR])(e_status, e_status);
 
 		//operator overload
 };

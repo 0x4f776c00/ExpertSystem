@@ -23,7 +23,7 @@ class Fact : public Hub
 		int			type;
 		const char	symbol;
 		bool		queried;
-		
+		e_status	status;
 		e_status	get_status(void);
 		void		set_status(e_status);
 
@@ -33,10 +33,6 @@ class Fact : public Hub
 		//TODO: add operator overload
 
 		void	compute_status(void);
-
-	private:
-
-		e_status	_status;
 };
 
 std::ostream & operator<<(std::ostream & o, const Fact & fact);

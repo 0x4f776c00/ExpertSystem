@@ -14,13 +14,13 @@
 
 Fact::Fact(int type, const char symbol) : type(type), symbol(symbol)
 {
-	this->_status = F_PENDING;
+	this->status = F_FALSE;
 	this->queried = false;
 }
 
 Fact::Fact(void) : symbol('\0')
 {
-	this->_status = F_PENDING;
+	this->status = F_PENDING;
 }
 
 
@@ -31,31 +31,40 @@ Fact::~Fact(void)
 
 e_status	Fact::get_status(void)
 {
-	return (this->_status);
+	if (this->type == 1)
+	{
+		Formula formula = *static_cast<Formula *>(this);
+		formula.get_status();
+	}
+	return (this->status);
 }
 
 void		Fact::set_status(e_status status)
 {
-	if ((this->_status == F_TRUE && status == F_FALSE)
-			|| (this->_status == F_FALSE && status == F_TRUE))
-		return ; //apocalypse();
-	if (this->_status != F_PENDING && status == F_UNKNOWN)
+	if (this->type == 1)
+	{
+		Formula formula = *static_cast<Formula *>(this);
+		formula.set_status(status);
+	}
+	if ((this->status == F_TRUE && status == F_FALSE)
+			|| (this->status == F_FALSE && status == F_TRUE))
+		error_n_exit("Contradiction in the facts...\n");
+	if (this->status != F_PENDING && status == F_UNKNOWN)
 		return ;
-	this->_status = status;
+	this->status = status;
 }
 
 void	Fact::compute_status()
 {
 	if (this->type == 1)
 	{
-		Formula test = *static_cast<Formula *>(this);
-		test.compute_status();
+		Formula formula = *static_cast<Formula *>(this);
+		formula.compute_status();
 	}
 	else
 	{
-		std::cout << "I AM A FACT: " << this->symbol << std::endl;
+		std::cout << "I AM A FACT: " << this->symbol << " " << this->get_status() << std::endl;
 	}
-	//this->set_status(tab_func[this->relation](*this->fact1, *this->fact2));
 }
 
 std::ostream & operator<<(std::ostream & o, const Fact & fact)
