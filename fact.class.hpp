@@ -32,7 +32,7 @@ class Fact : public Hub
 		~Fact(void);
 		//TODO: add operator overload
 
-		void	compute_status(void);
+		bool	compute_status(void);
 };
 
 std::ostream & operator<<(std::ostream & o, const Fact & fact);

@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 14:49:28 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/21 14:47:10 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ class Formula : public Fact
 
 		void		set_status(e_status status);
 		e_status	get_status(void);
-		void		compute_status(void);
+		bool		compute_status(void);
 
 	private:
 		static e_status	(*tab_func[NB_OPERATOR])(e_status, e_status);

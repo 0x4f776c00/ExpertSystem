@@ -58,15 +58,16 @@ void		Fact::set_status(e_status status)
 	//}
 }
 
-void	Fact::compute_status()
+bool	Fact::compute_status()
 {
 	if (this->type == 1)
 	{
 		Formula *formula = static_cast<Formula *>(this);
-		formula->compute_status();
+		return formula->compute_status();
 	}
 	else
 	{
+		return false;
 		std::cout << "I AM A FACT: " << this->symbol << " " << this->get_status() << std::endl;
 	}
 }

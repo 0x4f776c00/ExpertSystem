@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:48:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 12:27:37 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/21 14:48:30 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class Axiom : public Hub
 		Axiom(Fact *f1, Fact *f2, bool);
 		~Axiom(void);
 		
-		void	compute_axiom();
+		bool	compute_axiom();
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 17:45:19 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/21 14:51:37 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,20 +89,26 @@ e_status	Formula::get_status(void)
 	return this->status;
 }
 
-void	Formula::compute_status()
+bool	Formula::compute_status()
 {
-	e_status status2 = F_TRUE;
-
+	e_status	status2 = F_TRUE;
+	e_status	prev_status = this->status;
+	bool		ret = false;
+	
 	std::cout << this << std::endl;
-	this->fact1->compute_status();
+
+	ret = this->fact1->compute_status();
 	if (this->fact2 != nullptr)
 	{
-		this->fact2->compute_status();
+		ret |= this->fact2->compute_status();
 		status2 = this->fact2->get_status();
 	}
 
 	this->status = tab_func[this->relation](this->fact1->get_status(), status2);
-	std::cout << "Formula status: " << this->get_status() << std::endl;
+	if (this->get_status() == prev_status)
+		return true;
+	return ret;
+	//std::cout << "Formula status: " << this->get_status() << std::endl;
 }
 
 std::ostream & operator<<(std::ostream & o, const Formula & formula)
