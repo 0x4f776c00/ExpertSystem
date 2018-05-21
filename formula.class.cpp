@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/21 14:51:37 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/21 15:10:16 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,15 @@ e_status (*Formula::tab_func[NB_OPERATOR])(e_status, e_status) =
 	Formula::and_operator
 };
 
-// void		Formula::set_status(e_status status)
-// {
-// 	if ((this->status == F_TRUE && status == F_FALSE)
-// 			|| (this->status == F_FALSE && status == F_TRUE))
-// 		error_n_exit("Contradiction in the facts...\n");
-// 	if (this->status != F_PENDING && status == F_UNKNOWN)
-// 		return ;
-// 	this->status = status;
-// }
+void		Formula::set_status(e_status status)
+{
+	if ((this->status == F_TRUE && status == F_FALSE)
+			|| (this->status == F_FALSE && status == F_TRUE))
+		error_n_exit("Contradiction in the facts...\n");
+	if (this->status != F_PENDING && status == F_UNKNOWN)
+		return ;
+	this->status = status;
+}
 
 e_status	Formula::get_status(void)
 {
@@ -104,8 +104,8 @@ bool	Formula::compute_status()
 		status2 = this->fact2->get_status();
 	}
 
-	this->status = tab_func[this->relation](this->fact1->get_status(), status2);
-	if (this->get_status() == prev_status)
+	this->set_status(tab_func[this->relation](this->fact1->get_status(), status2));
+	if (this->get_status() != prev_status)
 		return true;
 	return ret;
 	//std::cout << "Formula status: " << this->get_status() << std::endl;

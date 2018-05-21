@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/21 14:59:08 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/21 15:09:11 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,7 @@ bool	Axiom::compute_axiom()
 	ret = this->fact1->compute_status();
 	std::cout << "AXIOM FACT1 STATUS: " << this->fact1->get_status() << "\n";
 	if (this->biconditional || this->fact1->get_status() == F_TRUE)
-	{
-		e_status	prev_status = this->fact2->get_status();
 		this->fact2->set_status(this->fact1->get_status());
-		if (prev_status != this->fact2->get_status())
-			return true;
-		else
-			return false;
-	}
 
 	return ret;
 	// TODO: if fact2 is a formula, create a function

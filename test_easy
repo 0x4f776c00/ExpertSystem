@@ -4,10 +4,11 @@ G + H => F
 I + J => G
 G => H
 L + M => K
-O + P => L + N
+O + P => L
+O + P => N
 N => M
 
-=DEIJOP
+=DEIJP
 ?AFKP
 
 #With =DEIJOP, AFKP is true.
