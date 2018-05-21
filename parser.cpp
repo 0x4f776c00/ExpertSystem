@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 17:21:27 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/21 15:23:13 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,15 @@
 // 	}
 // }
 
-static int		fact_queried(char symbol, Hub *hub)
-{
-	int	ret = 0;
-	for (std::vector <Fact> :: iterator i = (*hub).facts.begin(); i != (*hub).facts.end(); i++)
-	{
-		if ((*i).symbol == symbol)
-		{
-			(*i).queried = true;
-			ret = 1;
-			break ;
-		}
-	}
-	return (ret);
-}
-
 static void		get_queries(std::vector <std::vector <Token>> :: iterator line, Hub *hub)
 {
 	std::vector <Token> :: iterator i = (*line).begin();
 	i++;
 	for (; i != (*line).end(); i++)
 	{
-		if ((*i).type != FACT || !fact_queried((*i).symbol, hub))
-			error_n_exit("Querying an undefined fact");
+		if ((*i).type != FACT)
+			error_n_exit("Non factual query");
+		hub->queries += (*i).symbol;
 	}
 }
 

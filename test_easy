@@ -1,15 +1,4 @@
-B => A
-D + E => B
-G + H => F
-I + J => G
-G => H
-L + M => K
-O + P => L
-O + P => N
-N => M
-
-=DEIJP
-?AFKP
-
-#With =DEIJOP, AFKP is true.
-#With =DEIJP, AFP is true, K is false.
+=A
+A + !B => C
+C => B
+?ABC

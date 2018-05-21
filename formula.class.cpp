@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/21 15:10:16 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/21 15:12:30 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,6 @@ bool	Formula::compute_status()
 	e_status	status2 = F_TRUE;
 	e_status	prev_status = this->status;
 	bool		ret = false;
-	
-	std::cout << this << std::endl;
 
 	ret = this->fact1->compute_status();
 	if (this->fact2 != nullptr)

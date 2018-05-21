@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solve_system.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 15:22:10 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/21 14:55:04 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/21 15:17:53 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	solve_system(Hub *hub)
 		}
 	} while (has_actualized == true);
 
-	for (std::vector <Fact> :: iterator it = hub->facts.begin(); it != hub->facts.end(); it++)
+	for (size_t it = 0; it < hub->queries.length(); it++)
 	{
-		std::cout << it->symbol << ": " << it->status << std::endl;
+		std::cout << hub->facts[hub->queries[it] - 'A'].symbol << ": " << hub->facts[hub->queries[it] - 'A'].status << std::endl;
 	}
 }

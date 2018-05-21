@@ -36,7 +36,6 @@ e_status	Fact::get_status(void)
 		Formula *formula = static_cast<Formula *>(this);
 		return formula->get_status();
 	}
-	std::cout << "FACT GET STATUS\n";
 	return this->status;
 }
 
@@ -68,7 +67,6 @@ bool	Fact::compute_status()
 	else
 	{
 		return false;
-		std::cout << "I AM A FACT: " << this->symbol << " " << this->get_status() << std::endl;
 	}
 }
 
