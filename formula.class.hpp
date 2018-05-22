@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Ashbury <Ashbury@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/21 14:47:10 by justasze         ###   ########.fr       */
+/*   Updated: 2018/05/22 20:27:32 by Ashbury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ class Formula : public Fact
 
 	private:
 		static e_status	(*tab_func[NB_OPERATOR])(e_status, e_status);
-
-		//operator overload
 };
 
 std::ostream & operator<<(std::ostream & o, const Formula & formula);

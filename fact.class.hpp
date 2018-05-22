@@ -30,7 +30,6 @@ class Fact : public Hub
 		Fact(int type, const char);
 		Fact(void);
 		~Fact(void);
-		//TODO: add operator overload
 
 		bool	compute_status(void);
 };

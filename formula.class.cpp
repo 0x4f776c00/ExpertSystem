@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Ashbury <Ashbury@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/21 15:12:30 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/22 20:27:22 by Ashbury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void		Formula::set_status(e_status status)
 
 e_status	Formula::get_status(void)
 {
-//	std::cout << this << std::endl;
 	return this->status;
 }
 

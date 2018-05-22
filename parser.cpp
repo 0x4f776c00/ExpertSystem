@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Ashbury <Ashbury@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/21 15:23:13 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/05/22 20:28:09 by Ashbury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
-
-// static void		aff_token_list(std::vector <std::vector <Token>> tokens)
-// {
-// 	std::vector <std::vector <Token>> :: iterator line;
-// 	for (line = tokens.begin(); line != tokens.end(); ++line)
-// 	{
-// 		for (std::vector <Token> :: iterator i = (*line).begin(); i != (*line).end(); ++i)
-// 		{
-// 			std::cout << *i << '\n';
-// 		}
-// 		std::cout << "end line\n";
-// 	}
-// }
-
-// static void		aff_token_line(std::vector <Token> tokens)
-// {
-// 	for (std::vector <Token> :: iterator i = tokens.begin(); i != tokens.end(); ++i)
-// 	{
-// 		std::cout << *i << '\n';
-// 	}
-// }
 
 static void		get_queries(std::vector <std::vector <Token>> :: iterator line, Hub *hub)
 {
@@ -137,12 +116,8 @@ static void		get_axioms(std::vector <Token> line, Hub *hub)
 	if (relation == -1)
 		error_n_exit("Missing relation");
 	bool bicond = (line[relation].symbol == '=') ? 1 : 0;
-	//Formula test = *static_cast<Formula*>(get_formula(hub, line, 0, line.size()));
 	Axiom axiom(get_formula(hub, line, 0, relation), get_formula(hub, line, relation + 1, line.size()), bicond);
 	hub->axioms.push_back(axiom);
-
-	//test.compute_status();
-	//aff_token_line(line);
 }
 
 void			parse_system(std::vector <std::vector <Token>> tokens, Hub *hub)
@@ -156,5 +131,4 @@ void			parse_system(std::vector <std::vector <Token>> tokens, Hub *hub)
 		else
 			get_axioms(*i, hub);
 	}
-	//aff_token_list(tokens);
 }
