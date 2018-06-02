@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   solve_system.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 15:22:10 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/21 15:17:53 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/06/02 13:41:53 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
+
+
 
 void	solve_system(Hub *hub)
 {
@@ -27,6 +29,7 @@ void	solve_system(Hub *hub)
 
 	for (size_t it = 0; it < hub->queries.length(); it++)
 	{
-		std::cout << hub->facts[hub->queries[it] - 'A'].symbol << ": " << hub->facts[hub->queries[it] - 'A'].status << std::endl;
+		std::cout << hub->facts[hub->queries[it] - 'A'].symbol << ": "
+			<< hub->facts[hub->queries[it] - 'A'].status << std::endl;
 	}
 }
