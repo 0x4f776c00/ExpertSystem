@@ -31,7 +31,7 @@ Fact::~Fact(void)
 
 e_status	Fact::get_status(void)
 {
-	if (this->type == 1)
+	if (this->type == FORMULA)
 	{
 		Formula *formula = static_cast<Formula *>(this);
 		return formula->get_status();
@@ -42,7 +42,7 @@ e_status	Fact::get_status(void)
 e_ret_type	Fact::set_status(e_status status, bool testing)
 {
 	e_ret_type ret;
-	if (this->type == 1)
+	if (this->type == FORMULA)
 	{
 		Formula *formula = static_cast<Formula *>(this);
 		ret = formula->set_status(status, testing);
@@ -65,7 +65,7 @@ e_ret_type	Fact::set_status(e_status status, bool testing)
 
 e_ret_type	Fact::compute_status(bool testing)
 {
-	if (this->type == 1)
+	if (this->type == FORMULA)
 	{
 		Formula *formula = static_cast<Formula *>(this);
 		return formula->compute_status(testing);
