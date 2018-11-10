@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   axiom.class.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ashbury <Ashbury@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:48:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/22 20:25:29 by Ashbury          ###   ########.fr       */
+/*   Updated: 2018/06/02 15:08:52 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Axiom : public Hub
 		Axiom(Fact *f1, Fact *f2, bool);
 		~Axiom(void);
 		
-		bool	compute_axiom();
+		bool	compute_axiom(bool testing);
 };
 
 #endif

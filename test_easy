@@ -1,4 +1,5 @@
 =A
 A + !B => C
 C => B
+!D => D
 ?ABC

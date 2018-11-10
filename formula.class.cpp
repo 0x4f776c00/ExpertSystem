@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ashbury <Ashbury@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/22 20:27:22 by Ashbury          ###   ########.fr       */
+/*   Updated: 2018/06/02 15:09:30 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,20 @@ e_status (*Formula::tab_func[NB_OPERATOR])(e_status, e_status) =
 	Formula::and_operator
 };
 
-void		Formula::set_status(e_status status)
+e_ret_type	Formula::set_status(e_status status, bool testing)
 {
-	if ((this->status == F_TRUE && status == F_FALSE)
-			|| (this->status == F_FALSE && status == F_TRUE))
-		error_n_exit("Contradiction in the facts...\n");
-	if (this->status != F_PENDING && status == F_UNKNOWN)
-		return ;
-	this->status = status;
+	if ((this->status > 1 && status < 0)
+			|| (this->status < 0 && status > 1))
+	{
+		if (!testing)
+			error_n_exit("Contradiction in the facts...\n");
+		else
+			return ERROR;
+	}
+	if (this->status != PENDING && status == UNKNOWN)
+		return NON_ACTUALISED;
+	this->status = static_cast<e_status>(status + testing);
+	return ACTUALISED;
 }
 
 e_status	Formula::get_status(void)
@@ -88,22 +94,25 @@ e_status	Formula::get_status(void)
 	return this->status;
 }
 
-bool	Formula::compute_status()
+e_ret_type	Formula::compute_status(bool testing)
 {
 	e_status	status2 = F_TRUE;
 	e_status	prev_status = this->status;
-	bool		ret = false;
+	e_ret_type	ret = NON_ACTUALISED;
 
-	ret = this->fact1->compute_status();
+	ret = this->fact1->compute_status(testing);
 	if (this->fact2 != nullptr)
 	{
-		ret |= this->fact2->compute_status();
+		ret |= this->fact2->compute_status(testing);
+		if (ret & ERROR)
+			return ERROR;
 		status2 = this->fact2->get_status();
 	}
 
-	this->set_status(tab_func[this->relation](this->fact1->get_status(), status2));
+	if (this->set_status(tab_func[this->relation](this->fact1->get_status(), status2)) == ERROR)
+		return ERROR;
 	if (this->get_status() != prev_status)
-		return true;
+		return ACTUALISED;
 	return ret;
 	//std::cout << "Formula status: " << this->get_status() << std::endl;
 }

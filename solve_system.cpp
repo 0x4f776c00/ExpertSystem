@@ -6,13 +6,32 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 15:22:10 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/21 15:17:53 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/06/02 15:08:53 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
 
-void	solve_system(Hub *hub)
+static bool	induction(Hub *hub)
+{
+
+}
+
+static void	deduction(Hub *hub, bool testing)
+{
+	bool	has_actualized;
+
+	do
+	{
+		has_actualized = false;
+		for (std::list <Axiom> :: iterator it = hub->axioms.begin(); it != hub->axioms.end(); it++)
+		{
+			has_actualized |= it->compute_axiom(testing);
+		}
+	} while (has_actualized == true);
+}
+
+void		solve_system(Hub *hub)
 {
 	bool	has_actualized;
 

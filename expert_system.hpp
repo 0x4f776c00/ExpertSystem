@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/19 15:23:16 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/06/02 15:07:08 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 # include <fstream>
 # include <vector>
 
-enum e_status {F_TRUE, F_FALSE, F_PENDING, F_UNKNOWN};
+enum e_status {F_TRUE = 2, T_TRUE = 3, F_FALSE = -2, T_FALSE = -1, PENDING = 0, UNKNOWN = 1};
 enum e_token_type {INVALID, OPERATOR, FACT, RELATION, SEPARATOR, TRUTH, QUERY};
 enum e_relations {NOT, XOR, OR, AND};
+enum e_ret_type {NON_ACTUALISED, ACTUALISED, ERROR};
 
 # define NB_OPERATOR 4
 # define NB_SNARK 3

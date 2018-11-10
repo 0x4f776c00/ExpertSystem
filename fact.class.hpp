@@ -25,13 +25,13 @@ class Fact : public Hub
 		bool		queried;
 		e_status	status;
 		e_status	get_status(void);
-		void		set_status(e_status);
+		e_ret_type	set_status(e_status status, bool testing);
 
-		Fact(int type, const char);
+		Fact(int type, const char symbol);
 		Fact(void);
 		~Fact(void);
 
-		bool	compute_status(void);
+		e_ret_type	compute_status(bool testing);
 };
 
 std::ostream & operator<<(std::ostream & o, const Fact & fact);

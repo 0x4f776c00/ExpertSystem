@@ -39,34 +39,32 @@ e_status	Fact::get_status(void)
 	return this->status;
 }
 
-void		Fact::set_status(e_status status)
+e_ret_type	Fact::set_status(e_status status, bool testing)
 {
-	// if (this->type == 1)
-	// {
-	// 	Formula formula = *static_cast<Formula *>(this);
-	// 	formula.set_status(status);
-	// }
-	// else
-	// {
 		if ((this->status == F_TRUE && status == F_FALSE)
 				|| (this->status == F_FALSE && status == F_TRUE))
-			error_n_exit("Contradiction in the facts...\n");
+		{
+			if (!testing)
+				error_n_exit("Contradiction in the facts...\n");
+			else
+				return ERROR;
+		}
 		if (this->status != F_PENDING && status == F_UNKNOWN)
-			return ;
+			return NON_ACTUALISED;
 		this->status = status;
-	//}
+		return ACTUALISED;
 }
 
-bool	Fact::compute_status()
+e_ret_type	Fact::compute_status(bool testing)
 {
 	if (this->type == 1)
 	{
 		Formula *formula = static_cast<Formula *>(this);
-		return formula->compute_status();
+		return formula->compute_status(testing);
 	}
 	else
 	{
-		return false;
+		return NON_ACTUALISED;
 	}
 }
 
