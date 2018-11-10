@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/06/02 15:09:30 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/10 13:54:47 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ e_status	Formula::not_operator(e_status status1, e_status status2)
 		return F_TRUE;
 	else if (status1 == F_TRUE)
 		return F_FALSE;
-	return F_UNKNOWN;
+	return UNKNOWN;
 }
 
 e_status	Formula::and_operator(e_status status1, e_status status2)
@@ -42,7 +42,7 @@ e_status	Formula::and_operator(e_status status1, e_status status2)
 		return F_FALSE;
 	else if (status1 == F_TRUE && status2 == F_TRUE)
 		return F_TRUE;
-	return F_UNKNOWN;
+	return UNKNOWN;
 }
 
 e_status	Formula::or_operator(e_status status1, e_status status2)
@@ -51,7 +51,7 @@ e_status	Formula::or_operator(e_status status1, e_status status2)
 		return F_TRUE;
 	if (status1 == F_FALSE && status2 == F_FALSE)
 		return F_FALSE;
-	return F_UNKNOWN;
+	return UNKNOWN;
 }
 
 e_status	Formula::xor_operator(e_status status1, e_status status2)
@@ -62,7 +62,7 @@ e_status	Formula::xor_operator(e_status status1, e_status status2)
 	if ((status1 == F_FALSE && status2 == F_FALSE)
 			|| (status1 == F_TRUE && status2 == F_TRUE))
 		return F_FALSE;
-	return F_UNKNOWN;
+	return UNKNOWN;
 }
 
 e_status (*Formula::tab_func[NB_OPERATOR])(e_status, e_status) =
@@ -75,6 +75,8 @@ e_status (*Formula::tab_func[NB_OPERATOR])(e_status, e_status) =
 
 e_ret_type	Formula::set_status(e_status status, bool testing)
 {
+		std::cout << "set status formula" << std::endl;
+
 	if ((this->status > 1 && status < 0)
 			|| (this->status < 0 && status > 1))
 	{
@@ -84,8 +86,12 @@ e_ret_type	Formula::set_status(e_status status, bool testing)
 			return ERROR;
 	}
 	if (this->status != PENDING && status == UNKNOWN)
+	{
+		std::cout << "set status non_actualised" << std::endl;
 		return NON_ACTUALISED;
+	}
 	this->status = static_cast<e_status>(status + testing);
+		std::cout << "set status actualised" << std::endl;
 	return ACTUALISED;
 }
 
@@ -103,13 +109,13 @@ e_ret_type	Formula::compute_status(bool testing)
 	ret = this->fact1->compute_status(testing);
 	if (this->fact2 != nullptr)
 	{
-		ret |= this->fact2->compute_status(testing);
+		ret = static_cast<e_ret_type>(static_cast<int>(ret) | static_cast<int>(this->fact2->compute_status(testing)));
 		if (ret & ERROR)
 			return ERROR;
 		status2 = this->fact2->get_status();
 	}
 
-	if (this->set_status(tab_func[this->relation](this->fact1->get_status(), status2)) == ERROR)
+	if (this->set_status(tab_func[this->relation](this->fact1->get_status(), status2), testing) == ERROR)
 		return ERROR;
 	if (this->get_status() != prev_status)
 		return ACTUALISED;

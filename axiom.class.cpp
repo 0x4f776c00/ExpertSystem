@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/06/02 15:09:28 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/10 14:01:12 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ Axiom::~Axiom(void)
 
 bool	Axiom::compute_axiom(bool testing)
 {
-	bool	ret = false;
+	bool	ret;
 
-	ret = this->fact1->compute_status(bool testing);
+	ret = this->fact1->compute_status(testing);
 	if (this->biconditional || this->fact1->get_status() == F_TRUE)
-		this->fact2->set_status(this->fact1->get_status(), bool testing);
-
+	{
+		this->fact2->set_status(this->fact1->get_status(), testing);
+	}
 	return ret;
 	// TODO: if fact2 is a formula, create a function
 	// to propagate its status among itself

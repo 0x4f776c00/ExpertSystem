@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ashbury <Ashbury@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/05/22 20:28:09 by Ashbury          ###   ########.fr       */
+/*   Updated: 2018/11/10 11:17:24 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void		fact_set_true(char symbol, Hub *hub)
 	{
 		if ((*i).symbol == symbol)
 		{
-			(*i).set_status(F_TRUE);
+			(*i).set_status(F_TRUE, false);
 			return ;
 		}
 	}

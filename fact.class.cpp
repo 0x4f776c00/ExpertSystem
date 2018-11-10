@@ -14,13 +14,13 @@
 
 Fact::Fact(int type, const char symbol) : type(type), symbol(symbol)
 {
-	this->status = F_UNKNOWN;
+	this->status = UNKNOWN;
 	this->queried = false;
 }
 
 Fact::Fact(void) : symbol('\0')
 {
-	this->status = F_PENDING;
+	this->status = PENDING;
 }
 
 
@@ -41,6 +41,14 @@ e_status	Fact::get_status(void)
 
 e_ret_type	Fact::set_status(e_status status, bool testing)
 {
+	e_ret_type ret;
+	if (this->type == 1)
+	{
+		Formula *formula = static_cast<Formula *>(this);
+		ret = formula->set_status(status, testing);
+		std::cout << "status formula : " << formula->get_status() << std::endl;
+		return ret;
+	}
 		if ((this->status == F_TRUE && status == F_FALSE)
 				|| (this->status == F_FALSE && status == F_TRUE))
 		{
@@ -49,7 +57,7 @@ e_ret_type	Fact::set_status(e_status status, bool testing)
 			else
 				return ERROR;
 		}
-		if (this->status != F_PENDING && status == F_UNKNOWN)
+		if (this->status != PENDING && status == UNKNOWN)
 			return NON_ACTUALISED;
 		this->status = status;
 		return ACTUALISED;
