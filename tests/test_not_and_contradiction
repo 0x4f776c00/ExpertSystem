@@ -1,8 +1,6 @@
 =A
 A=>B
 A=>C
-A=>D
-A=>E
 A=>!(B+C)
 
-?BCD
+?BC
