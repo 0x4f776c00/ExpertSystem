@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 13:54:01 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 15:06:29 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,17 @@ class Formula : public Fact
 		e_ret_type	set_status(e_status status, bool testing);
 		e_status	get_status(void);
 		e_ret_type	compute_status(bool testing);
+		void		propagate_status(bool testing);
 
 	private:
-		static e_status	(*tab_func[NB_OPERATOR])(e_status, e_status);
+		static e_status	(*tab_operators[NB_OPERATOR])(e_status, e_status);
+		void (*tab_propagate[NB_OPERATOR])(bool) =
+		{
+			not_propagate,
+			xor_propagate,
+			or_propagate,
+			and_propagate
+		};
 };
 
 std::ostream & operator<<(std::ostream & o, const Formula & formula);

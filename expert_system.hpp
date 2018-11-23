@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/10 13:21:03 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/10 15:16:19 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ enum e_token_type {INVALID, OPERATOR, FACT, RELATION, SEPARATOR, TRUTH, QUERY};
 enum e_relations {NOT, XOR, OR, AND};
 enum e_ret_type {NON_ACTUALISED, ACTUALISED, ERROR};
 
+# define FORMULA 1
 # define NB_OPERATOR 4
 # define NB_SNARK 3
 
@@ -44,7 +45,5 @@ void	get_system(Hub *hub, char *file_name);
 void	parse_system(std::vector <std::vector <Token>> tokens, Hub *hub);
 int		error_n_exit(std::string str);
 void	solve_system(Hub *hub);
-
-//stat, mmap, getline, strtok
 
 #endif
