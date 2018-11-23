@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 15:51:18 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 17:28:01 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,50 +73,65 @@ e_status (*Formula::tab_operators[NB_OPERATOR])(e_status, e_status) =
 	Formula::and_operator
 };
 
-void		Formula::not_propagate(Formula &formula, bool testing)
+e_ret_type	Formula::not_propagate(Formula &formula, bool testing)
 {
+	e_ret_type ret = NON_ACTUALISED;
+std::cout << "not propagate" << std::endl;
+
 	if (formula.status == F_TRUE)
-		formula.fact1->set_status(F_FALSE, testing);
+		ret = formula.fact1->set_status(F_FALSE, testing);
 	else if (formula.status == F_FALSE)
-		formula.fact1->set_status(F_TRUE, testing);
+		ret = formula.fact1->set_status(F_TRUE, testing);
 	else if (formula.status == T_TRUE)
-		formula.fact1->set_status(T_FALSE, testing);
+		ret = formula.fact1->set_status(T_FALSE, testing);
 	else if (formula.status == T_FALSE)
-		formula.fact1->set_status(T_TRUE, testing);
+		ret = formula.fact1->set_status(T_TRUE, testing);
+
+	return ret;
 }
 
-void		Formula::and_propagate(Formula &formula, bool testing)
-{	
+e_ret_type	Formula::and_propagate(Formula &formula, bool testing)
+{
+	e_ret_type ret = NON_ACTUALISED;
+	e_ret_type ret2 = NON_ACTUALISED;
+std::cout << "and propagate" << std::endl;
 	if (formula.status == F_TRUE)
 	{
-		formula.fact1->set_status(F_TRUE, testing);
-		formula.fact2->set_status(F_TRUE, testing);
+		ret = formula.fact1->set_status(F_TRUE, testing);
+		ret2 = formula.fact2->set_status(F_TRUE, testing);
 	}
 	else if (formula.status == T_TRUE)
 	{
-		formula.fact1->set_status(T_TRUE, testing);
-		formula.fact2->set_status(T_TRUE, testing);
+		ret = formula.fact1->set_status(T_TRUE, testing);
+		ret2 = formula.fact2->set_status(T_TRUE, testing);
 	}
 	else if (formula.status == F_FALSE)
 	{
-		if (formula.fact1->get_status() == F_TRUE && formula.fact2->get_status() == F_TRUE)
+		if (formula.fact1->get_state() == F_TRUE && formula.fact2->get_state() == F_TRUE)
 			error_n_exit("Contradiction in the facts...\n");
 	}
+	if (ret == ERROR || ret2 == ERROR)
+		return ERROR;
+	if (ret == ACTUALISED || ret2 == ACTUALISED)
+		return ACTUALISED;
+	return NON_ACTUALISED;
 }
 
-void		Formula::or_propagate(Formula &formula, bool testing)
+e_ret_type	Formula::or_propagate(Formula &formula, bool testing)
 {
 	(void)testing;
 	(void)formula;
+	return NON_ACTUALISED;
 }
 
-void		Formula::xor_propagate(Formula &formula, bool testing)
+e_ret_type	Formula::xor_propagate(Formula &formula, bool testing)
 {
 	(void)testing;
 	(void)formula;
+	return NON_ACTUALISED;
 }
 
-void (*Formula::tab_propagate[NB_OPERATOR])(Formula&, bool) =
+e_ret_type (*Formula::tab_propagate[NB_OPERATOR])(Formula&, bool) =
 {
 	Formula::not_propagate,
 	Formula::xor_propagate,
@@ -124,14 +139,14 @@ void (*Formula::tab_propagate[NB_OPERATOR])(Formula&, bool) =
 	Formula::and_propagate
 };
 
-void		Formula::propagate_status(bool testing)
+e_ret_type	Formula::propagate_status(bool testing)
 {
-	tab_propagate[this->relation](*this, testing);
+	return tab_propagate[this->relation](*this, testing);
 }
 
 e_ret_type	Formula::set_status(e_status status, bool testing)
 {
-		std::cout << "set status formula" << std::endl;
+	std::cout << "set status formula" << std::endl;
 
 	if ((this->status > 1 && status < 0)
 			|| (this->status < 0 && status > 1))
@@ -141,15 +156,21 @@ e_ret_type	Formula::set_status(e_status status, bool testing)
 		else
 			return ERROR;
 	}
-	if (this->status != PENDING && status == UNKNOWN)
+	if (status == UNKNOWN)
 	{
 		std::cout << "set status non_actualised" << std::endl;
 		return NON_ACTUALISED;
 	}
 	this->status = static_cast<e_status>(status + testing);
-		std::cout << "set status actualised" << std::endl;
-	this->propagate_status(testing);
+	if (this->propagate_status(testing) == ERROR)
+		return ERROR;
+	std::cout << "set status actualised" << std::endl;
 	return ACTUALISED;
+}
+
+e_status	Formula::get_state(void)
+{
+	return tab_operators[this->relation](this->fact1->get_status(), this->fact2->get_status());
 }
 
 e_status	Formula::get_status(void)

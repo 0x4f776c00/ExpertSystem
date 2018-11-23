@@ -1,4 +1,9 @@
 =A
-D=>B
-A=>!B+C+D+!E+F
+A=>B
+A=>C
+A=>D
+A=>E
+A=>F
+
+A=>!(B+C+D+E+F)
 ?BCDEF

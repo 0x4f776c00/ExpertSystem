@@ -29,6 +29,16 @@ Fact::~Fact(void)
 	return ;
 }
 
+e_status	Fact::get_state(void)
+{
+	if (this->type == FORMULA)
+	{
+		Formula *formula = static_cast<Formula *>(this);
+		return formula->get_state();
+	}
+	return this->status;
+}
+
 e_status	Fact::get_status(void)
 {
 	if (this->type == FORMULA)
