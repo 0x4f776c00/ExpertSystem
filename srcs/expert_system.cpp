@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/11/23 18:21:53 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 19:49:59 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		main(int ac, char **av)
 		return (usage());
 	default_status = F_FALSE;
 	if (ac == 3 && !strcmp(av[2], "-b"))
-		default_status = UNKNOWN; // TODO: PENDING?
+		default_status = PENDING;
 	Hub hub;
 	std::srand(std::time(NULL));
 	create_facts(&hub, default_status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 19:08:10 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 20:01:25 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ e_status	Formula::not_operator(e_status status1, e_status status2)
 		return T_TRUE;
 	else if (status1 == T_TRUE)
 		return T_FALSE;
-	return UNKNOWN;
+	return PENDING;
 }
 
 e_status	Formula::and_operator(e_status status1, e_status status2)
@@ -50,7 +50,7 @@ e_status	Formula::and_operator(e_status status1, e_status status2)
 		return T_FALSE;
 	else if (status1 >= F_TRUE && status2 >= F_TRUE)
 		return T_TRUE;
-	return UNKNOWN;
+	return PENDING;
 }
 
 e_status	Formula::or_operator(e_status status1, e_status status2)
@@ -63,7 +63,7 @@ e_status	Formula::or_operator(e_status status1, e_status status2)
 		return T_TRUE;
 	else if (status1 <= T_FALSE && status2 <= T_FALSE)
 		return T_FALSE;
-	return UNKNOWN;
+	return PENDING;
 }
 
 e_status	Formula::xor_operator(e_status status1, e_status status2)
@@ -80,7 +80,7 @@ e_status	Formula::xor_operator(e_status status1, e_status status2)
 	else if ((status1 <= T_FALSE && status2 <= T_FALSE)
 			|| (status1 >= F_TRUE && status2 >= F_TRUE))
 		return T_FALSE;
-	return UNKNOWN;
+	return PENDING;
 }
 
 e_status (*Formula::tab_operators[NB_OPERATOR])(e_status, e_status) =
@@ -170,7 +170,7 @@ int	Formula::set_status(e_status status, bool testing)
 		else
 			return ERROR;
 	}
-	if (status == UNKNOWN)
+	if (status == PENDING)
 	{
 		return NON_ACTUALISED;
 	}

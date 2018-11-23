@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 18:46:51 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 20:06:49 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fstream>
 # include <vector>
 
-enum e_status {F_FALSE = -2, T_FALSE = -1, PENDING = 0, UNKNOWN = 1, F_TRUE = 2, T_TRUE = 3};
+enum e_status {F_FALSE = -2, T_FALSE = -1, PENDING = 0, F_TRUE = 2, T_TRUE = 3};
 enum e_token_type {INVALID, OPERATOR, FACT, RELATION, SEPARATOR, TRUTH, QUERY};
 enum e_relations {NOT, XOR, OR, AND};
 
