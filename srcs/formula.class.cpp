@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 17:46:06 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 19:08:10 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ e_status	Formula::not_operator(e_status status1, e_status status2)
 		return F_TRUE;
 	else if (status1 == F_TRUE)
 		return F_FALSE;
+	else if (status1 == T_FALSE)
+		return T_TRUE;
+	else if (status1 == T_TRUE)
+		return T_FALSE;
 	return UNKNOWN;
 }
 
@@ -42,6 +46,10 @@ e_status	Formula::and_operator(e_status status1, e_status status2)
 		return F_FALSE;
 	else if (status1 == F_TRUE && status2 == F_TRUE)
 		return F_TRUE;
+	else if (status1 <= T_FALSE || status2 <= T_FALSE)
+		return T_FALSE;
+	else if (status1 >= F_TRUE && status2 >= F_TRUE)
+		return T_TRUE;
 	return UNKNOWN;
 }
 
@@ -49,8 +57,12 @@ e_status	Formula::or_operator(e_status status1, e_status status2)
 {
 	if (status1 == F_TRUE || status2 == F_TRUE)
 		return F_TRUE;
-	if (status1 == F_FALSE && status2 == F_FALSE)
+	else if (status1 == F_FALSE && status2 == F_FALSE)
 		return F_FALSE;
+	else if (status1 >= F_TRUE || status2 >= F_TRUE)
+		return T_TRUE;
+	else if (status1 <= T_FALSE && status2 <= T_FALSE)
+		return T_FALSE;
 	return UNKNOWN;
 }
 
@@ -59,9 +71,15 @@ e_status	Formula::xor_operator(e_status status1, e_status status2)
 	if ((status1 == F_TRUE && status2 == F_FALSE)
 			|| (status1 == F_FALSE && status2 == F_TRUE))
 		return F_TRUE;
-	if ((status1 == F_FALSE && status2 == F_FALSE)
+	else if ((status1 == F_FALSE && status2 == F_FALSE)
 			|| (status1 == F_TRUE && status2 == F_TRUE))
 		return F_FALSE;
+	else if ((status1 >= F_TRUE && status2 <= T_FALSE)
+			|| (status1 <= T_FALSE && status2 >= F_TRUE))
+		return T_TRUE;
+	else if ((status1 <= T_FALSE && status2 <= T_FALSE)
+			|| (status1 >= F_TRUE && status2 >= F_TRUE))
+		return T_FALSE;
 	return UNKNOWN;
 }
 
@@ -73,9 +91,9 @@ e_status (*Formula::tab_operators[NB_OPERATOR])(e_status, e_status) =
 	Formula::and_operator
 };
 
-e_ret_type	Formula::not_propagate(Formula &formula, bool testing)
+int	Formula::not_propagate(Formula &formula, bool testing)
 {
-	e_ret_type ret = NON_ACTUALISED;
+	int ret = NON_ACTUALISED;
 
 	if (formula.status == F_TRUE)
 		ret = formula.fact1->set_status(F_FALSE, testing);
@@ -89,10 +107,10 @@ e_ret_type	Formula::not_propagate(Formula &formula, bool testing)
 	return ret;
 }
 
-e_ret_type	Formula::and_propagate(Formula &formula, bool testing)
+int	Formula::and_propagate(Formula &formula, bool testing)
 {
-	e_ret_type ret = NON_ACTUALISED;
-	e_ret_type ret2 = NON_ACTUALISED;
+	int ret = NON_ACTUALISED;
+	int ret2 = NON_ACTUALISED;
 	if (formula.status == F_TRUE)
 	{
 		ret = formula.fact1->set_status(F_TRUE, testing);
@@ -115,21 +133,21 @@ e_ret_type	Formula::and_propagate(Formula &formula, bool testing)
 	return NON_ACTUALISED;
 }
 
-e_ret_type	Formula::or_propagate(Formula &formula, bool testing)
+int	Formula::or_propagate(Formula &formula, bool testing)
 {
 	(void)testing;
 	(void)formula;
 	return NON_ACTUALISED;
 }
 
-e_ret_type	Formula::xor_propagate(Formula &formula, bool testing)
+int	Formula::xor_propagate(Formula &formula, bool testing)
 {
 	(void)testing;
 	(void)formula;
 	return NON_ACTUALISED;
 }
 
-e_ret_type (*Formula::tab_propagate[NB_OPERATOR])(Formula&, bool) =
+int (*Formula::tab_propagate[NB_OPERATOR])(Formula&, bool) =
 {
 	Formula::not_propagate,
 	Formula::xor_propagate,
@@ -137,15 +155,15 @@ e_ret_type (*Formula::tab_propagate[NB_OPERATOR])(Formula&, bool) =
 	Formula::and_propagate
 };
 
-e_ret_type	Formula::propagate_status(bool testing)
+int	Formula::propagate_status(bool testing)
 {
 	return tab_propagate[this->relation](*this, testing);
 }
 
-e_ret_type	Formula::set_status(e_status status, bool testing)
+int	Formula::set_status(e_status status, bool testing)
 {
-	if ((this->status > 1 && status < 0)
-			|| (this->status < 0 && status > 1))
+	if ((this->status >= T_TRUE && status <= F_FALSE)
+			|| (this->status <= F_FALSE && status >= T_TRUE))
 	{
 		if (!testing)
 			error_n_exit("Contradiction in the facts...\n");
@@ -169,16 +187,16 @@ e_status	Formula::get_status(void)
 	return this->status;
 }
 
-e_ret_type	Formula::compute_status(bool testing)
+int	Formula::compute_status(bool testing)
 {
 	e_status	status2 = F_TRUE;
-	e_status	prev_status = this->status;
-	e_ret_type	ret = NON_ACTUALISED;
+	e_status	prev_status = this->get_status();
+	int	ret = NON_ACTUALISED;
 
 	ret = this->fact1->compute_status(testing);
 	if (this->fact2 != nullptr)
 	{
-		ret = static_cast<e_ret_type>(static_cast<int>(ret) | static_cast<int>(this->fact2->compute_status(testing)));
+		ret = static_cast<int>(static_cast<int>(ret) | static_cast<int>(this->fact2->compute_status(testing)));
 		if (ret & ERROR)
 			return ERROR;
 		status2 = this->fact2->get_status();

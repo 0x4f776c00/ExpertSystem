@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:48:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/06/02 15:08:52 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 18:46:26 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Axiom : public Hub
 		Axiom(Fact *f1, Fact *f2, bool);
 		~Axiom(void);
 		
-		bool	compute_axiom(bool testing);
+		int	compute_axiom(bool testing);
 };
 
 #endif
