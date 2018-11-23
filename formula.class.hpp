@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/06/02 15:08:54 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 13:43:12 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,19 @@ class Formula : public Fact
 		static e_status	and_operator(e_status, e_status);
 		static e_status	not_operator(e_status, e_status);
 
+		static void		xor_propagate(bool);
+		static void		or_propagate(bool);
+		static void		and_propagate(bool);
+		static void		not_propagate(bool);
+
 		e_ret_type	set_status(e_status status, bool testing);
 		e_status	get_status(void);
 		e_ret_type	compute_status(bool testing);
+		void		propagate_status(bool testing);
 
 	private:
-		static e_status	(*tab_func[NB_OPERATOR])(e_status, e_status);
+		static e_status	(*tab_operators[NB_OPERATOR])(e_status, e_status);
+		static void		(*tab_propagate[NB_OPERATOR])(bool);
 };
 
 std::ostream & operator<<(std::ostream & o, const Formula & formula);
