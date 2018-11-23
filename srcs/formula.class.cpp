@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 17:28:01 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 17:30:50 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,6 @@ e_ret_type	Formula::propagate_status(bool testing)
 
 e_ret_type	Formula::set_status(e_status status, bool testing)
 {
-	std::cout << "set status formula" << std::endl;
-
 	if ((this->status > 1 && status < 0)
 			|| (this->status < 0 && status > 1))
 	{
@@ -158,13 +156,11 @@ e_ret_type	Formula::set_status(e_status status, bool testing)
 	}
 	if (status == UNKNOWN)
 	{
-		std::cout << "set status non_actualised" << std::endl;
 		return NON_ACTUALISED;
 	}
 	this->status = static_cast<e_status>(status + testing);
 	if (this->propagate_status(testing) == ERROR)
 		return ERROR;
-	std::cout << "set status actualised" << std::endl;
 	return ACTUALISED;
 }
 

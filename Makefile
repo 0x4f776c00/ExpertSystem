@@ -1,32 +1,42 @@
 NAME = expert_system
 
+INCLUDES_DIR = ./includes/
+SRCS_DIR = ./srcs/
+OBJS_DIR = ./objs/
+
 CC = clang++
+FLAGS = -Wall -Wextra -Werror -std=c++11 -g
 
-FLAGS = -Wall -Wextra -Werror -std=c++11 -g #-Weverything
+SRCS_FILES =	axiom.class.cpp\
+				expert_system.cpp\
+				fact.class.cpp\
+				formula.class.cpp\
+				hub.class.cpp\
+				lexer.cpp\
+				parser.cpp\
+				token.struct.cpp\
+				error_handling.cpp\
+				solve_system.cpp
 
-SRCS =		axiom.class.cpp\
-			expert_system.cpp\
-			fact.class.cpp\
-			formula.class.cpp\
-			hub.class.cpp\
-			lexer.cpp\
-			parser.cpp\
-			token.struct.cpp\
-			error_handling.cpp\
-			solve_system.cpp
+OBJS_FILES = $(SRCS_FILES:.cpp=.o)
 
-O_FILES = $(SRCS:.cpp=.o)
+SRCS = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
+OBJS = $(addprefix $(OBJS_DIR), $(OBJS_FILES))
 
-all: $(NAME)
+all: $(OBJS_DIR) $(NAME)
 
-$(NAME): $(O_FILES)
-	$(CC) $(FLAGS) -o $(NAME) $(O_FILES)
+$(NAME): $(OBJS)
+	$(CC) $(FLAGS) -o $(NAME) $(OBJS)
 
-%.o:%.cpp
-	$(CC) $(FLAGS) -c -o $@ $^
+$(OBJS_DIR):
+	mkdir -p $(OBJS_DIR)
+
+$(OBJS_DIR)%.o: $(SRCS_DIR)%.cpp
+	$(CC) $(FLAGS) -o $@ -c $< -I$(INCLUDES_DIR)
+
 
 clean:
-	rm -f $(O_FILES)
+	rm -rf $(OBJS_DIR)
 
 fclean: clean
 	rm -f $(NAME)
