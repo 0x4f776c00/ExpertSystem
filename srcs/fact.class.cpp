@@ -12,9 +12,8 @@
 
 #include "expert_system.hpp"
 
-Fact::Fact(int type, const char symbol) : type(type), symbol(symbol)
+Fact::Fact(int type, const char symbol, e_status status) : type(type), symbol(symbol), status(status)
 {
-	this->status = UNKNOWN;
 	this->queried = false;
 }
 
@@ -22,7 +21,6 @@ Fact::Fact(void) : symbol('\0')
 {
 	this->status = PENDING;
 }
-
 
 Fact::~Fact(void)
 {
@@ -39,17 +37,17 @@ e_status	Fact::get_status(void)
 	return this->status;
 }
 
-e_ret_type	Fact::set_status(e_status status, bool testing)
+int	Fact::set_status(e_status status, bool testing)
 {
-	e_ret_type ret;
+	int ret;
 	if (this->type == FORMULA)
 	{
 		Formula *formula = static_cast<Formula *>(this);
 		ret = formula->set_status(status, testing);
 		return ret;
 	}
-		if ((this->status == F_TRUE && status == F_FALSE)
-				|| (this->status == F_FALSE && status == F_TRUE))
+		if ((this->status >= F_TRUE && status <= T_FALSE)
+				|| (this->status <= T_FALSE && status >= F_TRUE))
 		{
 			if (!testing)
 				error_n_exit("Contradiction in the facts...\n");
@@ -62,7 +60,7 @@ e_ret_type	Fact::set_status(e_status status, bool testing)
 		return ACTUALISED;
 }
 
-e_ret_type	Fact::compute_status(bool testing)
+int	Fact::compute_status(bool testing)
 {
 	if (this->type == FORMULA)
 	{
