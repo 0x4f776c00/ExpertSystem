@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 15:51:18 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 15:56:38 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,6 @@ void		Formula::propagate_status(bool testing)
 
 e_ret_type	Formula::set_status(e_status status, bool testing)
 {
-		std::cout << "set status formula" << std::endl;
-
 	if ((this->status > 1 && status < 0)
 			|| (this->status < 0 && status > 1))
 	{
@@ -143,11 +141,9 @@ e_ret_type	Formula::set_status(e_status status, bool testing)
 	}
 	if (this->status != PENDING && status == UNKNOWN)
 	{
-		std::cout << "set status non_actualised" << std::endl;
 		return NON_ACTUALISED;
 	}
 	this->status = static_cast<e_status>(status + testing);
-		std::cout << "set status actualised" << std::endl;
 	this->propagate_status(testing);
 	return ACTUALISED;
 }

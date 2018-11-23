@@ -46,7 +46,6 @@ e_ret_type	Fact::set_status(e_status status, bool testing)
 	{
 		Formula *formula = static_cast<Formula *>(this);
 		ret = formula->set_status(status, testing);
-		std::cout << "status formula : " << formula->get_status() << std::endl;
 		return ret;
 	}
 		if ((this->status == F_TRUE && status == F_FALSE)
