@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/10 13:54:47 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 13:54:02 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,42 @@ e_status (*Formula::tab_func[NB_OPERATOR])(e_status, e_status) =
 	Formula::or_operator,
 	Formula::and_operator
 };
+
+void		Formula::not_propagate(bool testing)
+{
+	if (this->status == F_TRUE)
+		this->fact1->set_status(F_FALSE, testing);
+	else if (this->status == F_FALSE)
+		this->fact1->set_status(F_TRUE, testing);
+	else if (this->status == T_TRUE)
+		this->fact1->set_status(T_FALSE, testing);
+	else if (this->status == T_FALSE)
+		this->fact1->set_status(T_TRUE, testing);
+}
+
+void		Formula::and_propagate(bool testing)
+{	
+	if (this->status == F_TRUE)
+	{
+		this->fact1->set_status(F_TRUE, testing);
+		this->fact2->set_status(F_TRUE, testing);
+	}
+	else if (this->status == T_TRUE)
+	{
+		this->fact1->set_status(F_TRUE, testing);
+		this->fact2->set_status(F_TRUE, testing);
+	}
+}
+
+void		Formula::or_propagate(bool testing)
+{
+	(void)testing;
+}
+
+void		Formula::xor_propagate(bool testing)
+{
+	(void)testing;
+}
 
 e_ret_type	Formula::set_status(e_status status, bool testing)
 {
