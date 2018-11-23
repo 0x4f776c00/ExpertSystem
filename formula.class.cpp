@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 15:37:57 by justasze         ###   ########.fr       */
+/*   Updated: 2018/11/23 15:51:18 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,13 @@ void		Formula::and_propagate(Formula &formula, bool testing)
 	}
 	else if (formula.status == T_TRUE)
 	{
-		formula.fact1->set_status(F_TRUE, testing);
-		formula.fact2->set_status(F_TRUE, testing);
+		formula.fact1->set_status(T_TRUE, testing);
+		formula.fact2->set_status(T_TRUE, testing);
+	}
+	else if (formula.status == F_FALSE)
+	{
+		if (formula.fact1->get_status() == F_TRUE && formula.fact2->get_status() == F_TRUE)
+			error_n_exit("Contradiction in the facts...\n");
 	}
 }
 
