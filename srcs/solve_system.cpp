@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 15:22:10 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 20:23:39 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 20:39:46 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	induction(Hub *hub, bool testing)
 			has_actualized |= it->compute_axiom(testing);
 		}
 	} while (has_actualized == ACTUALISED);
+	// std::cout << "actu : " << has_actualized << std::endl;
 	return has_actualized;
 }
 
@@ -53,6 +54,7 @@ void		solve_system(Hub *hub)
 
 		if (it->status == PENDING)
 		{
+			// std::cout << "ind " << it->symbol << " t false" << std::endl;
 			it->status = T_FALSE;
 			has_actualized = induction(hub, true);
 			clean_induction(hub);
@@ -63,6 +65,8 @@ void		solve_system(Hub *hub)
 				solve_system(hub);
 				return ;
 			}
+			// std::cout << "ind " << it->symbol << " t true" << std::endl;
+
 			has_actualized = induction(hub, true);
 			clean_induction(hub);
 			if (has_actualized & ERROR)

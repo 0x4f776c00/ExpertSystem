@@ -54,7 +54,7 @@ int	Fact::set_status(e_status status, bool testing)
 			else
 				return ERROR;
 		}
-		if ((this->status != PENDING && status == PENDING) || this->status == F_TRUE || this->status == F_FALSE)
+		if (this->status != PENDING)
 			return NON_ACTUALISED;
 		this->status = status;
 		return ACTUALISED;
