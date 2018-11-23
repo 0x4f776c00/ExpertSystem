@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 17:30:50 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 17:46:06 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ e_status (*Formula::tab_operators[NB_OPERATOR])(e_status, e_status) =
 e_ret_type	Formula::not_propagate(Formula &formula, bool testing)
 {
 	e_ret_type ret = NON_ACTUALISED;
-std::cout << "not propagate" << std::endl;
 
 	if (formula.status == F_TRUE)
 		ret = formula.fact1->set_status(F_FALSE, testing);
@@ -94,7 +93,6 @@ e_ret_type	Formula::and_propagate(Formula &formula, bool testing)
 {
 	e_ret_type ret = NON_ACTUALISED;
 	e_ret_type ret2 = NON_ACTUALISED;
-std::cout << "and propagate" << std::endl;
 	if (formula.status == F_TRUE)
 	{
 		ret = formula.fact1->set_status(F_TRUE, testing);
@@ -107,7 +105,7 @@ std::cout << "and propagate" << std::endl;
 	}
 	else if (formula.status == F_FALSE)
 	{
-		if (formula.fact1->get_state() == F_TRUE && formula.fact2->get_state() == F_TRUE)
+		if (formula.fact1->get_status() == F_TRUE && formula.fact2->get_status() == F_TRUE)
 			error_n_exit("Contradiction in the facts...\n");
 	}
 	if (ret == ERROR || ret2 == ERROR)
@@ -164,13 +162,10 @@ e_ret_type	Formula::set_status(e_status status, bool testing)
 	return ACTUALISED;
 }
 
-e_status	Formula::get_state(void)
-{
-	return tab_operators[this->relation](this->fact1->get_status(), this->fact2->get_status());
-}
-
 e_status	Formula::get_status(void)
 {
+	if (this->fact2)
+		return tab_operators[this->relation](this->fact1->get_status(), this->fact2->get_status());
 	return this->status;
 }
 

@@ -25,7 +25,6 @@ class Fact : public Hub
 		bool		queried;
 		e_status	status;
 		e_status	get_status(void);
-		e_status	get_state(void);
 
 		e_ret_type	set_status(e_status status, bool testing);
 
