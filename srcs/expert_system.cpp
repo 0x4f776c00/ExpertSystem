@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/11/23 19:49:59 by justasze         ###   ########.fr       */
+/*   Updated: 2018/11/23 20:18:37 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ int		main(int ac, char **av)
 	std::srand(std::time(NULL));
 	create_facts(&hub, default_status);
 	get_system(&hub, av[1]);
+	for (size_t it = 0; it < hub.queries.length(); it++)
+	{
+		hub.facts[hub.queries[it] - 'A'].status = PENDING;
+	}
 	solve_system(&hub);
 	return 0;
 }
