@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 13:58:17 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 15:20:16 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,43 +73,45 @@ e_status (*Formula::tab_operators[NB_OPERATOR])(e_status, e_status) =
 	Formula::and_operator
 };
 
-void		Formula::not_propagate(bool testing)
+void		Formula::not_propagate(Formula &formula, bool testing)
 {
-	if (this->status == F_TRUE)
-		this->fact1->set_status(F_FALSE, testing);
-	else if (this->status == F_FALSE)
-		this->fact1->set_status(F_TRUE, testing);
-	else if (this->status == T_TRUE)
-		this->fact1->set_status(T_FALSE, testing);
-	else if (this->status == T_FALSE)
-		this->fact1->set_status(T_TRUE, testing);
+	if (formula.status == F_TRUE)
+		formula.fact1->set_status(F_FALSE, testing);
+	else if (formula.status == F_FALSE)
+		formula.fact1->set_status(F_TRUE, testing);
+	else if (formula.status == T_TRUE)
+		formula.fact1->set_status(T_FALSE, testing);
+	else if (formula.status == T_FALSE)
+		formula.fact1->set_status(T_TRUE, testing);
 }
 
-void		Formula::and_propagate(bool testing)
+void		Formula::and_propagate(Formula &formula, bool testing)
 {	
-	if (this->status == F_TRUE)
+	if (formula.status == F_TRUE)
 	{
-		this->fact1->set_status(F_TRUE, testing);
-		this->fact2->set_status(F_TRUE, testing);
+		formula.fact1->set_status(F_TRUE, testing);
+		formula.fact2->set_status(F_TRUE, testing);
 	}
-	else if (this->status == T_TRUE)
+	else if (formula.status == T_TRUE)
 	{
-		this->fact1->set_status(F_TRUE, testing);
-		this->fact2->set_status(F_TRUE, testing);
+		formula.fact1->set_status(F_TRUE, testing);
+		formula.fact2->set_status(F_TRUE, testing);
 	}
 }
 
-void		Formula::or_propagate(bool testing)
+void		Formula::or_propagate(Formula &formula, bool testing)
 {
 	(void)testing;
+	(void)formula;
 }
 
-void		Formula::xor_propagate(bool testing)
+void		Formula::xor_propagate(Formula &formula, bool testing)
 {
 	(void)testing;
+	(void)formula;
 }
 
-void (*Formula::tab_propagate[NB_OPERATOR])(bool) =
+void (*Formula::tab_propagate[NB_OPERATOR])(Formula&, bool) =
 {
 	Formula::not_propagate,
 	Formula::xor_propagate,
@@ -119,7 +121,7 @@ void (*Formula::tab_propagate[NB_OPERATOR])(bool) =
 
 void		Formula::propagate_status(bool testing)
 {
-	tab_propagate[this->relation](testing);
+	tab_propagate[this->relation](*this, testing);
 }
 
 e_ret_type	Formula::set_status(e_status status, bool testing)

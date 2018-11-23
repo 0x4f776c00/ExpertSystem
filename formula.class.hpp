@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 15:06:29 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 15:18:51 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ class Formula : public Fact
 		static e_status	and_operator(e_status, e_status);
 		static e_status	not_operator(e_status, e_status);
 
-		void		xor_propagate(bool);
-		void		or_propagate(bool);
-		void		and_propagate(bool);
-		void		not_propagate(bool);
+		static void		xor_propagate(Formula&, bool);
+		static void		or_propagate(Formula&, bool);
+		static void		and_propagate(Formula&, bool);
+		static void		not_propagate(Formula&, bool);
 
 		e_ret_type	set_status(e_status status, bool testing);
 		e_status	get_status(void);
@@ -43,13 +43,7 @@ class Formula : public Fact
 
 	private:
 		static e_status	(*tab_operators[NB_OPERATOR])(e_status, e_status);
-		void (*tab_propagate[NB_OPERATOR])(bool) =
-		{
-			not_propagate,
-			xor_propagate,
-			or_propagate,
-			and_propagate
-		};
+		static void		(*tab_propagate[NB_OPERATOR])(Formula&, bool);
 };
 
 std::ostream & operator<<(std::ostream & o, const Formula & formula);
