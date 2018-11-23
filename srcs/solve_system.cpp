@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solve_system.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 15:22:10 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 20:39:46 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 21:47:00 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	induction(Hub *hub, bool testing)
 	do
 	{
 		has_actualized = NON_ACTUALISED;
-		for (std::list <Axiom> :: iterator it = hub->axioms.begin(); it != hub->axioms.end(); it++)
+		for (std::list <Axiom> :: iterator it = hub->axioms.begin();
+				it != hub->axioms.end(); it++)
 		{
 			has_actualized |= it->compute_axiom(testing);
 		}
@@ -37,6 +38,39 @@ static void	clean_induction(Hub *hub)
 	}
 }
 
+static void	try_induction(Hub *hub)
+{
+	int	has_actualized;
+
+	for (std::vector <Fact> :: iterator it = hub->facts.begin();
+				it != hub->facts.end(); it++)
+	{
+
+		if (it->status == PENDING)
+		{
+			it->status = T_FALSE;
+			has_actualized = induction(hub, true);
+			clean_induction(hub);
+			it->status = T_TRUE;
+			if (has_actualized & ERROR)
+			{
+				it->status = F_TRUE;
+				solve_system(hub);
+				return ;
+			}
+
+			has_actualized = induction(hub, true);
+			clean_induction(hub);
+			if (has_actualized & ERROR)
+			{
+				it->status = F_FALSE;
+				solve_system(hub);
+				return ;
+			}
+		}
+	}
+}
+
 void		solve_system(Hub *hub)
 {
 	int	has_actualized;
@@ -49,37 +83,6 @@ void		solve_system(Hub *hub)
 			has_actualized |= it->compute_axiom(false);
 		}
 	} while (has_actualized == ACTUALISED);
-	for (std::vector <Fact> :: iterator it = hub->facts.begin(); it != hub->facts.end(); it++)
-	{
 
-		if (it->status == PENDING)
-		{
-			// std::cout << "ind " << it->symbol << " t false" << std::endl;
-			it->status = T_FALSE;
-			has_actualized = induction(hub, true);
-			clean_induction(hub);
-			it->status = T_TRUE;
-			if (has_actualized & ERROR)
-			{
-				it->status = F_TRUE;
-				solve_system(hub);
-				return ;
-			}
-			// std::cout << "ind " << it->symbol << " t true" << std::endl;
-
-			has_actualized = induction(hub, true);
-			clean_induction(hub);
-			if (has_actualized & ERROR)
-			{
-				it->status = F_FALSE;
-				solve_system(hub);
-				return ;
-			}
-		}
-	}
-	for (size_t it = 0; it < hub->queries.length(); it++)
-	{
-		std::cout << hub->facts[hub->queries[it] - 'A'].symbol << ": "
-			<< hub->facts[hub->queries[it] - 'A'].status << std::endl;
-	}
+	try_induction(hub);
 }
