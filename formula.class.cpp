@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 15:20:16 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/23 15:37:57 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,6 @@ e_ret_type	Formula::compute_status(bool testing)
 	if (this->get_status() != prev_status)
 		return ACTUALISED;
 	return ret;
-	//std::cout << "Formula status: " << this->get_status() << std::endl;
 }
 
 std::ostream & operator<<(std::ostream & o, const Formula & formula)
