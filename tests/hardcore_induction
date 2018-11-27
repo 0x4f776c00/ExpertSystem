@@ -1,8 +1,6 @@
 =A
-
-A => (B + C) ^ D
+A => B + C ^ D
 D => E | F
 E + C => D
 F => A
-
 ?BCDEF

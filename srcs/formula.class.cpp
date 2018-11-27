@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/27 16:52:36 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/27 17:19:15 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,72 @@ int	Formula::or_propagate(Formula &formula, bool testing)
 
 int	Formula::xor_propagate(Formula &formula, bool testing)
 {
-	(void)testing;
-	(void)formula;
+	if (formula.status >= F_TRUE)
+	{
+		if ((formula.fact1->get_status() >= F_TRUE && formula.fact2->get_status() >= F_TRUE) || (formula.fact1->get_status() <= T_FALSE && formula.fact2->get_status() <= T_FALSE))
+		{
+			if (!testing)
+				return ERROR;
+			error_n_exit("Contradiction in the facts...\n");			
+		}
+		else if (formula.fact1->get_status() >= F_TRUE)
+		{
+			if (!testing)
+				return formula.fact2->set_status(F_FALSE, testing);
+			return formula.fact2->set_status(T_FALSE, testing);
+		}
+		else if (formula.fact2->get_status() >= F_TRUE)
+		{
+			if (!testing)
+				return formula.fact1->set_status(F_FALSE, testing);
+			return formula.fact1->set_status(T_FALSE, testing);
+		}
+		else if (formula.fact1->get_status() <= T_FALSE)
+		{
+			if (!testing)
+				return formula.fact2->set_status(F_TRUE, testing);
+			return formula.fact2->set_status(T_TRUE, testing);
+		}
+		else if (formula.fact2->get_status() <= T_FALSE)
+		{
+			if (!testing)
+				return formula.fact1->set_status(F_TRUE, testing);
+			return formula.fact1->set_status(T_TRUE, testing);
+		}
+	}
+	else
+	{
+		if ((formula.fact1->get_status() >= F_TRUE && formula.fact2->get_status() <= T_FALSE) || (formula.fact1->get_status() <= T_FALSE && formula.fact2->get_status() >= F_TRUE))
+		{
+			if (!testing)
+				return ERROR;
+			error_n_exit("Contradiction in the facts...\n");			
+		}
+		else if (formula.fact1->get_status() >= F_TRUE)
+		{
+			if (!testing)
+				return formula.fact2->set_status(F_TRUE, testing);
+			return formula.fact2->set_status(T_TRUE, testing);
+		}
+		else if (formula.fact2->get_status() >= F_TRUE)
+		{
+			if (!testing)
+				return formula.fact1->set_status(F_TRUE, testing);
+			return formula.fact1->set_status(T_TRUE, testing);
+		}
+		else if (formula.fact1->get_status() <= T_FALSE)
+		{
+			if (!testing)
+				return formula.fact2->set_status(F_FALSE, testing);
+			return formula.fact2->set_status(T_FALSE, testing);
+		}
+		else if (formula.fact2->get_status() <= T_FALSE)
+		{
+			if (!testing)
+				return formula.fact1->set_status(F_FALSE, testing);
+			return formula.fact1->set_status(T_FALSE, testing);
+		}
+	}
 	return NON_ACTUALISED;
 }
 
@@ -163,6 +227,8 @@ int	Formula::propagate_status(bool testing)
 
 int	Formula::set_status(e_status status, bool testing)
 {
+	int ret = ACTUALISED;
+
 	if ((this->status >= T_TRUE && status <= F_FALSE)
 			|| (this->status <= F_FALSE && status >= T_TRUE))
 	{
@@ -173,12 +239,11 @@ int	Formula::set_status(e_status status, bool testing)
 	}
 	if (this->status != PENDING)
 	{
-		return NON_ACTUALISED;
+		ret = NON_ACTUALISED;
 	}
 	this->status = status;
-	if (this->propagate_status(testing) == ERROR)
-		return ERROR;
-	return ACTUALISED;
+	ret |= this->propagate_status(testing);
+	return ret;
 }
 
 e_status	Formula::get_status(void)
