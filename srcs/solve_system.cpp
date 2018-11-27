@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 15:22:10 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/27 23:06:35 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/27 23:50:09 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,11 @@ static int	induction(Hub *hub, int testing)
 
 static void	clean_induction(Hub *hub)
 {
-	std::cout << "clean" << std::endl;
 	for (std::list <Axiom> :: iterator it = hub->axioms.begin();
 			it != hub->axioms.end(); it++)
 	{
 		it->clean();
 	}
-	std::cout << "end 0clean" << std::endl;
-
 }
 
 static void	try_induction(Hub *hub)
@@ -81,27 +78,14 @@ static void	try_induction(Hub *hub)
 void		solve_system(Hub *hub)
 {
 	int	has_actualized;
-	std::cout << "solve_system" << std::endl;
-	int i = 0;
 	do
 	{
-		std::cout << "loop " << i << std::endl;
-		i++;
-		int j = 0;
 		has_actualized = NON_ACTUALISED;
 		for (std::list <Axiom> :: iterator it = hub->axioms.begin(); it != hub->axioms.end(); it++)
 		{
-			std::cout << "axiom " << j << std::endl;
-			j++;
 			has_actualized |= it->compute_axiom(false);
-			for (size_t it = 0; it < hub->queries.length(); it++)
-			{
-				std::cout << hub->facts[hub->queries[it] - 'A'].symbol << ": "
-						<< hub->facts[hub->queries[it] - 'A'].status << std::endl;
-			}
 		}
 	} while (has_actualized == ACTUALISED);
 
-	std::cout << "try induction" << std::endl;
 	try_induction(hub);
 }

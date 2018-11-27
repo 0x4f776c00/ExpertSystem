@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/27 22:03:22 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/27 23:49:39 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,7 @@ int	Formula::and_propagate(Formula &formula, int testing)
 	else if (formula.status == F_FALSE && !testing)
 	{
 		if (status1 == F_TRUE && status2 == F_TRUE)
-		{
-		std::cout << "Formula::and_propagate" << std::endl;
-
 			error_n_exit("Contradiction in the facts...\n");
-		}
 	}
 	else
 	{
@@ -128,28 +124,20 @@ int	Formula::or_propagate(Formula &formula, int testing)
 		if ((status1 == F_FALSE ||status1 == F_FALSE + testing)
 				&& (status2 == F_FALSE || status2 == F_FALSE + testing))
 		{
-		std::cout << "Formula::or_propagate1" << std::endl;
-
 			if (testing)
 				return ERROR;
 			error_n_exit("Contradiction in the facts...\n");
 		}
 		else if (status1 == F_FALSE || status1 == F_FALSE + testing)
-		{
 			return formula.fact2->set_status((F_TRUE + testing), testing);
-		}
 		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
-		{
 			return formula.fact1->set_status((F_TRUE + testing), testing);
-		}
 	}
 	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing)
 	{
 		if (status1 == F_TRUE || status1 == F_TRUE + testing
 				|| status2 == F_TRUE || status2 == F_TRUE + testing)
 		{
-		std::cout << "Formula::or_propagate2" << std::endl;
-
 			if (testing)
 				return ERROR;
 			error_n_exit("Contradiction in the facts...\n");
@@ -175,28 +163,18 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 				|| ((status1 == F_FALSE || status1 == F_FALSE + testing)
 				&& (status2 == F_FALSE || status2 == F_FALSE + testing)))
 		{
-		std::cout << "Formula::xor_propagate1" << std::endl;
-
 			if (testing)
 				return ERROR;
 			error_n_exit("Contradiction in the facts...\n");
 		}
 		else if (status1 == F_TRUE || status1 == F_TRUE + testing)
-		{
 			return formula.fact2->set_status((F_FALSE + testing), testing);
-		}
 		else if (status2 == F_TRUE || status2 == F_TRUE + testing)
-		{
 			return formula.fact1->set_status((F_FALSE + testing), testing);
-		}
 		else if (status1 == F_FALSE || status1 == F_FALSE + testing)
-		{
 			return formula.fact2->set_status((F_TRUE + testing), testing);
-		}
 		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
-		{
 			return formula.fact1->set_status((F_TRUE + testing), testing);
-		}
 	}
 	else
 	{
@@ -205,28 +183,18 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 				|| ((status1 == F_FALSE || status1 == F_FALSE + testing)
 				&& (status2 == F_TRUE || status2 == F_TRUE + testing)))
 		{
-		std::cout << "Formula::xor_propagate2" << std::endl;
-
 			if (testing)
 				return ERROR;
 			error_n_exit("Contradiction in the facts...\n");			
 		}
 		else if (status1 == F_TRUE || status1 == F_TRUE + testing)
-		{
 			return formula.fact2->set_status((F_TRUE + testing), testing);
-		}
 		else if (status2 == F_TRUE || status2 == F_TRUE + testing)
-		{
 			return formula.fact1->set_status((F_TRUE + testing), testing);
-		}
 		else if (status1 == F_FALSE || status1 == F_FALSE + testing)
-		{
 			return formula.fact2->set_status((F_FALSE + testing), testing);
-		}
 		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
-		{
 			return formula.fact1->set_status((F_FALSE + testing), testing);
-		}
 	}
 	return NON_ACTUALISED;
 }
@@ -251,8 +219,6 @@ int	Formula::set_status(int status, int testing)
 	if (((this->status == F_TRUE || this->status == F_TRUE + testing) && status == F_FALSE + testing)
 			|| ((this->status == F_FALSE || this->status == F_FALSE + testing) && status == F_TRUE + testing))
 	{
-		std::cout << "Formula::set_status" << std::endl;
-
 		if (!testing)
 			error_n_exit("Contradiction in the facts...\n");
 		else
@@ -266,7 +232,7 @@ int	Formula::set_status(int status, int testing)
 	if (testing == 2 && this->status + 1 == status)
 		status -= 2;
 	this->status = status;
-	ret |= this->propagate_status(testing);
+	// ret |= this->propagate_status(testing);
 	return ret;
 }
 

@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/27 22:00:18 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/27 23:48:13 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ int		Axiom::compute_axiom(int testing)
 
 	if ((ret = this->fact1->compute_status(testing)) == ERROR)
 		return ret;
-	if (this->biconditional || this->fact1->get_status(testing) == F_TRUE
+	if ((this->biconditional && (this->fact1->get_status(testing) == F_FALSE
+			|| this->fact1->get_status(testing) == F_FALSE + testing))
+			|| this->fact1->get_status(testing) == F_TRUE
 			|| this->fact1->get_status(testing) == F_TRUE + testing)
 	{
 		status_before = this->fact2->get_status(testing);
@@ -39,6 +41,7 @@ int		Axiom::compute_axiom(int testing)
 			return ERROR;
 		if (status_before != this->fact2->get_status(testing))
 			ret |= ACTUALISED;
+		ret |= this->fact2->propagate_status(testing);
 	}
 	if (this->biconditional)
 	{

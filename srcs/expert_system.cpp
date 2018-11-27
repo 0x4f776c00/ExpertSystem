@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/11/27 22:08:11 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/27 23:50:29 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int		main(int ac, char **av)
 	create_facts(&hub, default_status);
 	get_system(&hub, av[1]);
 	set_queries(&hub);
-	display_system(&hub);
-
 	solve_system(&hub);
 	display_system(&hub);
 

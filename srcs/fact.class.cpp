@@ -47,7 +47,6 @@ int	Fact::set_status(int status, int testing)
 	if (((this->status == F_TRUE || this->status == F_TRUE + testing) && status <= T2_FALSE)
 			|| ((this->status == F_FALSE || this->status == F_FALSE + testing) && status >= F_TRUE))
 	{
-		std::cout << "Fact::set_status " << this->symbol << " : " << this->status << " " << status << std::endl;
 		if (!testing)
 			error_n_exit("Contradiction in the facts...\n");
 		else
@@ -86,6 +85,16 @@ void	Fact::clean(void)
 		if (this->status != F_TRUE && this->status != F_FALSE)
 			this->status = PENDING;
 	}
+}
+
+int	Fact::propagate_status(int testing)
+{
+	if (this->type == FORMULA)
+	{
+		Formula *formula = static_cast<Formula *>(this);
+		return formula->tab_propagate[formula->relation](*formula, testing);
+	}
+	return PENDING;
 }
 
 std::ostream & operator<<(std::ostream & o, const Fact & fact)
