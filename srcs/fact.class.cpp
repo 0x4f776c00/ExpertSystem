@@ -39,25 +39,23 @@ e_status	Fact::get_status(void)
 
 int	Fact::set_status(e_status status, bool testing)
 {
-	int ret;
 	if (this->type == FORMULA)
 	{
 		Formula *formula = static_cast<Formula *>(this);
-		ret = formula->set_status(status, testing);
-		return ret;
+		return formula->set_status(status, testing);
 	}
-		if ((this->status >= F_TRUE && status <= T_FALSE)
-				|| (this->status <= T_FALSE && status >= F_TRUE))
-		{
-			if (!testing)
-				error_n_exit("Contradiction in the facts...\n");
-			else
-				return ERROR;
-		}
-		if (this->status != PENDING)
-			return NON_ACTUALISED;
-		this->status = status;
-		return ACTUALISED;
+	if ((this->status >= F_TRUE && status <= T_FALSE)
+			|| (this->status <= T_FALSE && status >= F_TRUE))
+	{
+		if (!testing)
+			error_n_exit("Contradiction in the facts...\n");
+		else
+			return ERROR;
+	}
+	if (this->status != PENDING)
+		return NON_ACTUALISED;
+	this->status = status;
+	return ACTUALISED;
 }
 
 int	Fact::compute_status(bool testing)

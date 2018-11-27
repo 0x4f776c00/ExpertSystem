@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 20:38:23 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/27 16:52:36 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,27 +110,28 @@ int	Formula::not_propagate(Formula &formula, bool testing)
 int	Formula::and_propagate(Formula &formula, bool testing)
 {
 	int ret = NON_ACTUALISED;
-	int ret2 = NON_ACTUALISED;
+
 	if (formula.status == F_TRUE)
 	{
 		ret = formula.fact1->set_status(F_TRUE, testing);
-		ret2 = formula.fact2->set_status(F_TRUE, testing);
+		ret |= formula.fact2->set_status(F_TRUE, testing);
 	}
 	else if (formula.status == T_TRUE)
 	{
 		ret = formula.fact1->set_status(T_TRUE, testing);
-		ret2 = formula.fact2->set_status(T_TRUE, testing);
+		ret |= formula.fact2->set_status(T_TRUE, testing);
 	}
-	else if (formula.status == F_FALSE)
+	else if (formula.status == F_FALSE && !testing)
 	{
 		if (formula.fact1->get_status() == F_TRUE && formula.fact2->get_status() == F_TRUE)
 			error_n_exit("Contradiction in the facts...\n");
 	}
-	if (ret == ERROR || ret2 == ERROR)
-		return ERROR;
-	if (ret == ACTUALISED || ret2 == ACTUALISED)
-		return ACTUALISED;
-	return NON_ACTUALISED;
+	else
+	{
+		if (formula.fact1->get_status() >= F_TRUE && formula.fact2->get_status() >= F_TRUE)
+			return ERROR;
+	}
+	return ret;
 }
 
 int	Formula::or_propagate(Formula &formula, bool testing)
@@ -174,7 +175,7 @@ int	Formula::set_status(e_status status, bool testing)
 	{
 		return NON_ACTUALISED;
 	}
-	this->status = static_cast<e_status>(status + testing);
+	this->status = status;
 	if (this->propagate_status(testing) == ERROR)
 		return ERROR;
 	return ACTUALISED;
@@ -192,16 +193,16 @@ int	Formula::compute_status(bool testing)
 	e_status	status2 = F_TRUE;
 	e_status	prev_status = this->get_status();
 	int	ret = NON_ACTUALISED;
-
+	if (testing)
+		status2 = T_TRUE;
 	ret = this->fact1->compute_status(testing);
 	if (this->fact2 != nullptr)
 	{
-		ret = static_cast<int>(static_cast<int>(ret) | static_cast<int>(this->fact2->compute_status(testing)));
+		ret |= this->fact2->compute_status(testing);
 		if (ret & ERROR)
 			return ERROR;
 		status2 = this->fact2->get_status();
 	}
-
 	if (this->set_status(tab_operators[this->relation](this->fact1->get_status(), status2), testing) == ERROR)
 		return ERROR;
 	if (this->get_status() != prev_status)
