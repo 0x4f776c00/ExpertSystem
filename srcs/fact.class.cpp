@@ -12,7 +12,7 @@
 
 #include "expert_system.hpp"
 
-Fact::Fact(int type, const char symbol, e_status status) : type(type), symbol(symbol), status(status)
+Fact::Fact(int type, const char symbol, int status) : type(type), symbol(symbol), status(status)
 {
 	this->queried = false;
 }
@@ -27,38 +27,41 @@ Fact::~Fact(void)
 	return ;
 }
 
-e_status	Fact::get_status(void)
+int	Fact::get_status(int testing)
 {
 	if (this->type == FORMULA)
 	{
 		Formula *formula = static_cast<Formula *>(this);
-		return formula->get_status();
+		return formula->get_status(testing);
 	}
 	return this->status;
 }
 
-int	Fact::set_status(e_status status, bool testing)
+int	Fact::set_status(int status, int testing)
 {
 	if (this->type == FORMULA)
 	{
 		Formula *formula = static_cast<Formula *>(this);
 		return formula->set_status(status, testing);
 	}
-	if ((this->status >= F_TRUE && status <= T_FALSE)
-			|| (this->status <= T_FALSE && status >= F_TRUE))
+	if (((this->status == F_TRUE || this->status == F_TRUE + testing) && status <= T2_FALSE)
+			|| ((this->status == F_FALSE || this->status == F_FALSE + testing) && status >= F_TRUE))
 	{
+		std::cout << "Fact::set_status " << this->symbol << " : " << this->status << " " << status << std::endl;
 		if (!testing)
 			error_n_exit("Contradiction in the facts...\n");
 		else
 			return ERROR;
 	}
-	if (this->status != PENDING)
+	if (this->status == status || this->status == F_TRUE || this->status == F_FALSE)
 		return NON_ACTUALISED;
+	if (testing == 2 && this->status + 1 == status)
+		status -= 2;
 	this->status = status;
 	return ACTUALISED;
 }
 
-int	Fact::compute_status(bool testing)
+int	Fact::compute_status(int testing)
 {
 	if (this->type == FORMULA)
 	{
@@ -68,6 +71,20 @@ int	Fact::compute_status(bool testing)
 	else
 	{
 		return NON_ACTUALISED;
+	}
+}
+
+void	Fact::clean(void)
+{
+	if (this->type == FORMULA)
+	{
+		Formula *formula = static_cast<Formula *>(this);
+		formula->clean();
+	}
+	else
+	{
+		if (this->status != F_TRUE && this->status != F_FALSE)
+			this->status = PENDING;
 	}
 }
 

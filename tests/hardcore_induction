@@ -3,4 +3,25 @@ A => B + C ^ D
 D => E | F
 E + C => D
 F => A
-?BCDEF
+? ABCDEF
+
+#should be
+# bonus :
+# A = 1
+# B = 1
+# C = 0
+# D = 0
+# E = 0
+# F = 0
+
+# normal
+# for BDF:
+# B = 1
+# D = 1
+# F = 1
+# for BC(F)
+# B = 1
+# C = 1
+# (F = 0)
+# else
+# Contradiction

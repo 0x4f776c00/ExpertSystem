@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 18:46:45 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/27 20:50:16 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,26 @@ class Formula : public Fact
 		Formula(int type, Fact *f1, Fact *f2, int relation);
 		~Formula(void);
 
-		static e_status	xor_operator(e_status, e_status);
-		static e_status	or_operator(e_status, e_status);
-		static e_status	and_operator(e_status, e_status);
-		static e_status	not_operator(e_status, e_status);
+		static int	xor_operator(int, int, int);
+		static int	or_operator(int, int, int);
+		static int	and_operator(int, int, int);
+		static int	not_operator(int, int, int);
 
-		static int	xor_propagate(Formula&, bool);
-		static int	or_propagate(Formula&, bool);
-		static int	and_propagate(Formula&, bool);
-		static int	not_propagate(Formula&, bool);
+		static int	xor_propagate(Formula&, int);
+		static int	or_propagate(Formula&, int);
+		static int	and_propagate(Formula&, int);
+		static int	not_propagate(Formula&, int);
 
-		int	set_status(e_status status, bool testing);
-		e_status	get_status(void);
-		e_status	get_state(void);
-		int	compute_status(bool testing);
-		int	propagate_status(bool testing);
+		int	set_status(int status, int testing);
+		int	get_status(int testing);
+		int	get_state(void);
+		int	compute_status(int testing);
+		int	propagate_status(int testing);
+		void	clean(void);
 
 	private:
-		static e_status		(*tab_operators[NB_OPERATOR])(e_status, e_status);
-		static int	(*tab_propagate[NB_OPERATOR])(Formula&, bool);
+		static int		(*tab_operators[NB_OPERATOR])(int, int, int);
+		static int	(*tab_propagate[NB_OPERATOR])(Formula&, int);
 };
 
 std::ostream & operator<<(std::ostream & o, const Formula & formula);

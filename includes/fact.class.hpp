@@ -23,16 +23,17 @@ class Fact : public Hub
 		int			type;
 		const char	symbol;
 		bool		queried;
-		e_status	status;
-		e_status	get_status(void);
+		int			status;
 
-		int	set_status(e_status status, bool testing);
+		int	get_status(int testing);
+		int	set_status(int status, int testing);
 
-		Fact(int type, const char symbol, e_status status);
+		Fact(int type, const char symbol, int status);
 		Fact(void);
 		~Fact(void);
 
-		int	compute_status(bool testing);
+		int		compute_status(int testing);
+		void	clean(void);
 };
 
 std::ostream & operator<<(std::ostream & o, const Fact & fact);

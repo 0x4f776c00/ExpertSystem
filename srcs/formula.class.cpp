@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/27 17:19:15 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/27 22:03:22 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,65 +25,51 @@ Formula::~Formula(void)
 	return ;
 }
 
-e_status	Formula::not_operator(e_status status1, e_status status2)
+int	Formula::not_operator(int status1, int status2, int testing)
 {
 	(void)status2;
 
-	if (status1 == F_FALSE)
-		return F_TRUE;
-	else if (status1 == F_TRUE)
-		return F_FALSE;
-	else if (status1 == T_FALSE)
-		return T_TRUE;
-	else if (status1 == T_TRUE)
-		return T_FALSE;
+	if (status1 == F_FALSE || status1 == F_FALSE + testing)
+		return (F_TRUE + testing);
+	else if (status1 == F_TRUE || status1 == F_TRUE + testing)
+		return (F_FALSE + testing);
 	return PENDING;
 }
 
-e_status	Formula::and_operator(e_status status1, e_status status2)
+int	Formula::and_operator(int status1, int status2, int testing)
 {	
-	if (status1 == F_FALSE || status2 == F_FALSE)
-		return F_FALSE;
-	else if (status1 == F_TRUE && status2 == F_TRUE)
-		return F_TRUE;
-	else if (status1 <= T_FALSE || status2 <= T_FALSE)
-		return T_FALSE;
-	else if (status1 >= F_TRUE && status2 >= F_TRUE)
-		return T_TRUE;
+	if (status1 == F_FALSE || status1 == F_FALSE + testing || status2 == F_FALSE || status2 == F_FALSE + testing)
+		return (F_FALSE + testing);
+	else if ((status1 == F_TRUE || status1 == F_TRUE + testing) && (status2 == F_TRUE || status2 == F_TRUE + testing))
+		return (F_TRUE + testing);
 	return PENDING;
 }
 
-e_status	Formula::or_operator(e_status status1, e_status status2)
+int	Formula::or_operator(int status1, int status2, int testing)
 {
-	if (status1 == F_TRUE || status2 == F_TRUE)
-		return F_TRUE;
-	else if (status1 == F_FALSE && status2 == F_FALSE)
-		return F_FALSE;
-	else if (status1 >= F_TRUE || status2 >= F_TRUE)
-		return T_TRUE;
-	else if (status1 <= T_FALSE && status2 <= T_FALSE)
-		return T_FALSE;
+	if (status1 == F_TRUE || status1 == F_TRUE + testing || status2 == F_TRUE || status2 == F_TRUE + testing)
+		return (F_TRUE + testing);
+	else if ((status1 == F_FALSE || status1 == F_FALSE + testing) && (status2 == F_FALSE || status2 == F_FALSE + testing))
+		return (F_FALSE + testing);
 	return PENDING;
 }
 
-e_status	Formula::xor_operator(e_status status1, e_status status2)
+int	Formula::xor_operator(int status1, int status2, int testing)
 {
-	if ((status1 == F_TRUE && status2 == F_FALSE)
-			|| (status1 == F_FALSE && status2 == F_TRUE))
-		return F_TRUE;
-	else if ((status1 == F_FALSE && status2 == F_FALSE)
-			|| (status1 == F_TRUE && status2 == F_TRUE))
-		return F_FALSE;
-	else if ((status1 >= F_TRUE && status2 <= T_FALSE)
-			|| (status1 <= T_FALSE && status2 >= F_TRUE))
-		return T_TRUE;
-	else if ((status1 <= T_FALSE && status2 <= T_FALSE)
-			|| (status1 >= F_TRUE && status2 >= F_TRUE))
-		return T_FALSE;
+	if (((status1 == F_TRUE || status1 == F_TRUE + testing)
+			&& (status2 == F_FALSE || status2 == F_FALSE + testing))
+			|| ((status1 == F_FALSE || status1 == F_FALSE + testing)
+			&& (status2 == F_TRUE || status2 == F_TRUE + testing)))
+		return (F_TRUE + testing);
+	else if (((status1 == F_FALSE || status1 == F_FALSE + testing)
+			&& (status2 == F_FALSE || status2 == F_FALSE + testing))
+			|| ((status1 == F_TRUE || status1 == F_TRUE + testing)
+			&& (status2 == F_TRUE || status2 == F_TRUE + testing)))
+		return (F_FALSE + testing);
 	return PENDING;
 }
 
-e_status (*Formula::tab_operators[NB_OPERATOR])(e_status, e_status) =
+int (*Formula::tab_operators[NB_OPERATOR])(int, int, int) =
 {
 	Formula::not_operator,
 	Formula::xor_operator,
@@ -91,128 +77,161 @@ e_status (*Formula::tab_operators[NB_OPERATOR])(e_status, e_status) =
 	Formula::and_operator
 };
 
-int	Formula::not_propagate(Formula &formula, bool testing)
+int	Formula::not_propagate(Formula &formula, int testing)
 {
 	int ret = NON_ACTUALISED;
 
-	if (formula.status == F_TRUE)
-		ret = formula.fact1->set_status(F_FALSE, testing);
-	else if (formula.status == F_FALSE)
-		ret = formula.fact1->set_status(F_TRUE, testing);
-	else if (formula.status == T_TRUE)
-		ret = formula.fact1->set_status(T_FALSE, testing);
-	else if (formula.status == T_FALSE)
-		ret = formula.fact1->set_status(T_TRUE, testing);
-
+	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
+		ret = formula.fact1->set_status((F_FALSE + testing), testing);
+	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing)
+		ret = formula.fact1->set_status((F_TRUE + testing), testing);
 	return ret;
 }
 
-int	Formula::and_propagate(Formula &formula, bool testing)
+int	Formula::and_propagate(Formula &formula, int testing)
 {
 	int ret = NON_ACTUALISED;
+	int	status1 = formula.fact1->get_status(testing);
+	int status2 = formula.fact2->get_status(testing);
 
-	if (formula.status == F_TRUE)
+	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
 	{
-		ret = formula.fact1->set_status(F_TRUE, testing);
-		ret |= formula.fact2->set_status(F_TRUE, testing);
-	}
-	else if (formula.status == T_TRUE)
-	{
-		ret = formula.fact1->set_status(T_TRUE, testing);
-		ret |= formula.fact2->set_status(T_TRUE, testing);
+		ret = formula.fact1->set_status((F_TRUE + testing), testing);
+		ret |= formula.fact2->set_status((F_TRUE + testing), testing);
 	}
 	else if (formula.status == F_FALSE && !testing)
 	{
-		if (formula.fact1->get_status() == F_TRUE && formula.fact2->get_status() == F_TRUE)
+		if (status1 == F_TRUE && status2 == F_TRUE)
+		{
+		std::cout << "Formula::and_propagate" << std::endl;
+
 			error_n_exit("Contradiction in the facts...\n");
+		}
 	}
 	else
 	{
-		if (formula.fact1->get_status() >= F_TRUE && formula.fact2->get_status() >= F_TRUE)
+		if ((status1 == F_TRUE || status1 == F_TRUE + testing)
+				&& (status2 == F_TRUE || status2 == F_TRUE + testing))
 			return ERROR;
 	}
 	return ret;
 }
 
-int	Formula::or_propagate(Formula &formula, bool testing)
+int	Formula::or_propagate(Formula &formula, int testing)
 {
-	(void)testing;
-	(void)formula;
+	int ret;
+	int status1 = formula.fact1->get_status(testing);
+	int status2 = formula.fact2->get_status(testing);
+
+	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
+	{
+		if ((status1 == F_FALSE ||status1 == F_FALSE + testing)
+				&& (status2 == F_FALSE || status2 == F_FALSE + testing))
+		{
+		std::cout << "Formula::or_propagate1" << std::endl;
+
+			if (testing)
+				return ERROR;
+			error_n_exit("Contradiction in the facts...\n");
+		}
+		else if (status1 == F_FALSE || status1 == F_FALSE + testing)
+		{
+			return formula.fact2->set_status((F_TRUE + testing), testing);
+		}
+		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
+		{
+			return formula.fact1->set_status((F_TRUE + testing), testing);
+		}
+	}
+	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing)
+	{
+		if (status1 == F_TRUE || status1 == F_TRUE + testing
+				|| status2 == F_TRUE || status2 == F_TRUE + testing)
+		{
+		std::cout << "Formula::or_propagate2" << std::endl;
+
+			if (testing)
+				return ERROR;
+			error_n_exit("Contradiction in the facts...\n");
+		}
+		else
+		{
+			ret = formula.fact1->set_status((F_FALSE + testing), testing);
+			return (ret | formula.fact2->set_status((F_FALSE + testing), testing));
+		}
+	}
 	return NON_ACTUALISED;
 }
 
-int	Formula::xor_propagate(Formula &formula, bool testing)
+int	Formula::xor_propagate(Formula &formula, int testing)
 {
-	if (formula.status >= F_TRUE)
+	int status1 = formula.fact1->get_status(testing);
+	int status2 = formula.fact2->get_status(testing);
+
+	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
 	{
-		if ((formula.fact1->get_status() >= F_TRUE && formula.fact2->get_status() >= F_TRUE) || (formula.fact1->get_status() <= T_FALSE && formula.fact2->get_status() <= T_FALSE))
+		if (((status1 == F_TRUE || status1 == F_TRUE + testing)
+				&& (status2 == F_TRUE || status2 == F_TRUE + testing))
+				|| ((status1 == F_FALSE || status1 == F_FALSE + testing)
+				&& (status2 == F_FALSE || status2 == F_FALSE + testing)))
 		{
-			if (!testing)
+		std::cout << "Formula::xor_propagate1" << std::endl;
+
+			if (testing)
 				return ERROR;
-			error_n_exit("Contradiction in the facts...\n");			
+			error_n_exit("Contradiction in the facts...\n");
 		}
-		else if (formula.fact1->get_status() >= F_TRUE)
+		else if (status1 == F_TRUE || status1 == F_TRUE + testing)
 		{
-			if (!testing)
-				return formula.fact2->set_status(F_FALSE, testing);
-			return formula.fact2->set_status(T_FALSE, testing);
+			return formula.fact2->set_status((F_FALSE + testing), testing);
 		}
-		else if (formula.fact2->get_status() >= F_TRUE)
+		else if (status2 == F_TRUE || status2 == F_TRUE + testing)
 		{
-			if (!testing)
-				return formula.fact1->set_status(F_FALSE, testing);
-			return formula.fact1->set_status(T_FALSE, testing);
+			return formula.fact1->set_status((F_FALSE + testing), testing);
 		}
-		else if (formula.fact1->get_status() <= T_FALSE)
+		else if (status1 == F_FALSE || status1 == F_FALSE + testing)
 		{
-			if (!testing)
-				return formula.fact2->set_status(F_TRUE, testing);
-			return formula.fact2->set_status(T_TRUE, testing);
+			return formula.fact2->set_status((F_TRUE + testing), testing);
 		}
-		else if (formula.fact2->get_status() <= T_FALSE)
+		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
 		{
-			if (!testing)
-				return formula.fact1->set_status(F_TRUE, testing);
-			return formula.fact1->set_status(T_TRUE, testing);
+			return formula.fact1->set_status((F_TRUE + testing), testing);
 		}
 	}
 	else
 	{
-		if ((formula.fact1->get_status() >= F_TRUE && formula.fact2->get_status() <= T_FALSE) || (formula.fact1->get_status() <= T_FALSE && formula.fact2->get_status() >= F_TRUE))
+		if (((status1 == F_TRUE || status1 == F_TRUE + testing)
+				&& (status2 == F_FALSE || status2 == F_FALSE + testing))
+				|| ((status1 == F_FALSE || status1 == F_FALSE + testing)
+				&& (status2 == F_TRUE || status2 == F_TRUE + testing)))
 		{
-			if (!testing)
+		std::cout << "Formula::xor_propagate2" << std::endl;
+
+			if (testing)
 				return ERROR;
 			error_n_exit("Contradiction in the facts...\n");			
 		}
-		else if (formula.fact1->get_status() >= F_TRUE)
+		else if (status1 == F_TRUE || status1 == F_TRUE + testing)
 		{
-			if (!testing)
-				return formula.fact2->set_status(F_TRUE, testing);
-			return formula.fact2->set_status(T_TRUE, testing);
+			return formula.fact2->set_status((F_TRUE + testing), testing);
 		}
-		else if (formula.fact2->get_status() >= F_TRUE)
+		else if (status2 == F_TRUE || status2 == F_TRUE + testing)
 		{
-			if (!testing)
-				return formula.fact1->set_status(F_TRUE, testing);
-			return formula.fact1->set_status(T_TRUE, testing);
+			return formula.fact1->set_status((F_TRUE + testing), testing);
 		}
-		else if (formula.fact1->get_status() <= T_FALSE)
+		else if (status1 == F_FALSE || status1 == F_FALSE + testing)
 		{
-			if (!testing)
-				return formula.fact2->set_status(F_FALSE, testing);
-			return formula.fact2->set_status(T_FALSE, testing);
+			return formula.fact2->set_status((F_FALSE + testing), testing);
 		}
-		else if (formula.fact2->get_status() <= T_FALSE)
+		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
 		{
-			if (!testing)
-				return formula.fact1->set_status(F_FALSE, testing);
-			return formula.fact1->set_status(T_FALSE, testing);
+			return formula.fact1->set_status((F_FALSE + testing), testing);
 		}
 	}
 	return NON_ACTUALISED;
 }
 
-int (*Formula::tab_propagate[NB_OPERATOR])(Formula&, bool) =
+int (*Formula::tab_propagate[NB_OPERATOR])(Formula&, int) =
 {
 	Formula::not_propagate,
 	Formula::xor_propagate,
@@ -220,59 +239,72 @@ int (*Formula::tab_propagate[NB_OPERATOR])(Formula&, bool) =
 	Formula::and_propagate
 };
 
-int	Formula::propagate_status(bool testing)
+int	Formula::propagate_status(int testing)
 {
 	return tab_propagate[this->relation](*this, testing);
 }
 
-int	Formula::set_status(e_status status, bool testing)
+int	Formula::set_status(int status, int testing)
 {
 	int ret = ACTUALISED;
 
-	if ((this->status >= T_TRUE && status <= F_FALSE)
-			|| (this->status <= F_FALSE && status >= T_TRUE))
+	if (((this->status == F_TRUE || this->status == F_TRUE + testing) && status == F_FALSE + testing)
+			|| ((this->status == F_FALSE || this->status == F_FALSE + testing) && status == F_TRUE + testing))
 	{
+		std::cout << "Formula::set_status" << std::endl;
+
 		if (!testing)
 			error_n_exit("Contradiction in the facts...\n");
 		else
 			return ERROR;
 	}
-	if (this->status != PENDING)
+	if (this->status == status || this->status == F_TRUE || this->status == F_FALSE)
 	{
+		status = this->status;
 		ret = NON_ACTUALISED;
 	}
+	if (testing == 2 && this->status + 1 == status)
+		status -= 2;
 	this->status = status;
 	ret |= this->propagate_status(testing);
 	return ret;
 }
 
-e_status	Formula::get_status(void)
+int	Formula::get_status(int testing)
 {
 	if (this->fact2)
-		return tab_operators[this->relation](this->fact1->get_status(), this->fact2->get_status());
+		return tab_operators[this->relation](this->fact1->get_status(testing), this->fact2->get_status(testing), testing);
 	return this->status;
 }
 
-int	Formula::compute_status(bool testing)
+int	Formula::compute_status(int testing)
 {
-	e_status	status2 = F_TRUE;
-	e_status	prev_status = this->get_status();
+	int	status2 = F_TRUE + testing;
+	int	prev_status = this->get_status(testing);
 	int	ret = NON_ACTUALISED;
-	if (testing)
-		status2 = T_TRUE;
+
 	ret = this->fact1->compute_status(testing);
 	if (this->fact2 != nullptr)
 	{
 		ret |= this->fact2->compute_status(testing);
 		if (ret & ERROR)
 			return ERROR;
-		status2 = this->fact2->get_status();
+		status2 = this->fact2->get_status(testing);
 	}
-	if (this->set_status(tab_operators[this->relation](this->fact1->get_status(), status2), testing) == ERROR)
+	if (this->set_status(tab_operators[this->relation](this->fact1->get_status(testing), status2, testing), testing) == ERROR)
 		return ERROR;
-	if (this->get_status() != prev_status)
+	if (this->get_status(testing) != prev_status)
 		return ACTUALISED;
 	return ret;
+}
+
+void	Formula::clean()
+{
+	if (this->status != F_TRUE && this->status != F_FALSE)
+		this->status = PENDING;
+	this->fact1->clean();
+	if (this->fact2)
+		this->fact2->clean();
 }
 
 std::ostream & operator<<(std::ostream & o, const Formula & formula)
