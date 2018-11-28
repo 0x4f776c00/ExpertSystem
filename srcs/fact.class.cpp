@@ -46,15 +46,17 @@ int	Fact::set_status(int status, int testing)
 		Formula *formula = static_cast<Formula *>(this);
 		return formula->set_status(status, testing);
 	}
-	if (((this->status == F_TRUE || this->status == F_TRUE + testing) && status <= T2_FALSE)
-			|| ((this->status == F_FALSE || this->status == F_FALSE + testing) && status >= F_TRUE))
+	if (((this->status == F_TRUE || this->status == F_TRUE + testing)
+			&& status <= T2_FALSE) || ((this->status == F_FALSE
+			|| this->status == F_FALSE + testing)
+			&& status >= F_TRUE && mode_bonus))
 	{
 		if (!testing)
 			error_n_exit("Contradiction in the facts...\n");
 		else
 			return ERROR;
 	}
-	if (this->status == status || this->status == F_TRUE || this->status == F_FALSE)
+	if (this->status == status || (status >= F_TRUE && this->status == F_TRUE) || (status <= T2_FALSE && this->status == F_FALSE))
 		return NON_ACTUALISED;
 	if (testing == 2 && this->status + 1 == status)
 	{
