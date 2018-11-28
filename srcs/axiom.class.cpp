@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 14:24:57 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 16:35:04 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,7 @@ int		Axiom::compute_axiom(int testing)
 			return ERROR;
 		if (status_before != this->fact2->get_status(testing))
 			ret |= ACTUALISED;
-		if (this->fact2->type == FORMULA)
-		{
-			Formula *formula = static_cast<Formula *>(this->fact2);
-			ret |= formula->propagate_status(testing);
-		}
+		ret |= this->fact2->compute_propagate_status(testing);
 	}
 	if (this->biconditional && (this->fact2->get_status(testing) == F_TRUE
 			|| this->fact2->get_status(testing) == F_TRUE + testing
@@ -57,11 +53,7 @@ int		Axiom::compute_axiom(int testing)
 			return ERROR;
 		if (status_before != this->fact1->get_status(testing))
 			ret |= ACTUALISED;
-		if (this->fact2->type == FORMULA)
-		{
-			Formula *formula = static_cast<Formula *>(this->fact2);
-			ret |= formula->propagate_status(testing);
-		}
+		ret |= this->fact1->compute_propagate_status(testing);
 	}
 	return ret;
 }
