@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 15:22:10 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 14:50:01 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 15:36:05 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	try_induction(Hub *hub)
 	for (std::vector <Fact> :: iterator it = hub->facts.begin();
 				it != hub->facts.end(); it++)
 	{
-		if (it->status == PENDING)
+		if (it->used == true && it->status == PENDING)
 		{
 			it->status = T1_FALSE;
 			has_actualized = induction(hub, 1);

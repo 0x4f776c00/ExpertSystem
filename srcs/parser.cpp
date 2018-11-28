@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/23 18:12:36 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 15:32:48 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,22 @@ static void		get_queries(std::vector <std::vector <Token>> :: iterator line, Hub
 	{
 		if ((*i).type != FACT)
 			error_n_exit("Non factual query");
+		hub->facts[(*i).symbol - 'A'].used = true;
 		hub->queries += (*i).symbol;
 	}
 }
 
-static void		fact_set_true(char symbol, Hub *hub)
+static void		fact_set_truth(char symbol, int status, Hub *hub)
 {
 	for (std::vector <Fact> :: iterator i = (*hub).facts.begin(); i != (*hub).facts.end(); i++)
 	{
 		if ((*i).symbol == symbol)
 		{
-			(*i).status = F_TRUE;
+			if ((*i).set == true)
+				error_n_exit("Fact's truth set twice");
+			(*i).set = true;
+			(*i).used = true;
+			(*i).status = status;
 			return ;
 		}
 	}
@@ -38,13 +43,23 @@ static void		fact_set_true(char symbol, Hub *hub)
 
 static void		get_truth(std::vector <std::vector <Token>> :: iterator line, Hub *hub)
 {
+	int	status;
 	std::vector <Token> :: iterator i = (*line).begin();
 	i++;
+
 	for (; i != (*line).end(); i++)
 	{
+		status = F_TRUE;
+		if ((*i).symbol == '!')
+		{
+			status = F_FALSE;
+			i++;
+			if (i == (*line).end())
+				error_n_exit("The void can't be false");
+		}
 		if ((*i).type != FACT)
-			error_n_exit(" an undefined fact");
-		fact_set_true((*i).symbol, hub);
+			error_n_exit("Non-factual truth attribution");
+		fact_set_truth((*i).symbol, status, hub);
 	}
 }
 
@@ -93,7 +108,10 @@ static Fact	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 		}
 	}
 	if (begin == end - 1)
+	{
+		hub->facts[line[begin].symbol - 'A'].used = true;
 		return &hub->facts[line[begin].symbol - 'A'];
+	}
 	if (priority == -1)
 		error_n_exit("Error in formula");
 	if (priority == NOT)

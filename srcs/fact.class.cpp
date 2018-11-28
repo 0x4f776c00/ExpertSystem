@@ -15,6 +15,8 @@
 Fact::Fact(int type, const char symbol, int status) : type(type), symbol(symbol), status(status)
 {
 	this->queried = false;
+	this->used = false;
+	this->set = false;
 }
 
 Fact::Fact(void) : symbol('\0')

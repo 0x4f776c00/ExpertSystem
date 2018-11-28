@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 14:50:20 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 15:36:25 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ enum e_relations {NOT, XOR, OR, AND};
 
 # define FORMULA		1
 # define NB_OPERATOR	4
-# define NB_SNARK		3
+# define NB_SNARK		6
 # define NON_ACTUALISED	0
 # define ACTUALISED		1
 # define ERROR			2
@@ -42,6 +42,9 @@ constexpr const char *snark_tab[NB_SNARK] =
 	"You are bad, and you should feel bad.",
 	"Unbelievable. You, [subject name here], must be the pride of [subject hometown here]!",
 	"Well done. Here come the test results: \"You are a horrible person.\" That's what it says. We weren't even testing for that."
+	"Please be advised that a noticeable taste of blood is not part of any test protocol."
+	"The Enrichment Center regrets to inform you that this next test is impossible. Make no attempt to solve it."
+	"No further compliance information is required or will be provided, and you are an excellent test subject!"
 };
 
 extern bool	is_restart;
