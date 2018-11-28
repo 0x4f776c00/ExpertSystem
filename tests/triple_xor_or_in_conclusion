@@ -1,8 +1,8 @@
-A => B ^ C ^ D # | D ^ E ^ F
+A => (B ^ (C ^ D)) | (D ^ (E ^ F))
 B => C
 C => D
 E => F
 F => C
 F => D
-= A
+= AC
 ?BCDEF

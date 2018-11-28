@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 19:04:03 by justasze         ###   ########.fr       */
+/*   Updated: 2018/11/28 19:08:41 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 {
 	int status1 = formula.fact1->get_status(testing);
 	int status2 = formula.fact2->get_status(testing);
-	// std::cout << "formula : " << formula.status << " fact1 : " << status1 << "fact2 : " << status2 << std::endl;
 
 	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
 	{
@@ -236,7 +235,6 @@ int	Formula::set_status(int status, int testing)
 		is_restart = true;
 	}
 	this->status = status;
-	// ret |= this->propagate_status(testing);
 	return ret;
 }
 
