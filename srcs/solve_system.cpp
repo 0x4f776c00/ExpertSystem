@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 15:22:10 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 16:53:33 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 17:07:28 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	try_induction(Hub *hub)
 			if (has_actualized & ERROR)
 			{
 				clean_induction(hub);
+				std::cout << "set " << it->symbol << " to F_TRUE" << std::endl;
 				it->status = F_TRUE;
 				solve_system(hub);
 				return ;
@@ -65,6 +66,8 @@ static void	try_induction(Hub *hub)
 			clean_induction(hub);
 			if (has_actualized & ERROR)
 			{
+				std::cout << "set " << it->symbol << " to F_FALSE" << std::endl;
+
 				it->status = F_FALSE;
 				solve_system(hub);
 				return ;

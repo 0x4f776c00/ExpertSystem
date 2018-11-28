@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 16:57:25 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 17:11:11 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 {
 	int status1 = formula.fact1->get_status(testing);
 	int status2 = formula.fact2->get_status(testing);
+	// std::cout << "formula : " << formula.status << " fact1 : " << status1 << "fact2 : " << status2 << std::endl;
 
 	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
 	{
@@ -176,7 +177,7 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
 			return formula.fact1->set_status((F_TRUE + testing), testing);
 	}
-	else
+	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing)
 	{
 		if (((status1 == F_TRUE || status1 == F_TRUE + testing)
 				&& (status2 == F_FALSE || status2 == F_FALSE + testing))
@@ -272,7 +273,6 @@ int	Formula::compute_propagate_status(int testing)
 	int ret;
 
 	ret = this->propagate_status(testing);
-
 	if (ret == ERROR)
 		return ret;
 	ret |= this->fact1->compute_propagate_status(testing);
@@ -284,8 +284,6 @@ int	Formula::compute_propagate_status(int testing)
 		if (ret & ERROR)
 			return ERROR;
 	}
-	ret |= this->propagate_status(testing);
-
 	return ret;
 }
 
