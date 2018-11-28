@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solve_system.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 15:22:10 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/27 23:50:09 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 15:13:16 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	try_induction(Hub *hub)
 	for (std::vector <Fact> :: iterator it = hub->facts.begin();
 				it != hub->facts.end(); it++)
 	{
-		if (it->status == PENDING)
+		if (it->used == true && it->status == PENDING)
 		{
 			it->status = T1_FALSE;
 			has_actualized = induction(hub, 1);

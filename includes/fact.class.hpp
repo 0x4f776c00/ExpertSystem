@@ -23,6 +23,8 @@ class Fact : public Hub
 		int			type;
 		const char	symbol;
 		bool		queried;
+		bool		used;
+		bool		set;
 		int			status;
 
 		int	get_status(int testing);
