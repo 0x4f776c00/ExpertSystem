@@ -2,7 +2,7 @@ B => A
 C => A
 
 ?A
-=
+=BC
 
 # With =, A is false
 # With =B, A is true

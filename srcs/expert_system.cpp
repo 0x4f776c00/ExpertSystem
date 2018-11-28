@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/11/28 19:52:22 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/29 00:20:20 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,6 @@ static void	create_facts(Hub *hub, int default_status)
 {
 	for (int i = 0; i < 26; i++)
 		hub->facts.push_back(Fact(0, 'A' + i, default_status));
-}
-
-static void	set_queries(Hub *hub)
-{
-	for (size_t it = 0; it < hub->queries.length(); it++)
-	{
-		if (hub->facts[hub->queries[it] - 'A'].set == false)
-			hub->facts[hub->queries[it] - 'A'].status = PENDING;
-	}
 }
 
 static void	display_system(Hub *hub)
@@ -68,7 +59,6 @@ int		main(int ac, char **av)
 	std::srand(std::time(NULL));
 	create_facts(&hub, default_status);
 	get_system(&hub, av[1]);
-	set_queries(&hub);
 	solve_system(&hub);
 	display_system(&hub);
 

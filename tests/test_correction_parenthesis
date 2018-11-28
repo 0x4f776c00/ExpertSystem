@@ -1,8 +1,8 @@
-A | (B + C) => E
+A | B + C => E
 (F | G) + H => E
 
 ? E
-=GH
+=H
 
 # With =, E is false
 
