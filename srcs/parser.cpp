@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 15:32:48 by justasze         ###   ########.fr       */
+/*   Updated: 2018/11/28 19:32:11 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ static Fact	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 			index = i;
 			priority = line[i].operator_type;
 		}
+		if (line[i].type == FACT && i + 1 < end && line[i + 1].operator_type == NOT)
+			error_n_exit("Error in formula");
 	}
 	if (begin == end - 1)
 	{
