@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/27 23:49:39 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 14:50:12 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,10 @@ int	Formula::set_status(int status, int testing)
 		ret = NON_ACTUALISED;
 	}
 	if (testing == 2 && this->status + 1 == status)
+	{
 		status -= 2;
+		is_restart = true;
+	}
 	this->status = status;
 	// ret |= this->propagate_status(testing);
 	return ret;

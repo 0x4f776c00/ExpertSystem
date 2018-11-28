@@ -1,0 +1,5 @@
+C | D => A
+A + B => !B
+E => C | D
+=E
+?ABCDEF

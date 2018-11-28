@@ -55,7 +55,10 @@ int	Fact::set_status(int status, int testing)
 	if (this->status == status || this->status == F_TRUE || this->status == F_FALSE)
 		return NON_ACTUALISED;
 	if (testing == 2 && this->status + 1 == status)
+	{
 		status -= 2;
+		is_restart = true;
+	}
 	this->status = status;
 	return ACTUALISED;
 }
@@ -85,16 +88,6 @@ void	Fact::clean(void)
 		if (this->status != F_TRUE && this->status != F_FALSE)
 			this->status = PENDING;
 	}
-}
-
-int	Fact::propagate_status(int testing)
-{
-	if (this->type == FORMULA)
-	{
-		Formula *formula = static_cast<Formula *>(this);
-		return formula->tab_propagate[formula->relation](*formula, testing);
-	}
-	return PENDING;
 }
 
 std::ostream & operator<<(std::ostream & o, const Fact & fact)

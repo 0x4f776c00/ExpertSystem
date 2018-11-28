@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/27 22:09:32 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 14:50:20 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ constexpr const char *snark_tab[NB_SNARK] =
 	"Unbelievable. You, [subject name here], must be the pride of [subject hometown here]!",
 	"Well done. Here come the test results: \"You are a horrible person.\" That's what it says. We weren't even testing for that."
 };
+
+extern bool	is_restart;
 
 # include "fact.class.hpp"
 # include "hub.class.hpp"

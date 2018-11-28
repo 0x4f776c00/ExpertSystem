@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/27 23:48:13 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 14:24:57 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,27 @@ int		Axiom::compute_axiom(int testing)
 			return ERROR;
 		if (status_before != this->fact2->get_status(testing))
 			ret |= ACTUALISED;
-		ret |= this->fact2->propagate_status(testing);
+		if (this->fact2->type == FORMULA)
+		{
+			Formula *formula = static_cast<Formula *>(this->fact2);
+			ret |= formula->propagate_status(testing);
+		}
 	}
-	if (this->biconditional)
+	if (this->biconditional && (this->fact2->get_status(testing) == F_TRUE
+			|| this->fact2->get_status(testing) == F_TRUE + testing
+			|| this->fact2->get_status(testing) == F_FALSE
+			|| this->fact2->get_status(testing) == F_FALSE + testing))
 	{
 		status_before = this->fact1->get_status(testing);
 		if (this->fact1->set_status(this->fact2->get_status(testing), testing) == ERROR)
 			return ERROR;
 		if (status_before != this->fact1->get_status(testing))
 			ret |= ACTUALISED;
+		if (this->fact2->type == FORMULA)
+		{
+			Formula *formula = static_cast<Formula *>(this->fact2);
+			ret |= formula->propagate_status(testing);
+		}
 	}
 	return ret;
 }

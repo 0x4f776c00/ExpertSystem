@@ -34,7 +34,6 @@ class Fact : public Hub
 
 		int		compute_status(int testing);
 		void	clean(void);
-		int		propagate_status(int testing);
 };
 
 std::ostream & operator<<(std::ostream & o, const Fact & fact);
