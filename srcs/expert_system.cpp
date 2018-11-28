@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/11/29 00:17:51 by justasze         ###   ########.fr       */
+/*   Updated: 2018/11/29 00:18:52 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int		main(int ac, char **av)
 	std::srand(std::time(NULL));
 	create_facts(&hub, default_status);
 	get_system(&hub, av[1]);
+	set_queries(&hub);
 	solve_system(&hub);
 	display_system(&hub);
 
