@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/11/28 15:13:00 by justasze         ###   ########.fr       */
+/*   Updated: 2018/11/28 19:06:42 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	set_queries(Hub *hub)
 {
 	for (size_t it = 0; it < hub->queries.length(); it++)
 	{
-		if (hub->facts[hub->queries[it] - 'A'].status != F_TRUE)
+		if (hub->facts[hub->queries[it] - 'A'].set == false)
 			hub->facts[hub->queries[it] - 'A'].status = PENDING;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 17:11:11 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 19:04:03 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ int	Formula::xor_operator(int status1, int status2, int testing)
 int (*Formula::tab_operators[NB_OPERATOR])(int, int, int) =
 {
 	Formula::not_operator,
-	Formula::xor_operator,
+	Formula::and_operator,
 	Formula::or_operator,
-	Formula::and_operator
+	Formula::xor_operator
 };
 
 int	Formula::not_propagate(Formula &formula, int testing)
@@ -203,9 +203,9 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 int (*Formula::tab_propagate[NB_OPERATOR])(Formula&, int) =
 {
 	Formula::not_propagate,
-	Formula::xor_propagate,
+	Formula::and_propagate,
 	Formula::or_propagate,
-	Formula::and_propagate
+	Formula::xor_propagate
 };
 
 int	Formula::propagate_status(int testing)
