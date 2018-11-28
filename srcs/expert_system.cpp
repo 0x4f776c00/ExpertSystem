@@ -6,7 +6,7 @@
 /*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/11/28 19:06:42 by justasze         ###   ########.fr       */
+/*   Updated: 2018/11/28 19:18:25 by justasze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,13 @@ static void	display_system(Hub *hub)
 {
 	for (size_t it = 0; it < hub->queries.length(); it++)
 	{
-		std::cout << hub->facts[hub->queries[it] - 'A'].symbol << ": "
-			<< hub->facts[hub->queries[it] - 'A'].status << std::endl;
+		std::cout << hub->facts[hub->queries[it] - 'A'].symbol << ": ";
+		if (hub->facts[hub->queries[it] - 'A'].status == F_TRUE)
+			std::cout << "True." << std::endl;
+		else if (hub->facts[hub->queries[it] - 'A'].status == F_FALSE)
+			std::cout << "False." << std::endl;
+		else
+			std::cout << "Unknownable." << std::endl;
 	}
 }
 
