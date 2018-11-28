@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 15:36:25 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 16:31:57 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ enum e_relations {NOT, XOR, OR, AND};
 
 # define FORMULA		1
 # define NB_OPERATOR	4
-# define NB_SNARK		6
+# define NB_SNARK		15
 # define NON_ACTUALISED	0
 # define ACTUALISED		1
 # define ERROR			2
@@ -39,12 +39,21 @@ enum e_relations {NOT, XOR, OR, AND};
 
 constexpr const char *snark_tab[NB_SNARK] =
 {
-	"You are bad, and you should feel bad.",
 	"Unbelievable. You, [subject name here], must be the pride of [subject hometown here]!",
-	"Well done. Here come the test results: \"You are a horrible person.\" That's what it says. We weren't even testing for that."
-	"Please be advised that a noticeable taste of blood is not part of any test protocol."
-	"The Enrichment Center regrets to inform you that this next test is impossible. Make no attempt to solve it."
-	"No further compliance information is required or will be provided, and you are an excellent test subject!"
+	"Well done. Here come the test results: \"You are a horrible person.\" That's what it says. We weren't even testing for that.",
+	"Please be advised that a noticeable taste of blood is not part of any test protocol.",
+	"The Enrichment Center regrets to inform you that this next test is impossible. Make no attempt to solve it.",
+	"No further compliance information is required or will be provided, and you are an excellent test subject!",
+	"Congratulations! The test is now over.",
+	"We are very, very happy for your success.",
+	"Where do you think you're going? Because I don't think you're going where you think you're going.",
+	"Okay. I am going to kill you now.",
+	"I feel sorry for you, really, because you're not even in the right place.",
+	"It's funny, actually, when you think about it.",
+	"You're not a good person. You know that, right?",
+	"This is your fault. It didn't have to be like this.",
+	"That crazy thing is not part of any test protocol.",
+	"If it makes you feel any better, science has now validated your birth mother's decision to abandon you on a doorstep."
 };
 
 extern bool	is_restart;

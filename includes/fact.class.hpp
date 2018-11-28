@@ -35,6 +35,7 @@ class Fact : public Hub
 		~Fact(void);
 
 		int		compute_status(int testing);
+		int		compute_propagate_status(int testing);
 		void	clean(void);
 };
 

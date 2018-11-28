@@ -78,6 +78,19 @@ int	Fact::compute_status(int testing)
 	}
 }
 
+int	Fact::compute_propagate_status(int testing)
+{
+	if (this->type == FORMULA)
+	{
+		Formula *formula = static_cast<Formula *>(this);
+		return formula->compute_propagate_status(testing);
+	}
+	else
+	{
+		return NON_ACTUALISED;
+	}
+}
+
 void	Fact::clean(void)
 {
 	if (this->type == FORMULA)

@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 14:50:12 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/28 16:57:25 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,28 @@ int	Formula::compute_status(int testing)
 		return ERROR;
 	if (this->get_status(testing) != prev_status)
 		return ACTUALISED;
+	return ret;
+}
+
+int	Formula::compute_propagate_status(int testing)
+{
+	int ret;
+
+	ret = this->propagate_status(testing);
+
+	if (ret == ERROR)
+		return ret;
+	ret |= this->fact1->compute_propagate_status(testing);
+	if (ret & ERROR)
+		return ret;
+	if (this->fact2 != nullptr)
+	{
+		ret |= this->fact2->compute_propagate_status(testing);
+		if (ret & ERROR)
+			return ERROR;
+	}
+	ret |= this->propagate_status(testing);
+
 	return ret;
 }
 
