@@ -1,7 +1,7 @@
 B + !C => A
 
 ?A
-=
+=CB
 
 # With =, A is false
 # With =B, A is true

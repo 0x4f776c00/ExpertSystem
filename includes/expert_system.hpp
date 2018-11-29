@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 19:02:23 by justasze         ###   ########.fr       */
+/*   Updated: 2018/11/28 19:51:08 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ constexpr const char *snark_tab[NB_SNARK] =
 };
 
 extern bool	is_restart;
+extern bool	mode_bonus;
 
 # include "fact.class.hpp"
 # include "hub.class.hpp"

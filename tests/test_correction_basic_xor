@@ -3,7 +3,7 @@ D ^ E => B
 B => C
 
 ?A
-=E
+=
 
 # With =, A is false
 # With =D, a is true

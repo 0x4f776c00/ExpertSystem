@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formula.class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 19:08:41 by justasze         ###   ########.fr       */
+/*   Updated: 2018/11/28 23:58:30 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	Formula::and_propagate(Formula &formula, int testing)
 		if (status1 == F_TRUE && status2 == F_TRUE)
 			error_n_exit("Contradiction in the facts...\n");
 	}
-	else
+	else if (formula.status == F_FALSE && testing)
 	{
 		if ((status1 == F_TRUE || status1 == F_TRUE + testing)
 				&& (status2 == F_TRUE || status2 == F_TRUE + testing))
@@ -216,15 +216,18 @@ int	Formula::set_status(int status, int testing)
 {
 	int ret = ACTUALISED;
 
-	if (((this->status == F_TRUE || this->status == F_TRUE + testing) && status == F_FALSE + testing)
-			|| ((this->status == F_FALSE || this->status == F_FALSE + testing) && status == F_TRUE + testing))
+	if (((this->status == F_TRUE || this->status == F_TRUE + testing)
+			&& status == F_FALSE + testing) || ((this->status == F_FALSE
+			|| this->status == F_FALSE + testing)
+			&& status == F_TRUE + testing && mode_bonus))
 	{
 		if (!testing)
 			error_n_exit("Contradiction in the facts...\n");
 		else
 			return ERROR;
 	}
-	if (this->status == status || this->status == F_TRUE || this->status == F_FALSE)
+	if (this->status == status || (status >= F_TRUE && this->status == F_TRUE)
+			|| (status <= T2_FALSE && this->status == F_FALSE))
 	{
 		status = this->status;
 		ret = NON_ACTUALISED;
@@ -241,7 +244,8 @@ int	Formula::set_status(int status, int testing)
 int	Formula::get_status(int testing)
 {
 	if (this->fact2)
-		return tab_operators[this->relation](this->fact1->get_status(testing), this->fact2->get_status(testing), testing);
+		return tab_operators[this->relation](this->fact1->get_status(testing),
+				this->fact2->get_status(testing), testing);
 	return this->status;
 }
 
