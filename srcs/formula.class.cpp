@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 23:58:30 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/29 18:37:00 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	Formula::and_propagate(Formula &formula, int testing)
 		if (status1 == F_TRUE && status2 == F_TRUE)
 			error_n_exit("Contradiction in the facts...\n");
 	}
-	else if (formula.status == F_FALSE && testing)
+	else if (formula.status <= T2_FALSE && testing)
 	{
 		if ((status1 == F_TRUE || status1 == F_TRUE + testing)
 				&& (status2 == F_TRUE || status2 == F_TRUE + testing))
@@ -121,7 +121,7 @@ int	Formula::or_propagate(Formula &formula, int testing)
 
 	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
 	{
-		if ((status1 == F_FALSE ||status1 == F_FALSE + testing)
+		if ((status1 == F_FALSE || status1 == F_FALSE + testing)
 				&& (status2 == F_FALSE || status2 == F_FALSE + testing))
 		{
 			if (testing)
@@ -132,6 +132,12 @@ int	Formula::or_propagate(Formula &formula, int testing)
 			return formula.fact2->set_status((F_TRUE + testing), testing);
 		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
 			return formula.fact1->set_status((F_TRUE + testing), testing);
+		if (status1 == S_FALSE && status2 == S_FALSE)
+		{
+			formula.fact1->set_status((PENDING), testing);
+			formula.fact2->set_status((PENDING), testing);
+			return ACTUALISED;
+		}
 	}
 	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing)
 	{
@@ -218,16 +224,14 @@ int	Formula::set_status(int status, int testing)
 
 	if (((this->status == F_TRUE || this->status == F_TRUE + testing)
 			&& status == F_FALSE + testing) || ((this->status == F_FALSE
-			|| this->status == F_FALSE + testing)
-			&& status == F_TRUE + testing && mode_bonus))
+			|| this->status == F_FALSE + testing) && status == F_TRUE + testing))
 	{
 		if (!testing)
 			error_n_exit("Contradiction in the facts...\n");
 		else
 			return ERROR;
 	}
-	if (this->status == status || (status >= F_TRUE && this->status == F_TRUE)
-			|| (status <= T2_FALSE && this->status == F_FALSE))
+	if (this->status == status || this->status == F_TRUE || this->status == F_FALSE)
 	{
 		status = this->status;
 		ret = NON_ACTUALISED;

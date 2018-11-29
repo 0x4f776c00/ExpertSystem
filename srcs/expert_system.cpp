@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expert_system.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/11/29 14:01:12 by justasze         ###   ########.fr       */
+/*   Updated: 2018/11/29 18:37:49 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
-
-bool	mode_bonus = false;
 
 static int	usage()
 {
@@ -48,13 +46,10 @@ int		main(int ac, char **av)
 	if (ac < 2)
 		return (usage());
 
-	default_status = F_FALSE;
+	default_status = S_FALSE;
 
 	if (ac == 3 && !strcmp(av[2], "-b"))
-	{
 		default_status = PENDING;
-		mode_bonus = true;
-	}
 
 	std::srand(std::time(NULL));
 	create_facts(&hub, default_status);

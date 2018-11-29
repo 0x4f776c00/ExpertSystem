@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 19:51:08 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/29 18:37:30 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ enum e_relations {NOT, AND, OR, XOR};
 # define ACTUALISED		1
 # define ERROR			2
 
+# define S_FALSE	-4
 # define F_FALSE	-3
 # define T1_FALSE	-2
 # define T2_FALSE	-1
@@ -57,7 +58,6 @@ constexpr const char *snark_tab[NB_SNARK] =
 };
 
 extern bool	is_restart;
-extern bool	mode_bonus;
 
 # include "fact.class.hpp"
 # include "hub.class.hpp"
