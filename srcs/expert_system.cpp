@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/11/29 18:37:49 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/29 22:56:31 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,74 @@ static void	display_system(Hub *hub)
 	}
 }
 
+static void	queried_arg(char *queries, Hub *hub)
+{
+	for (int i = 1; queries[i]; i++)
+	{
+		if ((uint)(queries[i] - 'A') < 26)
+		{
+			hub->facts[queries[i] - 'A'].used = true;
+			hub->queries += queries[i];
+		}
+		else
+			error_n_exit("Non factual query");
+	}
+}
+
+static void		fact_set_truth_arg(char *truth, Hub *hub)
+{
+	int	status;
+	for (int i = 1; truth[i]; i++)
+	{
+		status = F_TRUE;
+		if (truth[i] == '!' && truth[i + 1])
+		{
+			status = F_FALSE;
+			i++;
+		}
+		if ((uint)(truth[i] - 'A') < 26)
+		{
+			if (hub->facts[truth[i] - 'A'].set == true)
+				error_n_exit("Fact's truth set twice");
+			hub->facts[truth[i] - 'A'].set = true;
+			hub->facts[truth[i] - 'A'].used = true;
+			hub->facts[truth[i] - 'A'].status = status;
+		}
+		else
+			error_n_exit("Non factual fact's truth");
+	}
+}
+
+static void	get_args(int ac, char **av, Hub *hub)
+{
+	while (ac-- > 2)
+	{
+		if (!strcmp(av[ac], "-b"))
+			continue ;
+		else if (av[ac][0] == '=')
+			fact_set_truth_arg(av[ac], hub);
+		else if (av[ac][0] == '?')
+			queried_arg(av[ac], hub);
+		else
+			error_n_exit("Two files specifieds or wrong argument");
+	}
+}
+
 int		main(int ac, char **av)
 {
-	Hub			hub;
-	int	default_status;
-
-	if (ac < 2)
-		return (usage());
+	Hub		hub;
+	int		default_status;
 
 	default_status = S_FALSE;
-
-	if (ac == 3 && !strcmp(av[2], "-b"))
+	if (ac < 2)
+		return (usage());
+	if (ac > 2 && !strcmp(av[2], "-b"))
 		default_status = PENDING;
 
 	std::srand(std::time(NULL));
 	create_facts(&hub, default_status);
 	get_system(&hub, av[1]);
+	get_args(ac, av, &hub);
 	solve_system(&hub);
 	display_system(&hub);
 
