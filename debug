@@ -1,3 +1,7 @@
-b0c0d99d75f0b7f3f85946652acf7d7fea509d1a Logs deleted. Final display with words instead of values. -> Good
+From ancient most ancient to most recent
+
+b0c0d99d75f0b7f3f85946652acf7d7fea509d1a Logs deleted. Final display with words instead of values. -> Good for both
+3a6d979d4a926e2ee65a1d61c45bfb9751d7317e Merge -> Good for both !
+2abc342a4d1a80039f0a86cdc3202997d264c778 authorize set a false fact to true in normal mode -> segfault in both !
 8dbb273bd361066b3392e9c5808e9cb56cdd73e1 No more pending ! -> No segfault in -b, contradiction in normal
-3a6d979d4a926e2ee65a1d61c45bfb9751d7317e -> Good for both !
+Now -> Contradiction in normal, segfault in -b !
