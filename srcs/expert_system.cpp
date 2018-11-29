@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/11/29 22:56:31 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/29 23:03:43 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	display_system(Hub *hub)
 		std::cout << hub->facts[hub->queries[it] - 'A'].symbol << ": ";
 		if (hub->facts[hub->queries[it] - 'A'].status == F_TRUE)
 			std::cout << "True." << std::endl;
-		else if (hub->facts[hub->queries[it] - 'A'].status == F_FALSE)
+		else if (hub->facts[hub->queries[it] - 'A'].status == F_FALSE || hub->facts[hub->queries[it] - 'A'].status == S_FALSE)
 			std::cout << "False." << std::endl;
 		else
 			std::cout << "Unknownable." << std::endl;
