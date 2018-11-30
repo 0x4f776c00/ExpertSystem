@@ -47,10 +47,11 @@ int	Fact::set_status(int status, int testing)
 		Formula *formula = static_cast<Formula *>(this);
 		return formula->set_status(status, testing);
 	}
-	if (status == S_TRUE)
-		status = F_TRUE;
-	else if (status == S_FALSE)
-		status = F_FALSE;
+
+	// if (status == S_TRUE)
+	// 	status = F_TRUE;
+	// else if (status == S_FALSE)
+	// 	status = F_FALSE;
 	if (((this->status == F_TRUE || this->status == F_TRUE + testing)
 			&& status <= T2_FALSE) || ((this->status == F_FALSE
 			|| this->status == F_FALSE + testing) && status >= F_TRUE))
@@ -60,10 +61,13 @@ int	Fact::set_status(int status, int testing)
 		else
 			return ERROR;
 	}
-	if (this->status == status || this->status == F_TRUE
-			|| this->status == F_FALSE)
+	if (this->status == status || (this->status == F_TRUE
+			&& (status == F_TRUE + testing || status == S_TRUE))
+			|| (this->status == F_FALSE && (status == F_FALSE + testing
+			|| status == S_FALSE)))
 		return NON_ACTUALISED;
-	if (testing == 2 && this->status + 1 == status)
+	if (testing == 2 && ((this->status == T1_FALSE && status == T2_FALSE)
+			|| (this->status == T1_TRUE && status == T2_TRUE)))
 	{
 		status -= 2;
 		is_restart = true;
@@ -120,7 +124,7 @@ void	Fact::set_s_false_to_pending(void)
 	}
 	else
 	{
-		if (this->status == S_FALSE)
+		if (this->status == S_FALSE || this->status == S_TRUE)
 			this->status = PENDING;
 	}
 }
