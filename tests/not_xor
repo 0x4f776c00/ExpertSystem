@@ -3,3 +3,15 @@
 D => !B
 =D
 ?ABC
+
+# bonus mode :
+# A = False
+# B = False
+# C = True
+# D = True
+
+# normal mode :
+# A = False
+# B = False
+# C = True
+# D = True

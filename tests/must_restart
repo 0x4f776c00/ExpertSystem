@@ -2,4 +2,18 @@ C | D => A
 A + B => !B
 E => C | D
 =E
-?ABCDEF
+?ABCDE
+
+# bonus mode :
+# A = True
+# B = False
+# C = Unknownable
+# D = Unknownable
+# E = True
+
+# normal mode :
+# A = True
+# B = False
+# C = Unknownable
+# D = Unknownable
+# E = True

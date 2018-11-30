@@ -101,7 +101,21 @@ void	Fact::clean(void)
 	}
 	else
 	{
-		if (this->status != F_TRUE && this->status != F_FALSE)
+		if (this->status != F_TRUE && this->status != F_FALSE && this->status != S_FALSE)
+			this->status = PENDING;
+	}
+}
+
+void	Fact::set_s_false_to_pending(void)
+{
+	if (this->type == FORMULA)
+	{
+		Formula *formula = static_cast<Formula *>(this);
+		formula->set_s_false_to_pending();
+	}
+	else
+	{
+		if (this->status == S_FALSE)
 			this->status = PENDING;
 	}
 }

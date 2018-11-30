@@ -4,3 +4,19 @@ D => E | F
 E + C => D
 F => A
 ? BCDEF
+
+# bonus mode :
+# A = True
+# B = True
+# C = True
+# D = False
+# E = False
+# F = Unknoable
+
+# normal mode :
+# A = True
+# B = True
+# C = True
+# D = False
+# E = False
+# F = False

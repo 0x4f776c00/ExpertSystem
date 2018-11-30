@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/29 18:37:00 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/30 05:18:15 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	Formula::not_operator(int status1, int status2, int testing)
 {
 	(void)status2;
 
-	if (status1 == F_FALSE || status1 == F_FALSE + testing)
+	if (status1 == F_FALSE || status1 == F_FALSE + testing || status1 == S_FALSE)
 		return (F_TRUE + testing);
 	else if (status1 == F_TRUE || status1 == F_TRUE + testing)
 		return (F_FALSE + testing);
@@ -37,7 +37,9 @@ int	Formula::not_operator(int status1, int status2, int testing)
 }
 
 int	Formula::and_operator(int status1, int status2, int testing)
-{	
+{
+	if (status1 == S_FALSE || status2 == S_FALSE)
+		return S_FALSE;
 	if (status1 == F_FALSE || status1 == F_FALSE + testing || status2 == F_FALSE || status2 == F_FALSE + testing)
 		return (F_FALSE + testing);
 	else if ((status1 == F_TRUE || status1 == F_TRUE + testing) && (status2 == F_TRUE || status2 == F_TRUE + testing))
@@ -49,6 +51,13 @@ int	Formula::or_operator(int status1, int status2, int testing)
 {
 	if (status1 == F_TRUE || status1 == F_TRUE + testing || status2 == F_TRUE || status2 == F_TRUE + testing)
 		return (F_TRUE + testing);
+	else if (status1 == S_FALSE || status2 == S_FALSE)
+	{
+		if ((status1 == F_FALSE || status1 == F_FALSE + testing
+				|| status1 == S_FALSE) && (status2 == F_FALSE
+				|| status2 == F_FALSE + testing || status2 == S_FALSE))
+			return (S_FALSE);
+	}
 	else if ((status1 == F_FALSE || status1 == F_FALSE + testing) && (status2 == F_FALSE || status2 == F_FALSE + testing))
 		return (F_FALSE + testing);
 	return PENDING;
@@ -57,12 +66,15 @@ int	Formula::or_operator(int status1, int status2, int testing)
 int	Formula::xor_operator(int status1, int status2, int testing)
 {
 	if (((status1 == F_TRUE || status1 == F_TRUE + testing)
-			&& (status2 == F_FALSE || status2 == F_FALSE + testing))
-			|| ((status1 == F_FALSE || status1 == F_FALSE + testing)
+			&& (status2 == F_FALSE || status2 == F_FALSE + testing
+			|| status2 == S_FALSE)) || ((status1 == F_FALSE
+			|| status1 == F_FALSE + testing || status1 == S_FALSE)
 			&& (status2 == F_TRUE || status2 == F_TRUE + testing)))
 		return (F_TRUE + testing);
-	else if (((status1 == F_FALSE || status1 == F_FALSE + testing)
-			&& (status2 == F_FALSE || status2 == F_FALSE + testing))
+	else if (status1 == S_FALSE && status2 == S_FALSE)
+		return (S_FALSE);
+	else if (((status1 == F_FALSE || status1 == F_FALSE + testing || status1 == S_FALSE)
+			&& (status2 == F_FALSE || status2 == F_FALSE + testing || status2 == S_FALSE))
 			|| ((status1 == F_TRUE || status1 == F_TRUE + testing)
 			&& (status2 == F_TRUE || status2 == F_TRUE + testing)))
 		return (F_FALSE + testing);
@@ -83,7 +95,8 @@ int	Formula::not_propagate(Formula &formula, int testing)
 
 	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
 		ret = formula.fact1->set_status((F_FALSE + testing), testing);
-	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing)
+	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing
+			|| formula.status == S_FALSE)
 		ret = formula.fact1->set_status((F_TRUE + testing), testing);
 	return ret;
 }
@@ -99,7 +112,8 @@ int	Formula::and_propagate(Formula &formula, int testing)
 		ret = formula.fact1->set_status((F_TRUE + testing), testing);
 		ret |= formula.fact2->set_status((F_TRUE + testing), testing);
 	}
-	else if (formula.status == F_FALSE && !testing)
+	else if ((formula.status == F_FALSE || formula.status == S_FALSE)
+			&& !testing)
 	{
 		if (status1 == F_TRUE && status2 == F_TRUE)
 			error_n_exit("Contradiction in the facts...\n");
@@ -121,8 +135,14 @@ int	Formula::or_propagate(Formula &formula, int testing)
 
 	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
 	{
-		if ((status1 == F_FALSE || status1 == F_FALSE + testing)
-				&& (status2 == F_FALSE || status2 == F_FALSE + testing))
+		if (status1 == S_FALSE && status2 == S_FALSE)
+		{
+			formula.set_s_false_to_pending();
+			return ACTUALISED;
+		}
+		if ((status1 == F_FALSE || status1 == F_FALSE + testing
+				|| status1 == S_FALSE) && (status2 == F_FALSE
+				|| status2 == F_FALSE + testing || status2 == S_FALSE))
 		{
 			if (testing)
 				return ERROR;
@@ -132,12 +152,7 @@ int	Formula::or_propagate(Formula &formula, int testing)
 			return formula.fact2->set_status((F_TRUE + testing), testing);
 		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
 			return formula.fact1->set_status((F_TRUE + testing), testing);
-		if (status1 == S_FALSE && status2 == S_FALSE)
-		{
-			formula.fact1->set_status((PENDING), testing);
-			formula.fact2->set_status((PENDING), testing);
-			return ACTUALISED;
-		}
+
 	}
 	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing)
 	{
@@ -164,25 +179,38 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 
 	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
 	{
+		if (status1 == S_FALSE && status2 == S_FALSE)
+		{
+			formula.set_s_false_to_pending();
+			return ACTUALISED;
+		}
 		if (((status1 == F_TRUE || status1 == F_TRUE + testing)
 				&& (status2 == F_TRUE || status2 == F_TRUE + testing))
-				|| ((status1 == F_FALSE || status1 == F_FALSE + testing)
-				&& (status2 == F_FALSE || status2 == F_FALSE + testing)))
+				|| ((status1 == F_FALSE || status1 == F_FALSE + testing) && (status2 == F_FALSE
+				|| status2 == F_FALSE + testing)))
 		{
 			if (testing)
 				return ERROR;
 			error_n_exit("Contradiction in the facts...\n");
 		}
 		else if (status1 == F_TRUE || status1 == F_TRUE + testing)
+		{
+			if (formula.fact2->get_status(testing) == S_FALSE)
+				return NON_ACTUALISED;
 			return formula.fact2->set_status((F_FALSE + testing), testing);
+		}
 		else if (status2 == F_TRUE || status2 == F_TRUE + testing)
+		{
+			if (formula.fact1->get_status(testing) == S_FALSE)
+				return NON_ACTUALISED;
 			return formula.fact1->set_status((F_FALSE + testing), testing);
-		else if (status1 == F_FALSE || status1 == F_FALSE + testing)
+		}
+		else if (status1 == F_FALSE || status1 == F_FALSE + testing || status1 == S_FALSE)
 			return formula.fact2->set_status((F_TRUE + testing), testing);
-		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
+		else if (status2 == F_FALSE || status2 == F_FALSE + testing || status2 == S_FALSE)
 			return formula.fact1->set_status((F_TRUE + testing), testing);
 	}
-	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing)
+	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing || formula.status == S_FALSE)
 	{
 		if (((status1 == F_TRUE || status1 == F_TRUE + testing)
 				&& (status2 == F_FALSE || status2 == F_FALSE + testing))
@@ -197,9 +225,11 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 			return formula.fact2->set_status((F_TRUE + testing), testing);
 		else if (status2 == F_TRUE || status2 == F_TRUE + testing)
 			return formula.fact1->set_status((F_TRUE + testing), testing);
-		else if (status1 == F_FALSE || status1 == F_FALSE + testing)
+		else if (status1 == F_FALSE || status1 == F_FALSE + testing
+				|| status1 == S_FALSE)
 			return formula.fact2->set_status((F_FALSE + testing), testing);
-		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
+		else if (status2 == F_FALSE || status2 == F_FALSE + testing
+				|| status2 == S_FALSE)
 			return formula.fact1->set_status((F_FALSE + testing), testing);
 	}
 	return NON_ACTUALISED;
@@ -300,6 +330,13 @@ void	Formula::clean()
 	this->fact1->clean();
 	if (this->fact2)
 		this->fact2->clean();
+}
+
+void	Formula::set_s_false_to_pending()
+{
+	this->fact1->set_s_false_to_pending();
+	if (this->fact2)
+		this->fact2->set_s_false_to_pending();
 }
 
 std::ostream & operator<<(std::ostream & o, const Formula & formula)

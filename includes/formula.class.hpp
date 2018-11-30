@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 13:42:24 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 16:38:33 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/30 01:18:40 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ class Formula : public Fact
 		int	compute_propagate_status(int testing);
 
 		void	clean(void);
+		void	set_s_false_to_pending(void);
 		static int	(*tab_propagate[NB_OPERATOR])(Formula&, int);
 
 
