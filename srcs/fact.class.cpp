@@ -114,12 +114,12 @@ void	Fact::clean(void)
 	}
 }
 
-void	Fact::set_s_false_to_pending(void)
+void	Fact::set_s_to_pending(void)
 {
 	if (this->type == FORMULA)
 	{
 		Formula *formula = static_cast<Formula *>(this);
-		formula->set_s_false_to_pending();
+		formula->set_s_to_pending();
 	}
 	else
 	{

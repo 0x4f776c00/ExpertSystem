@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/12/01 00:20:45 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/12/01 00:43:51 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ int	Formula::or_propagate(Formula &formula, int testing)
 	{
 		if (status1 == S_FALSE && status2 == S_FALSE)
 		{
-			formula.set_s_false_to_pending();
+			formula.set_s_to_pending();
 			return ACTUALISED;
 		}
 		if ((status1 == F_FALSE || status1 == F_FALSE + testing
@@ -239,12 +239,11 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 {
 	int status1 = formula.fact1->get_status(testing);
 	int status2 = formula.fact2->get_status(testing);
-
 	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
 	{
 		if (status1 == S_FALSE && status2 == S_FALSE)
 		{
-			formula.set_s_false_to_pending();
+			formula.set_s_to_pending();
 			return ACTUALISED;
 		}
 		if (((status1 == F_TRUE || status1 == F_TRUE + testing)
@@ -277,7 +276,7 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 	{
 		if (status1 == S_FALSE && status2 == S_FALSE)
 		{
-			formula.set_s_false_to_pending();
+			formula.set_s_to_pending();
 			return ACTUALISED;
 		}
 		if (((status1 == F_TRUE || status1 == F_TRUE + testing)
@@ -461,12 +460,12 @@ void	Formula::clean()
 		this->fact2->clean();
 }
 
-void	Formula::set_s_false_to_pending()
+void	Formula::set_s_to_pending()
 {
 	if (this->status == S_FALSE || this->status == S_TRUE)
 		this->status = PENDING;
-	this->fact1->set_s_false_to_pending();
+	this->fact1->set_s_to_pending();
 	if (this->fact2)
-		this->fact2->set_s_false_to_pending();
+		this->fact2->set_s_to_pending();
 }
 

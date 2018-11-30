@@ -36,7 +36,7 @@ class Fact : public Hub
 
 		int		compute_status(int testing);
 		int		compute_propagate_status(int testing);
-		void	set_s_false_to_pending(void);
+		void	set_s_to_pending(void);
 		void	clean(void);
 };
 
