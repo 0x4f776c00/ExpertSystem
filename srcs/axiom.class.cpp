@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/30 23:41:20 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/12/01 00:20:16 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,18 @@ int		Axiom::compute_axiom(int testing)
 
 	if ((ret = this->fact1->compute_status(testing)) == ERROR)
 		return ret;
-	if (this->biconditional && (ret |= this->fact2->compute_status(testing)) & ERROR)
+	if (this->biconditional &&
+			(ret |= this->fact2->compute_status(testing)) & ERROR)
 		return ret;
 	status1 = this->fact1->get_status(testing);
 	status2 = this->fact2->get_status(testing);
 	if ((this->biconditional && (status1 == F_FALSE
-			|| status1 == F_FALSE + testing || status1 == S_FALSE)
-			&& status2 != F_TRUE && status2 != F_FALSE)
-			|| status1 == F_TRUE || status1 == F_TRUE + testing
-			|| status1 == S_TRUE)
+			|| status1 == F_FALSE + testing
+			|| (status1 == S_FALSE && status2 != F_TRUE
+			&& status2 != F_FALSE))) || status1 == F_TRUE
+			|| status1 == F_TRUE + testing || (status1 == S_TRUE
+			&& (!this->biconditional || (status2 != F_TRUE
+			&& status2 != F_FALSE))))
 	{
 		status2 = this->fact2->get_status(testing);
 		if (this->fact2->set_status(status1, testing) == ERROR)

@@ -56,10 +56,9 @@ int	Fact::set_status(int status, int testing)
 			&& status <= T2_FALSE) || ((this->status == F_FALSE
 			|| this->status == F_FALSE + testing) && status >= F_TRUE))
 	{
-		if (!testing)
-			error_n_exit("Contradiction in the facts...\n");
-		else
+		if (testing)
 			return ERROR;
+		error_n_exit("Contradiction in the facts...\n");
 	}
 	if (this->status == status || (this->status == F_TRUE
 			&& (status == F_TRUE + testing || status == S_TRUE))
