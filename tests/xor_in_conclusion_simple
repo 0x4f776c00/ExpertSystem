@@ -3,3 +3,13 @@
 A => B ^ C
 C => !A
 ?BC
+
+# bonus mode :
+# A = True
+# B = True
+# C = False
+
+# normal mode :
+# A = True
+# B = True
+# C = False

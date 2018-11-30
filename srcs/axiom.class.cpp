@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 17:25:55 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/30 06:30:44 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,29 @@ Axiom::~Axiom(void)
 int		Axiom::compute_axiom(int testing)
 {
 	int	ret;
-	int	status_before;
+	int	status1;
+	int	status2;
 
 	if ((ret = this->fact1->compute_status(testing)) == ERROR)
 		return ret;
-	if ((this->biconditional && (this->fact1->get_status(testing) == F_FALSE
-			|| this->fact1->get_status(testing) == F_FALSE + testing))
-			|| this->fact1->get_status(testing) == F_TRUE
-			|| this->fact1->get_status(testing) == F_TRUE + testing)
+	status1 = this->fact1->get_status(testing);
+	if ((this->biconditional && (status1 == F_FALSE || status1 == F_FALSE + testing || status1 == S_FALSE))
+			|| status1 == F_TRUE || status1 == F_TRUE + testing || status1 == S_TRUE)
 	{
-		status_before = this->fact2->get_status(testing);
-		if (this->fact2->set_status(this->fact1->get_status(testing), testing) == ERROR)
+		status2 = this->fact2->get_status(testing);
+		if (this->fact2->set_status(status1, testing) == ERROR)
 			return ERROR;
-		if (status_before != this->fact2->get_status(testing))
+		if (status2 != this->fact2->get_status(testing))
 			ret |= ACTUALISED;
 		ret |= this->fact2->compute_propagate_status(testing);
 	}
-	if (this->biconditional && (this->fact2->get_status(testing) == F_TRUE
-			|| this->fact2->get_status(testing) == F_TRUE + testing
-			|| this->fact2->get_status(testing) == F_FALSE
-			|| this->fact2->get_status(testing) == F_FALSE + testing))
+	status2 = this->fact2->get_status(testing);
+	if (this->biconditional && (status2 == F_TRUE || status2 == F_TRUE + testing || status2 == S_TRUE
+			|| status2 == F_FALSE || status2 == F_FALSE + testing || status2 == S_FALSE))
 	{
-		status_before = this->fact1->get_status(testing);
-		if (this->fact1->set_status(this->fact2->get_status(testing), testing) == ERROR)
+		if (this->fact1->set_status(status2, testing) == ERROR)
 			return ERROR;
-		if (status_before != this->fact1->get_status(testing))
+		if (status1 != this->fact1->get_status(testing))
 			ret |= ACTUALISED;
 		ret |= this->fact1->compute_propagate_status(testing);
 	}

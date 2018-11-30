@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/30 01:57:21 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/30 05:23:50 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ enum e_relations {NOT, AND, OR, XOR};
 # define F_TRUE		1
 # define T1_TRUE	2
 # define T2_TRUE	3
+# define S_TRUE		4
 
 constexpr const char *snark_tab[NB_SNARK] =
 {

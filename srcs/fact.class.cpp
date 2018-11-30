@@ -46,6 +46,10 @@ int	Fact::set_status(int status, int testing)
 		Formula *formula = static_cast<Formula *>(this);
 		return formula->set_status(status, testing);
 	}
+	if (status == S_TRUE)
+		status = F_TRUE;
+	else if (status == S_FALSE)
+		status = F_FALSE;
 	if (((this->status == F_TRUE || this->status == F_TRUE + testing)
 			&& status <= T2_FALSE) || ((this->status == F_FALSE
 			|| this->status == F_FALSE + testing) && status >= F_TRUE))
@@ -87,9 +91,7 @@ int	Fact::compute_propagate_status(int testing)
 		return formula->compute_propagate_status(testing);
 	}
 	else
-	{
 		return NON_ACTUALISED;
-	}
 }
 
 void	Fact::clean(void)

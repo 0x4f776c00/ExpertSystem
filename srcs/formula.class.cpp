@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/30 05:18:15 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/30 06:31:02 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,14 @@ int	Formula::not_operator(int status1, int status2, int testing)
 {
 	(void)status2;
 
-	if (status1 == F_FALSE || status1 == F_FALSE + testing || status1 == S_FALSE)
+	if (status1 == S_FALSE)
+		return (S_TRUE);
+	else if (status1 == F_FALSE || status1 == F_FALSE + testing)
 		return (F_TRUE + testing);
 	else if (status1 == F_TRUE || status1 == F_TRUE + testing)
 		return (F_FALSE + testing);
+	else if (status1 == S_TRUE)
+		return (S_TRUE);
 	return PENDING;
 }
 
@@ -40,7 +44,13 @@ int	Formula::and_operator(int status1, int status2, int testing)
 {
 	if (status1 == S_FALSE || status2 == S_FALSE)
 		return S_FALSE;
-	if (status1 == F_FALSE || status1 == F_FALSE + testing || status2 == F_FALSE || status2 == F_FALSE + testing)
+	else if (status1 == S_TRUE || status2 == S_TRUE)
+	{
+		if (status1 == F_TRUE || status1 == F_TRUE + testing || status2 == F_TRUE || status2 == F_TRUE + testing)
+			return S_TRUE;
+		return S_FALSE;
+	}
+	else if (status1 == F_FALSE || status1 == F_FALSE + testing || status2 == F_FALSE || status2 == F_FALSE + testing)
 		return (F_FALSE + testing);
 	else if ((status1 == F_TRUE || status1 == F_TRUE + testing) && (status2 == F_TRUE || status2 == F_TRUE + testing))
 		return (F_TRUE + testing);
@@ -49,15 +59,20 @@ int	Formula::and_operator(int status1, int status2, int testing)
 
 int	Formula::or_operator(int status1, int status2, int testing)
 {
-	if (status1 == F_TRUE || status1 == F_TRUE + testing || status2 == F_TRUE || status2 == F_TRUE + testing)
-		return (F_TRUE + testing);
+	if (status1 == S_TRUE || status2 == S_TRUE)
+		return S_TRUE;
 	else if (status1 == S_FALSE || status2 == S_FALSE)
 	{
 		if ((status1 == F_FALSE || status1 == F_FALSE + testing
 				|| status1 == S_FALSE) && (status2 == F_FALSE
 				|| status2 == F_FALSE + testing || status2 == S_FALSE))
-			return (S_FALSE);
+			return S_FALSE;
+		if (status1 == F_TRUE || status1 == F_TRUE + testing || status2 == F_TRUE || status2 == F_TRUE + testing)
+			return S_TRUE;
 	}
+	if (status1 == F_TRUE || status1 == F_TRUE + testing || status2 == F_TRUE || status2 == F_TRUE + testing)
+		return (F_TRUE + testing);
+
 	else if ((status1 == F_FALSE || status1 == F_FALSE + testing) && (status2 == F_FALSE || status2 == F_FALSE + testing))
 		return (F_FALSE + testing);
 	return PENDING;
@@ -65,16 +80,25 @@ int	Formula::or_operator(int status1, int status2, int testing)
 
 int	Formula::xor_operator(int status1, int status2, int testing)
 {
-	if (((status1 == F_TRUE || status1 == F_TRUE + testing)
-			&& (status2 == F_FALSE || status2 == F_FALSE + testing
-			|| status2 == S_FALSE)) || ((status1 == F_FALSE
-			|| status1 == F_FALSE + testing || status1 == S_FALSE)
-			&& (status2 == F_TRUE || status2 == F_TRUE + testing)))
+	if (status1 == S_FALSE || status1 == S_TRUE || status2 == S_FALSE || status2 == S_TRUE)
+	{
+		if (((status1 == F_TRUE || status1 == F_TRUE + testing || status1 == S_TRUE)
+				&& (status2 == F_FALSE || status2 == F_FALSE + testing || status2 == S_FALSE))
+				|| ((status1 == F_FALSE || status1 == F_FALSE + testing || status1 == S_FALSE)
+				&& (status2 == F_TRUE || status2 == F_TRUE + testing || status2 == S_TRUE)))
+			return (S_TRUE);
+		else if (((status1 == F_FALSE || status1 == F_FALSE + testing || status1 == S_FALSE)
+				&& (status2 == F_FALSE || status2 == F_FALSE + testing || status2 == S_FALSE))
+				|| ((status1 == F_TRUE || status1 == F_TRUE + testing || status1 == S_TRUE)
+				&& (status2 == F_TRUE || status2 == F_TRUE + testing || status2 == S_TRUE)))
+			return (S_FALSE);
+	}
+	else if (((status1 == F_TRUE || status1 == F_TRUE + testing)
+			&& (status2 == F_FALSE || status2 == F_FALSE + testing)) || ((status1 == F_FALSE
+			|| status1 == F_FALSE + testing) && (status2 == F_TRUE || status2 == F_TRUE + testing)))
 		return (F_TRUE + testing);
-	else if (status1 == S_FALSE && status2 == S_FALSE)
-		return (S_FALSE);
-	else if (((status1 == F_FALSE || status1 == F_FALSE + testing || status1 == S_FALSE)
-			&& (status2 == F_FALSE || status2 == F_FALSE + testing || status2 == S_FALSE))
+	else if (((status1 == F_FALSE || status1 == F_FALSE + testing)
+			&& (status2 == F_FALSE || status2 == F_FALSE + testing))
 			|| ((status1 == F_TRUE || status1 == F_TRUE + testing)
 			&& (status2 == F_TRUE || status2 == F_TRUE + testing)))
 		return (F_FALSE + testing);
@@ -93,7 +117,7 @@ int	Formula::not_propagate(Formula &formula, int testing)
 {
 	int ret = NON_ACTUALISED;
 
-	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
+	if (formula.status == F_TRUE || formula.status == F_TRUE + testing || formula.status == S_TRUE)
 		ret = formula.fact1->set_status((F_FALSE + testing), testing);
 	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing
 			|| formula.status == S_FALSE)
@@ -104,10 +128,11 @@ int	Formula::not_propagate(Formula &formula, int testing)
 int	Formula::and_propagate(Formula &formula, int testing)
 {
 	int ret = NON_ACTUALISED;
+
 	int	status1 = formula.fact1->get_status(testing);
 	int status2 = formula.fact2->get_status(testing);
 
-	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
+	if (formula.status == F_TRUE || formula.status == F_TRUE + testing || formula.status == S_TRUE)
 	{
 		ret = formula.fact1->set_status((F_TRUE + testing), testing);
 		ret |= formula.fact2->set_status((F_TRUE + testing), testing);
@@ -133,7 +158,7 @@ int	Formula::or_propagate(Formula &formula, int testing)
 	int status1 = formula.fact1->get_status(testing);
 	int status2 = formula.fact2->get_status(testing);
 
-	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
+	if (formula.status == F_TRUE || formula.status == F_TRUE + testing || formula.status == S_TRUE)
 	{
 		if (status1 == S_FALSE && status2 == S_FALSE)
 		{
@@ -148,13 +173,12 @@ int	Formula::or_propagate(Formula &formula, int testing)
 				return ERROR;
 			error_n_exit("Contradiction in the facts...\n");
 		}
-		else if (status1 == F_FALSE || status1 == F_FALSE + testing)
+		else if (status1 == F_FALSE || status1 == F_FALSE + testing || status1 == S_FALSE)
 			return formula.fact2->set_status((F_TRUE + testing), testing);
-		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
+		else if (status2 == F_FALSE || status2 == F_FALSE + testing || status2 == S_FALSE)
 			return formula.fact1->set_status((F_TRUE + testing), testing);
-
 	}
-	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing)
+	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing || formula.status == S_FALSE)
 	{
 		if (status1 == F_TRUE || status1 == F_TRUE + testing
 				|| status2 == F_TRUE || status2 == F_TRUE + testing)
@@ -163,6 +187,10 @@ int	Formula::or_propagate(Formula &formula, int testing)
 				return ERROR;
 			error_n_exit("Contradiction in the facts...\n");
 		}
+		else if (status1 == S_TRUE)
+			return formula.fact1->set_status((F_FALSE), testing);
+		else if (status2 == S_TRUE)
+			return formula.fact2->set_status((F_FALSE), testing);
 		else
 		{
 			ret = formula.fact1->set_status((F_FALSE + testing), testing);
@@ -177,7 +205,7 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 	int status1 = formula.fact1->get_status(testing);
 	int status2 = formula.fact2->get_status(testing);
 
-	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
+	if (formula.status == F_TRUE || formula.status == F_TRUE + testing || formula.status == S_TRUE)
 	{
 		if (status1 == S_FALSE && status2 == S_FALSE)
 		{
@@ -194,20 +222,16 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 			error_n_exit("Contradiction in the facts...\n");
 		}
 		else if (status1 == F_TRUE || status1 == F_TRUE + testing)
-		{
-			if (formula.fact2->get_status(testing) == S_FALSE)
-				return NON_ACTUALISED;
 			return formula.fact2->set_status((F_FALSE + testing), testing);
-		}
 		else if (status2 == F_TRUE || status2 == F_TRUE + testing)
-		{
-			if (formula.fact1->get_status(testing) == S_FALSE)
-				return NON_ACTUALISED;
 			return formula.fact1->set_status((F_FALSE + testing), testing);
-		}
-		else if (status1 == F_FALSE || status1 == F_FALSE + testing || status1 == S_FALSE)
+		else if (status1 == F_FALSE || status1 == F_FALSE + testing)
 			return formula.fact2->set_status((F_TRUE + testing), testing);
-		else if (status2 == F_FALSE || status2 == F_FALSE + testing || status2 == S_FALSE)
+		else if (status2 == F_FALSE || status2 == F_FALSE + testing)
+			return formula.fact1->set_status((F_TRUE + testing), testing);
+		else if (status1 == S_FALSE)
+			return formula.fact2->set_status((F_TRUE + testing), testing);
+		else if (status2 == S_FALSE)
 			return formula.fact1->set_status((F_TRUE + testing), testing);
 	}
 	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing || formula.status == S_FALSE)
