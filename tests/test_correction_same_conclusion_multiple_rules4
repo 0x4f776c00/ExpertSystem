@@ -1,0 +1,10 @@
+B => A
+C => A
+
+?A
+=BC
+
+# With =, A is false
+# With =B, A is true
+# With =C, A is true
+# With =BC, A is true

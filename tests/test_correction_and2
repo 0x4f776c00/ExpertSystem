@@ -1,0 +1,16 @@
+B => A
+D + E => B
+G + H => F
+I + J => G
+G => H
+L + M => K
+O + P => L + N
+N => M
+
+= DEIJOP
+
+?AFKP
+
+
+# With =DEIJOP, AFKP are true
+# With =DEIJP, AFP wre true, K is false

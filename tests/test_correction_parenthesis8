@@ -1,0 +1,19 @@
+A | B + C => E
+(F | G) + H => E
+
+? E
+=G
+
+# With =, E is false
+
+# With =A, E is true
+# With =B, E is false
+# With =C, E is false
+# With =AC, E is true
+# With =BC, E is true
+
+# With =F, E is false
+# With =G, E is false
+# With =H, E is false
+# With =FH, E is true
+# With =GH, E is true

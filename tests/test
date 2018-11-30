@@ -1,0 +1,16 @@
+=A
+!D => C
+
+A => D
+A => !C
+?ACD
+
+# bonus mode :
+# A = True
+# C = False
+# D = True
+
+# normal mode :
+# A = True
+# C = False
+# D = True

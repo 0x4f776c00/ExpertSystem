@@ -1,0 +1,11 @@
+B + C => A
+D | E => B
+B=> C
+
+?A
+=D
+
+# With =, A is false
+# With =D, a is true
+# With =E, a is true
+# With =DE, a is true
