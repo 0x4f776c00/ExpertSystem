@@ -6,13 +6,14 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 14:00:54 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 19:32:11 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/11/30 06:54:59 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
 
-static void		get_queries(std::vector <std::vector <Token>> :: iterator line, Hub *hub)
+static void		get_queries(std::vector <std::vector <Token>> :: iterator line,
+		Hub *hub)
 {
 	std::vector <Token> :: iterator i = (*line).begin();
 	i++;
@@ -27,7 +28,8 @@ static void		get_queries(std::vector <std::vector <Token>> :: iterator line, Hub
 
 static void		fact_set_truth(char symbol, int status, Hub *hub)
 {
-	for (std::vector <Fact> :: iterator i = (*hub).facts.begin(); i != (*hub).facts.end(); i++)
+	for (std::vector <Fact> :: iterator i = (*hub).facts.begin();
+			i != (*hub).facts.end(); i++)
 	{
 		if ((*i).symbol == symbol)
 		{
@@ -41,7 +43,8 @@ static void		fact_set_truth(char symbol, int status, Hub *hub)
 	}
 }
 
-static void		get_truth(std::vector <std::vector <Token>> :: iterator line, Hub *hub)
+static void		get_truth(std::vector <std::vector <Token>> :: iterator line,
+		Hub *hub)
 {
 	int	status;
 	std::vector <Token> :: iterator i = (*line).begin();
@@ -63,7 +66,8 @@ static void		get_truth(std::vector <std::vector <Token>> :: iterator line, Hub *
 	}
 }
 
-static int		get_end_parenthesis(Hub *hub, std::vector <Token> line, int i, int end)
+static int		get_end_parenthesis(Hub *hub, std::vector <Token> line,
+		int i, int end)
 {
 	i++;
 	while (line[i].symbol != ')')
@@ -106,7 +110,8 @@ static Fact	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 			index = i;
 			priority = line[i].operator_type;
 		}
-		if (line[i].type == FACT && i + 1 < end && line[i + 1].operator_type == NOT)
+		if (line[i].type == FACT && i + 1 < end
+				&& line[i + 1].operator_type == NOT)
 			error_n_exit("Error in formula");
 	}
 	if (begin == end - 1)
@@ -117,8 +122,10 @@ static Fact	*get_formula(Hub *hub, std::vector <Token> line, int begin, int end)
 	if (priority == -1)
 		error_n_exit("Error in formula");
 	if (priority == NOT)
-		return new Formula(1, get_formula(hub, line, index + 1, end), nullptr, priority);
-	return new Formula(1, get_formula(hub, line, begin, index), get_formula(hub, line, index + 1, end), priority);
+		return new Formula(1, get_formula(hub, line, index + 1, end),
+				nullptr, priority);
+	return new Formula(1, get_formula(hub, line, begin, index),
+			get_formula(hub, line, index + 1, end), priority);
 }
 
 static void		get_axioms(std::vector <Token> line, Hub *hub)
@@ -136,13 +143,15 @@ static void		get_axioms(std::vector <Token> line, Hub *hub)
 	if (relation == -1)
 		error_n_exit("Missing relation");
 	bool bicond = (line[relation].symbol == '=') ? 1 : 0;
-	Axiom axiom(get_formula(hub, line, 0, relation), get_formula(hub, line, relation + 1, line.size()), bicond);
+	Axiom axiom(get_formula(hub, line, 0, relation),
+			get_formula(hub, line, relation + 1, line.size()), bicond);
 	hub->axioms.push_back(axiom);
 }
 
 void			parse_system(std::vector <std::vector <Token>> tokens, Hub *hub)
 {
-	for (std::vector <std::vector <Token>> :: iterator i = tokens.begin(); i != tokens.end(); ++i)
+	for (std::vector <std::vector <Token>> :: iterator i = tokens.begin();
+			i != tokens.end(); ++i)
 	{
 		if ((*(*i).begin()).type == QUERY)
 			get_queries(i, hub);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solve_system.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justasze <justasze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 15:22:10 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/28 19:19:09 by justasze         ###   ########.fr       */
+/*   Updated: 2018/11/30 06:54:50 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void		solve_system(Hub *hub)
 	do
 	{
 		has_actualized = NON_ACTUALISED;
-		for (std::list <Axiom> :: iterator it = hub->axioms.begin(); it != hub->axioms.end(); it++)
+		for (std::list <Axiom> :: iterator it = hub->axioms.begin();
+				it != hub->axioms.end(); it++)
 		{
 			has_actualized |= it->compute_axiom(false);
 		}

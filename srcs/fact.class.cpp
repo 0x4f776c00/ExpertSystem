@@ -12,7 +12,8 @@
 
 #include "expert_system.hpp"
 
-Fact::Fact(int type, const char symbol, int status) : type(type), symbol(symbol), status(status)
+Fact::Fact(int type, const char symbol, int status) : type(type),
+		symbol(symbol), status(status)
 {
 	this->queried = false;
 	this->used = false;
@@ -59,7 +60,8 @@ int	Fact::set_status(int status, int testing)
 		else
 			return ERROR;
 	}
-	if (this->status == status || this->status == F_TRUE || this->status == F_FALSE)
+	if (this->status == status || this->status == F_TRUE
+			|| this->status == F_FALSE)
 		return NON_ACTUALISED;
 	if (testing == 2 && this->status + 1 == status)
 	{
@@ -103,7 +105,8 @@ void	Fact::clean(void)
 	}
 	else
 	{
-		if (this->status != F_TRUE && this->status != F_FALSE && this->status != S_FALSE)
+		if (this->status != F_TRUE && this->status != F_FALSE
+				&& this->status != S_FALSE)
 			this->status = PENDING;
 	}
 }
@@ -120,10 +123,4 @@ void	Fact::set_s_false_to_pending(void)
 		if (this->status == S_FALSE)
 			this->status = PENDING;
 	}
-}
-
-std::ostream & operator<<(std::ostream & o, const Fact & fact)
-{
-	o << "Symbol: " << fact.symbol << std::endl;
-	return o;
 }
