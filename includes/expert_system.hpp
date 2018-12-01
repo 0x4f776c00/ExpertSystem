@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 12:51:12 by bcozic            #+#    #+#             */
-/*   Updated: 2018/11/30 06:56:01 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/12/01 02:10:02 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ enum e_relations {NOT, AND, OR, XOR};
 # define NON_ACTUALISED	0
 # define ACTUALISED		1
 # define ERROR			2
+# define SET_PENDING	4
 
+# define B_FALSE	-5
 # define S_FALSE	-4
 # define F_FALSE	-3
 # define T1_FALSE	-2

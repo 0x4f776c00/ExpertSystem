@@ -5,7 +5,7 @@ NC='\033[0m'
 success=0
 fail=0
 
-mkdir output
+mkdir -p output
 cd tests
 for OUT in *;
 do

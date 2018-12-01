@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 16:18:17 by justasze          #+#    #+#             */
-/*   Updated: 2018/11/30 05:35:18 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/12/01 02:10:30 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int		main(int ac, char **av)
 	Hub		hub;
 	int		default_status;
 
-	default_status = S_FALSE;
+	default_status = B_FALSE;
 	if (ac < 2)
 		return (usage());
 	if (ac > 2 && !strcmp(av[2], "-b"))

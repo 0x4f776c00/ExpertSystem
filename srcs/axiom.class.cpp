@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/12/01 00:43:15 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/12/01 02:23:11 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,13 @@ int		Axiom::compute_axiom(int testing)
 	int	status1;
 	int	status2;
 
-	if ((ret = this->fact1->compute_status(testing)) == ERROR)
-		return ret;
-	if (this->biconditional &&
-			(ret |= this->fact2->compute_status(testing)) & ERROR)
-		return ret;
+	ret = this->fact1->compute_status(testing);
+	if (this->biconditional)
+		ret |= this->fact2->compute_status(testing);
 	status1 = this->fact1->get_status(testing);
 	status2 = this->fact2->get_status(testing);
-	if (this->biconditional && ((status1 == S_FALSE && status2 == S_TRUE)
-			|| (status2 == S_FALSE && status1 == S_TRUE)))
+	if (this->biconditional && ((status1 <= S_FALSE && status2 == S_TRUE)
+			|| (status2 <= S_FALSE && status1 == S_TRUE)))
 	{
 		this->fact1->set_s_to_pending();
 		this->fact2->set_s_to_pending();
@@ -47,15 +45,14 @@ int		Axiom::compute_axiom(int testing)
 	}
 	if ((this->biconditional && (status1 == F_FALSE
 			|| status1 == F_FALSE + testing
-			|| (status1 == S_FALSE && status2 != F_TRUE
+			|| (status1 <= S_FALSE && status2 != F_TRUE
 			&& status2 != F_FALSE))) || status1 == F_TRUE
 			|| status1 == F_TRUE + testing || (status1 == S_TRUE
 			&& (!this->biconditional || (status2 != F_TRUE
 			&& status2 != F_FALSE))))
 	{
 		status2 = this->fact2->get_status(testing);
-		if (this->fact2->set_status(status1, testing) == ERROR)
-			return ERROR;
+		ret |= this->fact2->set_status(status1, testing);
 		if (status2 != this->fact2->get_status(testing))
 			ret |= ACTUALISED;
 		ret |= this->fact2->compute_propagate_status(testing);
@@ -64,13 +61,18 @@ int		Axiom::compute_axiom(int testing)
 	if (this->biconditional && (status2 == F_TRUE
 			|| status2 == F_TRUE + testing || status2 == S_TRUE
 			|| status2 == F_FALSE || status2 == F_FALSE + testing
-			|| status2 == S_FALSE))
+			|| status2 <= S_FALSE))
 	{
-		if (this->fact1->set_status(status2, testing) == ERROR)
-			return ERROR;
+		ret |= this->fact1->set_status(status2, testing);
 		if (status1 != this->fact1->get_status(testing))
 			ret |= ACTUALISED;
 		ret |= this->fact1->compute_propagate_status(testing);
+	}
+	if (ret & SET_PENDING && !(ret & ERROR))
+	{
+		this->fact1->set_s_to_pending();
+		this->fact2->set_s_to_pending();
+		return ACTUALISED;
 	}
 	return ret;
 }
