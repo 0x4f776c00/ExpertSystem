@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/12/01 02:15:42 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/12/01 02:58:41 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	Formula::not_propagate(Formula &formula, int testing)
 		ret = formula.fact1->set_status((F_FALSE + testing), testing);
 	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing)
 		ret = formula.fact1->set_status((F_TRUE + testing), testing);
-	if (formula.status == S_TRUE)
+	else if (formula.status == S_TRUE)
 		ret = formula.fact1->set_status(S_FALSE, testing);
 	else if (formula.status <= S_FALSE)
 		ret = formula.fact1->set_status(S_TRUE, testing);
@@ -147,11 +147,15 @@ int	Formula::and_propagate(Formula &formula, int testing)
 	int	status1 = formula.fact1->get_status(testing);
 	int status2 = formula.fact2->get_status(testing);
 
-	if (formula.status == F_TRUE || formula.status == F_TRUE + testing
-			|| formula.status == S_TRUE)
+	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
 	{
 		ret = formula.fact1->set_status((F_TRUE + testing), testing);
 		ret |= formula.fact2->set_status((F_TRUE + testing), testing);
+	}
+	if (formula.status == S_TRUE)
+	{
+		ret = formula.fact1->set_status(S_TRUE, testing);
+		ret |= formula.fact2->set_status(S_TRUE, testing);
 	}
 	else if ((formula.status == F_FALSE || formula.status <= S_FALSE)
 			&& !testing)
@@ -174,8 +178,7 @@ int	Formula::or_propagate(Formula &formula, int testing)
 	int status1 = formula.fact1->get_status(testing);
 	int status2 = formula.fact2->get_status(testing);
 
-	if (formula.status == F_TRUE || formula.status == F_TRUE + testing
-			|| formula.status == S_TRUE)
+	if (formula.status == F_TRUE || formula.status == F_TRUE + testing)
 	{
 		if (status1 <= S_FALSE && status2 <= S_FALSE)
 		{
@@ -198,6 +201,24 @@ int	Formula::or_propagate(Formula &formula, int testing)
 			return formula.fact2->set_status((S_TRUE), testing);
 		else if (status2 <= S_FALSE)
 			return formula.fact1->set_status((S_TRUE), testing);
+	}
+	if (formula.status == S_TRUE)
+	{
+		if (status1 <= S_FALSE && status2 <= S_FALSE)
+		{
+			formula.set_s_to_pending();
+			return ACTUALISED;
+		}
+		if ((status1 == F_FALSE || status1 == F_FALSE + testing
+				|| status1 <= S_FALSE) && (status2 == F_FALSE
+				|| status2 == F_FALSE + testing || status2 <= S_FALSE))
+			formula.set_status(F_TRUE + testing, testing);
+		else if (status1 == F_FALSE || status1 == F_FALSE + testing
+				|| status1 == S_FALSE)
+			return formula.fact2->set_status(S_TRUE, testing);
+		else if (status2 == F_FALSE || status2 == F_FALSE + testing
+				|| status2 == S_FALSE)
+			return formula.fact1->set_status(S_TRUE, testing);
 	}
 	else if (formula.status == F_FALSE || formula.status == F_FALSE + testing)
 	{
@@ -285,9 +306,7 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 				&& (status2 == F_TRUE || status2 == F_TRUE + testing))
 				|| ((status1 == F_FALSE || status1 == F_FALSE + testing)
 				&& (status2 == F_FALSE || status2 == F_FALSE + testing)))
-		{
-			formula.set_status(F_FALSE, testing);
-		}
+			formula.set_status(F_FALSE + testing, testing);
 		else if (status1 == F_TRUE || status1 == F_TRUE + testing
 				|| status1 == S_TRUE)
 			return formula.fact2->set_status((S_FALSE), testing);
@@ -310,7 +329,7 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 		{
 			if (testing)
 				return ERROR;
-			error_n_exit("Contradiction in the facts...\n");			
+			error_n_exit("Contradiction in the facts...\n");
 		}
 		else if (status1 == F_TRUE || status1 == F_TRUE + testing)
 			return formula.fact2->set_status((F_TRUE + testing), testing);
@@ -338,7 +357,7 @@ int	Formula::xor_propagate(Formula &formula, int testing)
 		{
 			if (testing)
 				return ERROR;
-			error_n_exit("Contradiction in the facts...\n");			
+			error_n_exit("Contradiction in the facts...\n");
 		}
 		else if (status1 == F_TRUE || status1 == F_TRUE + testing
 				|| status1 == S_TRUE)
