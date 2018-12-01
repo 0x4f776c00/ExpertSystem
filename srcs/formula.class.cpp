@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/12/01 02:58:41 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/12/01 04:26:57 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,10 +390,8 @@ int	Formula::propagate_status(int testing)
 
 int	Formula::set_status(int status, int testing)
 {
-	int ret = ACTUALISED;
-	if (this->status == 1 && status != 1)
-		if (status == PENDING)
-			return NON_ACTUALISED;
+	if (status == PENDING)
+		return NON_ACTUALISED;
 	if ((this->status == S_TRUE && status == S_FALSE)
 			|| (this->status == S_FALSE && status == S_TRUE))
 		return SET_PENDING;
@@ -410,10 +408,7 @@ int	Formula::set_status(int status, int testing)
 			&& (status == F_TRUE + testing || status == S_TRUE || status <= S_FALSE))
 			|| (this->status == F_FALSE && (status == F_FALSE + testing
 			|| status <= S_FALSE || status == S_TRUE)))
-	{
-		status = this->status;
 		return NON_ACTUALISED;
-	}
 	if (testing == 2 && ((this->status == T1_FALSE && status == T2_FALSE)
 			|| (this->status == T1_TRUE && status == T2_TRUE)))
 	{
@@ -422,7 +417,7 @@ int	Formula::set_status(int status, int testing)
 	}
 	this->status = status;
 
-	return ret;
+	return ACTUALISED;
 }
 
 int	Formula::get_status(int testing)
@@ -492,4 +487,3 @@ void	Formula::set_s_to_pending()
 	if (this->fact2)
 		this->fact2->set_s_to_pending();
 }
-

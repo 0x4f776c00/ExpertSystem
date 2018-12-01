@@ -47,6 +47,8 @@ int	Fact::set_status(int status, int testing)
 		Formula *formula = static_cast<Formula *>(this);
 		return formula->set_status(status, testing);
 	}
+	if (status == PENDING)
+		return NON_ACTUALISED;
 	if ((this->status == S_TRUE && status == S_FALSE)
 			|| (this->status == S_FALSE && status == S_TRUE))
 		return SET_PENDING;
