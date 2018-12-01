@@ -11,21 +11,29 @@ for OUT in *;
 do
 	../expert_system $OUT > ../output/$OUT 2>&1
 	diff "../diff/$OUT" "../output/$OUT"
-	if [ $? == 1 ]
+	res=$?
+	if [ $res == 1 ]
 	then
 		echo -e "${RED}$OUT KO${NC}"
 		((fail++))
-	else
+	elif [ $res == 0 ]
+	then
 		((success++))
+	else
+		echo -e "${RED}$OUT Error diff${NC}"
 	fi
 	../expert_system $OUT -b > ../output/$OUT 2>&1
 	diff "../diffb/$OUT" "../output/$OUT"
-	if [ $? == 1 ]
+	res=$?
+	if [ $res == 1 ]
 	then
 		echo -e "${RED}b_$OUT KO${NC}"
 		((fail++))
-	else
+	elif [ $res == 0 ]
+	then
 		((success++))
+	else
+		echo -e "${RED}$OUT Error diff${NC}"
 	fi
 done
 echo $success "success"
