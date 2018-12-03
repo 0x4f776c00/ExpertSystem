@@ -6,13 +6,22 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 15:22:10 by bcozic            #+#    #+#             */
-/*   Updated: 2018/12/01 04:27:06 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/12/03 06:26:47 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expert_system.hpp"
 
 bool	is_restart = false;
+
+static void	clean_induction(Hub *hub)
+{
+	for (std::list <Axiom> :: iterator it = hub->axioms.begin();
+			it != hub->axioms.end(); it++)
+	{
+		it->clean();
+	}
+}
 
 static int	induction(Hub *hub, int testing)
 {
@@ -25,18 +34,14 @@ static int	induction(Hub *hub, int testing)
 				it != hub->axioms.end(); it++)
 		{
 			has_actualized |= it->compute_axiom(testing);
+			if (has_actualized & SET_PENDING)
+			{
+				clean_induction(hub);
+				has_actualized -= SET_PENDING;
+			}
 		}
 	} while (has_actualized == ACTUALISED);
 	return has_actualized;
-}
-
-static void	clean_induction(Hub *hub)
-{
-	for (std::list <Axiom> :: iterator it = hub->axioms.begin();
-			it != hub->axioms.end(); it++)
-	{
-		it->clean();
-	}
 }
 
 static void	try_induction(Hub *hub)
@@ -89,6 +94,11 @@ void		solve_system(Hub *hub)
 				it != hub->axioms.end(); it++)
 		{
 			has_actualized |= it->compute_axiom(false);
+			if (has_actualized & SET_PENDING)
+			{
+				clean_induction(hub);
+				has_actualized -= SET_PENDING;
+			}
 		}
 	} while (has_actualized == ACTUALISED);
 

@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 14:31:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/12/01 04:26:37 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/12/03 06:22:53 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int		Axiom::compute_axiom(int testing)
 	{
 		this->fact1->set_s_to_pending();
 		this->fact2->set_s_to_pending();
-		return ACTUALISED;
+		this->compute_axiom(testing);
+		return SET_PENDING;
 	}
 	return ret;
 }

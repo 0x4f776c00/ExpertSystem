@@ -9,6 +9,7 @@ mkdir -p output
 cd tests
 for OUT in *;
 do
+	echo $OUT
 	../expert_system $OUT > ../output/$OUT 2>&1
 	diff "../diff/$OUT" "../output/$OUT"
 	res=$?

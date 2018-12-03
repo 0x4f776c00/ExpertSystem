@@ -6,7 +6,7 @@
 /*   By: bcozic <bcozic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 15:03:33 by bcozic            #+#    #+#             */
-/*   Updated: 2018/12/01 04:26:57 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/12/03 06:28:10 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -392,8 +392,10 @@ int	Formula::set_status(int status, int testing)
 {
 	if (status == PENDING)
 		return NON_ACTUALISED;
-	if ((this->status == S_TRUE && status == S_FALSE)
-			|| (this->status == S_FALSE && status == S_TRUE))
+	if ((this->status == S_TRUE && (status == F_FALSE || status == S_FALSE))
+			|| (this->status == S_FALSE && (status == F_TRUE || status == S_TRUE))
+			|| ((this->status == F_FALSE || this->status == S_FALSE) && status == S_TRUE)
+			|| ((this->status == F_TRUE || this->status == S_TRUE) && status == S_FALSE))
 		return SET_PENDING;
 	if (((this->status == F_TRUE || this->status == F_TRUE + testing)
 			&& status == F_FALSE + testing) || ((this->status == F_FALSE

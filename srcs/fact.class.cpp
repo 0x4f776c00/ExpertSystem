@@ -49,8 +49,10 @@ int	Fact::set_status(int status, int testing)
 	}
 	if (status == PENDING)
 		return NON_ACTUALISED;
-	if ((this->status == S_TRUE && status == S_FALSE)
-			|| (this->status == S_FALSE && status == S_TRUE))
+	if ((this->status == S_TRUE && (status == F_FALSE || status == S_FALSE))
+			|| (this->status == S_FALSE && (status == F_TRUE || status == S_TRUE))
+			|| ((this->status == F_FALSE || this->status == S_FALSE) && status == S_TRUE)
+			|| ((this->status == F_TRUE || this->status == S_TRUE) && status == S_FALSE))
 		return SET_PENDING;
 	if (((this->status == F_TRUE || this->status == F_TRUE + testing)
 			&& status <= T2_FALSE) || ((this->status == F_FALSE
